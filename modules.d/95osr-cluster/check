@@ -1,0 +1,28 @@
+#!/bin/sh
+# Check script to validate if an osr cluster initrd can be build or not
+# Right now this can only work with NFS as root filesystem
+
+. ./dracut-functions
+
+# we require nfs
+# What if we either require nfs|ocfs2|gfs|glusterfs|ext3 ???
+[ "$1" = "-d" ] && echo osr
+
+# Those rpms are only needed for generating the cluster configuration into initrd. 
+# We don't copy any of those modules into the initrd but need them to generate configurations for the initrd.
+#RPMS="comoonics-cdsl-py comoonics-cluster-py"
+#
+#missingrpms=""
+#for rpm in "$RPMS"; do
+#   rpm -q $rpm >/dev/null 2>/dev/null
+#   if [ $? -ne 0 ]; then
+#      missingrpms="$missingrpms $rpm"
+#   fi
+#done
+#
+#if [ -n "$missingrpms" ]; then
+#    derror "Could not find required rpm/s $missingrpms. Please install first the continue."
+#    exit 1
+#fi
+
+exit 1

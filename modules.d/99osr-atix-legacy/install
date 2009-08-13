@@ -1,0 +1,5 @@
+#!/bin/sh
+
+. $dracutfunctions
+
+inst "$moddir/atix-logo.txt" /etc

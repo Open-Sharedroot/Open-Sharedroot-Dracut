@@ -1,0 +1,12 @@
+In order to change any variables influencing the bootprocess use the following commands:
+
+setparameter:   sets a given parameter    (parameters are: name, value)
+getparameter:   gets a given parameter    (parameters are: name)
+listparameters: lists all set parameters  (parameters are: none)
+delparameter:   deletes a given parameter (parameters are: name)
+help:           show this help            (parameters are: none)
+lastmessage:    show the last message     (parameters are: none)
+messages:       list all messages         (parameters are: none)
+
+Use these methods with care as they might influence the bootprocess and lead to 
+unpreditable behaviours.

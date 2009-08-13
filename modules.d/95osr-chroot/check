@@ -1,0 +1,11 @@
+#!/bin/sh
+# Check script to validate if an osr cluster initrd can be build or not
+# Right now this can only work with NFS as root filesystem
+
+. ./dracut-functions
+
+# we require nfs
+# What if we either require nfs|ocfs2|gfs|glusterfs|ext3 ???
+[ "$1" = "-d" ] && echo "osr"
+
+exit 1
