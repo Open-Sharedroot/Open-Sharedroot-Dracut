@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 #
 # Script to automatically detect the apropriate root and set the environment variables accordingly.
 # This script should be called prior to mount but after the nodeid has been set.

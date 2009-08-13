@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 if [ -n "$dracutlib" ] && [ -f $dracutlib ]; then
 	. $dracutlib
 elif [ -f /lib/dracut-lib.sh ]; then

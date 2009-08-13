@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 . $dracutfunctions
 if [ -f $dsrc/modules.d/95osr-cluster/cluster-lib.sh ]; then

@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 # This script detects if a chroot is needed for this rootfilesystem.
 # It can either be configured via the nodevalues file or the following bootparameters:
 #   chrootneeded

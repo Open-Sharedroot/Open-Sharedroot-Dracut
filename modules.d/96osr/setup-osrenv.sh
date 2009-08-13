@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 #
 # Just sets up the environment for the open sharedroot.
 #

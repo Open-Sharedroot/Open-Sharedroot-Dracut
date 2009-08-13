@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 # This skript fills in the xfiles for being used by other programs that might be using those information
 
 if [ -n "$dracutlib" ] && [ -f $dracutlib ]; then

@@ -1,5 +1,6 @@
+#!/bin/sh
 #
-# $Id: shinit.sh,v 1.1 2009-08-13 09:25:46 marc Exp $
+# $Id: shinit.sh,v 1.2 2009-08-13 10:00:41 marc Exp $
 #
 # @(#)$File$
 #

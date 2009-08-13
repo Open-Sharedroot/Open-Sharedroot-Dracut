@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 # This script builds the chroot needed to mount the chroot
 if [ -n "$dracutlib" ] && [ -f $dracutlib ]; then
 	. $dracutlib
