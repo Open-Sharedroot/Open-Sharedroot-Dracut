@@ -1,4 +1,4 @@
-VERSION=0.7
+VERSION=0.8
 
 prefix = /usr
 datadir = ${prefix}/share
@@ -25,7 +25,7 @@ dist: ../osr-dracut-module-$(VERSION).tar.bz2
 
 ../osr-dracut-module-$(VERSION).tar.bz2:
 	cd ..; \
-	tar -c -j -f osr-dracut-module-$(VERSION).tar.bz2 osr-dracut-module-$(VERSION)/*
+	tar -c -j --exclude="*/CVS*" --exclude="*/BUILD*" --exclude="*/noarch*" --exclude="*/modules.d/99osr-atix-legacy*" -f osr-dracut-module-$(VERSION).tar.bz2 osr-dracut-module-$(VERSION)/*
 
 rpm: clean ../osr-dracut-module-$(VERSION).tar.bz2
 	rpmbuild --define "_topdir $$PWD" --define "_sourcedir $$PWD/.." --define "_specdir $$PWD" --define "_srcrpmdir $$PWD" --define "_rpmdir $$PWD" -ba osr-dracut-module.spec 
