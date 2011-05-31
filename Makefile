@@ -17,6 +17,12 @@ install: dist
 	mkdir -p $(pkglibdir)/modules.d
 	cp -arx $(OUTPUT_BUILD)/modules.d/* $(pkglibdir)
 
+uninstall: 
+	$(RM) -r  $(OUTPUT_BUILD)/modules.d/95osr-chroot
+	$(RM) -r  $(OUTPUT_BUILD)/modules.d/95osr-cluster
+	$(RM) -r  $(OUTPUT_BUILD)/modules.d/96osr
+	$(RM) -r  $(OUTPUT_BUILD)/modules.d/99osr-atix-legacy
+
 clean:
 	rm -f *~
 	rm -f osr-dracut*.rpm ../osr-dracut*.tar.bz2
