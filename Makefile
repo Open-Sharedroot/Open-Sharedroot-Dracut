@@ -13,9 +13,9 @@ OUTPUT_BUILD = ./build
 
 all: 
 
-install:
-	mkdir -p $(DESTDIR)$(pkglibdir)/modules.d
-	cp -arx modules.d $(DESTDIR)$(pkglibdir)
+install: dist
+	mkdir -p $(pkglibdir)/modules.d
+	cp -arx $(OUTPUT_BUILD)/modules.d/* $(pkglibdir)
 
 clean:
 	rm -f *~
@@ -24,10 +24,9 @@ clean:
 
 archive: ../osr-dracut-module-$(VERSION).tar.bz2
 
-#dist: ../osr-dracut-module-$(VERSION).tar.bz2
 
 # create distrebut-build
-dist: clean
+dist: 
 	mkdir $(OUTPUT_BUILD)
 	cp ./GPL*.txt $(OUTPUT_BUILD)
 	cp ./README* $(OUTPUT_BUILD)
@@ -39,18 +38,22 @@ dist: clean
 # create tar-file
 tar: dist
 	tar -cvjf ./osr-dracut-module_`date +%F`.tar.bz2 $(OUTPUT_BUILD)
+	tar -cvjf ./osr-dracut-module-dev.tar.bz2 $(OUTPUT_BUILD)
 
 
-rpm: clean ../osr-dracut-module-$(VERSION).tar.bz2
-	rpmbuild --define "_topdir $$PWD" \
-	--define "_sourcedir $$PWD/.." \
+rpm: clean dist
+	rpmbuild \
+	--define "_topdir $$PWD" \
+	--define "_sourcedir $$PWD" \
 	--define "_specdir $$PWD" \
 	--define "_srcrpmdir $$PWD" \
-	--define "_rpmdir $$PWD" -ba osr-dracut-module.spec
-	rm -fr BUILD BUILDROOT
+	--define "_rpmdir $$PWD" \
+	-ba osr-dracut-module.spec
+
 
 check: all
 	@ret=0;for i in modules.d/*/*.sh; do \
 		dash -n "$$i" ; ret=$$(($$ret+$$?)); \
 	done;exit $$ret
 	make -C test check
+

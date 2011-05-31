@@ -1,5 +1,5 @@
 Name: osr-dracut-module
-Version: 0.8
+Version: dev
 Release: 1
 Summary: Dracut modules for open sharedroot
 Group: System Environment/Base		
