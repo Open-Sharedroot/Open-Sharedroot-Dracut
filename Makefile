@@ -14,7 +14,7 @@ OUTPUT_BUILD = ./build
 all: dist
 
 install: 
-	cp -arx $(OUTPUT_BUILD)/modules.d/* $(pkglibdir)
+	cp -arx $(OUTPUT_BUILD)/modules.d/* $(pkglibdir)/modules.d/
 
 uninstall: 
 	$(RM) -r  $(OUTPUT_BUILD)/modules.d/95osr-chroot
