@@ -13,7 +13,7 @@ OUTPUT_BUILD = ./build
 
 all: dist
 
-install: dist
+install: 
 	cp -arx $(OUTPUT_BUILD)/modules.d/* $(pkglibdir)
 
 uninstall: 
