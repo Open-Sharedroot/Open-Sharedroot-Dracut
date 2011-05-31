@@ -14,7 +14,6 @@ OUTPUT_BUILD = ./build
 all: dist
 
 install: dist
-	mkdir -p $(pkglibdir)/modules.d
 	cp -arx $(OUTPUT_BUILD)/modules.d/* $(pkglibdir)
 
 uninstall: 
