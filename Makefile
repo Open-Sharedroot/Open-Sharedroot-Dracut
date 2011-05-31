@@ -11,7 +11,7 @@ OUTPUT_BUILD = ./build
 
 .PHONY: install clean archive rpm testimage test all check
 
-all: 
+all: dist
 
 install: dist
 	mkdir -p $(pkglibdir)/modules.d
