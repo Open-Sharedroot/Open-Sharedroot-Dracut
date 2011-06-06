@@ -51,6 +51,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,0755)
 %doc README.txt COPYING AUTHORS
 %{_datadir}/dracut/modules.d/96osr
+%{_datadir}/dracut/modules.d/99osr-atix-legacy
 
 %files cluster
 %defattr(-,root,root,0755)
@@ -61,6 +62,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,0755)
 %{_datadir}/dracut/modules.d/95osr-chroot
 %doc README.osr-chroot.txt COPYING AUTHORS
+
 
 %changelog
 * Thu Aug 13 2009 Marc Grimme <grimme@atix.de> 0.8-1

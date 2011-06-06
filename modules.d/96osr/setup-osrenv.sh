@@ -8,14 +8,14 @@
 
 #[ "$CMDLINE" ] || read CMDLINE </proc/cmdline
 if [ -n "$dracutlib" ] && [ -f $dracutlib ]; then
-	. $dracutlib
+    . $dracutlib
 elif [ -f /lib/dracut-lib.sh ]; then
-  . /lib/dracut-lib.sh
+    . /lib/dracut-lib.sh
 fi
 
 if [ -f std-lib.sh ]; then
-	. ./std-lib.sh
-	libdir="."
+    . ./std-lib.sh
+    libdir="."
 elif [ -f /lib/osr/std-lib.sh ]; then 
     .  /lib/osr/std-lib.sh
     libdir="/lib/osr"
