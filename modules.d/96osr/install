@@ -1,7 +1,15 @@
 #!/bin/bash
 
 # Install all libraries we need
-for lib in boot-lib.sh defaults.sh repository-lib.sh rootfs-lib.sh shinit.sh std-lib.sh; do
+for lib \
+    in \
+        boot-lib.sh \
+        defaults.sh \
+        repository-lib.sh \
+        rootfs-lib.sh \
+        shinit.sh \
+        std-lib.sh; \
+    do
   dinfo "Installing $lib"
   mkdir  -p ${initdir}/lib/osr
   inst_simple "$moddir/lib/$lib" /lib/osr

@@ -25,8 +25,8 @@ set +x
 export PS1="osr \! > " TERM=xterm
 
 if [ -f ${libdir-.}/std-lib.sh ]; then
-	libdir=${libdir-.}
-	. ${libdir}/std-lib.sh
+    libdir=${libdir-.}
+    . ${libdir}/std-lib.sh
 elif [ -f /lib/osr/std-lib.sh ]; then 
     .  /lib/osr/std-lib.sh
     libdir="/lib/osr"
@@ -39,60 +39,73 @@ fi
 
 sourceLibs ${libdir}
 if repository_has_key rootfs; then
-  sourceRootfsLibs ${libdir}
+    sourceRootfsLibs ${libdir}
 fi
 
 logo=$(repository_get_value logofile)
 shellissue=$(repository_get_value shellissue)
 shellissuetmp=$(repository_get_value shellissuetmp)
 
-setparameter() {
+setparameter()
+{
    repository_store_value $*
 }
-getparameter() {
+
+getparameter()
+{
    repository_get_value $*
 }
-delparameter() {
+
+delparameter()
+{
 	repository_del_value $*
 }
-listparameters() {
+
+listparameters()
+{
    repository_list_items "="
 }
-drawline() {
-	echo
-	echo "-------------------------------------------------------------"
-	echo
+
+drawline()
+{
+    echo
+    echo "-------------------------------------------------------------"
+    echo
 }
+
 help() {
-	local shellissue=$(repository_get_value shellissue)
-    if [ -n "$shellissue" ] && [ -f "$shellissue" ]; then	
-	  cat $shellissue >/dev/console
+    local shellissue=$(repository_get_value shellissue)
+    if [ -n "$shellissue" ] && [ -f "$shellissue" ]; then
+        cat $shellissue >/dev/console
     fi
 }
-lastmessage() {
-	local shellissuetmp=$(repository_get_value shellissuetmp)
-    if [ -n "$shellissuetmp" ] && [ -f "$shellissuetmp" ]; then	
-	  cat $shellissuetmp >/dev/console
+
+lastmessage()
+{
+    local shellissuetmp=$(repository_get_value shellissuetmp)
+    if [ -n "$shellissuetmp" ] && [ -f "$shellissuetmp" ]; then
+        cat $shellissuetmp >/dev/console
     fi
 }
+
 messages() {
-	if [ -n "$bootlog" ] && [ -f "$bootlog" ]; then
-	  cat $bootlog
-	fi
+    if [ -n "$bootlog" ] && [ -f "$bootlog" ]; then
+        cat $bootlog
+    fi
 }
-	
+
 drawline
 if [ -f "$logo" ]; then
-  cat $logo
-  drawline
+    cat $logo
+    drawline
 fi
 if [ -f "$shellissue" ]; then
-  cat $shellissue
-  drawline
+    cat $shellissue
+    drawline
 fi
 if [ -f "$shellissuetmp" ]; then
-  cat $shellissuetmp
-  drawline
+    cat $shellissuetmp
+    drawline
 fi
 
 unset logo
