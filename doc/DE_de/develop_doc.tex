@@ -20,7 +20,15 @@
 
 \section{Gernerell}
 
-Das erste Mudul was von Darcut startet wird ist das Mudul 99base. Dieses ist ein ein Shell-Script das vom Kernel gestartet wird. Das Erste was das Modul tut ist, dafür zu sorgen das dass initramfs geladen hat. Das Script was daführ verantwortlich ist, ist die \texttt{init}-Datei. Diese kann angepasst weren. Empfohlen wird aber stat dessen die Hooks zu verwenden. Hooks sind Scrips die vor oder nach definierten Ereignissen ausgeführt werden. Diese Hooks werden in den Dodulen in den Dateien \texttt{install} definiert. 
+Das erste Modul was von Darcut startet wird ist das Modul 99base. Dieses ist ein ein Shell-Script das vom Kernel gestartet wird. Das Erste was das Modul tut ist, dafür zu sorgen das dass initramfs geladen hat. Das Script was dafür verantwortlich ist, ist die \texttt{init}-Datei. Diese kann angepasst werden. Empfohlen wird aber stat dessen die Hooks zu verwenden. Hooks sind Scrips die vor oder nach definierten Ereignissen ausgeführt werden. Diese Hooks werden in den Modulen in den Dateien \texttt{install} definiert.
+
+Die in den Modulen verwendeten Hooks sind:
+\begin{description}
+ \item[cmdline] Ein sehr früher Zeitpunkt. Hier werden die Kerne-Parameter ausgewertet werden die dem Bootloader mitgegeben wurden (Sei es als GRUB-Konfiguration oder beim Booten). Hier werden z.B. die wichtigsten Environment-Variablen gesetzt. 
+ \item[pre-pivot] Das ist der letzte Hook der ausgeführt wird, bevor  das richtige root-Verzeichnis ein gehangen wird. Also ein guter Zeitpunkt für etweilige Aufräumarbeiten.
+ \item[emergency]
+ \item[]
+ \end{description}
 
 \section{Modul 95osr-chroot}
 
