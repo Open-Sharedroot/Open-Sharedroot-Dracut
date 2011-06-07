@@ -1,0 +1,54 @@
+\documentclass[10pt,a4paper,titlepage]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage{ucs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\author{Olaf Radicke}
+\title{Dokumentation der Funktionsweise der OSR-Dracut-Mudule}
+
+
+\begin{document}
+
+\maketitle
+
+\newpage 
+
+\tableofcontents
+
+\newpage 
+
+\section{Gernerell}
+
+Das erste Mudul was von Darcut startet wird ist das Mudul 99base. Dieses ist ein ein Shell-Script das vom Kernel gestartet wird. Das Erste was das Modul tut ist, dafür zu sorgen das dass initramfs geladen hat. Das Script was daführ verantwortlich ist, ist die \texttt{init}-Datei. Diese kann angepasst weren. Empfohlen wird aber stat dessen die Hooks zu verwenden. Hooks sind Scrips die vor oder nach definierten Ereignissen ausgeführt werden. Diese Hooks werden in den Dodulen in den Dateien \texttt{install} definiert. 
+
+\section{Modul 95osr-chroot}
+
+[TEXT]
+
+\section{Modul 95osr-cluster}
+
+[TEXT]
+
+\section{Modul 96osr}
+
+\subsection{Definierte Hooks}
+
+
+\begin{description}
+\item[setup-osrenv.sh] cmdline  99
+\item[parse-nodeid.sh] cmdline  2
+\item[parse-cdsl.sh] cmdline 99
+\item[mount-cdsl.sh] pre-pivot 1
+\item[write-xfiles.sh] pre-pivot 90
+\item[emergencyenv.sh] emergency 1
+\end{description}
+
+
+
+
+\section{Modul 99osr-atix-legacy}
+
+[TEXT]
+
+\end{document}
