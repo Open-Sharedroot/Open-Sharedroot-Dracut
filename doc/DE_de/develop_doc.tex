@@ -4,6 +4,9 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{hyperref}
+
+
 \author{Olaf Radicke}
 \title{Dokumentation der Funktionsweise der OSR-Dracut-Mudule}
 
@@ -20,15 +23,20 @@
 
 \section{Gernerell}
 
-Das erste Modul was von Darcut startet wird ist das Modul 99base. Dieses ist ein ein Shell-Script das vom Kernel gestartet wird. Das Erste was das Modul tut ist, dafür zu sorgen das dass initramfs geladen hat. Das Script was dafür verantwortlich ist, ist die \texttt{init}-Datei. Diese kann angepasst werden. Empfohlen wird aber stat dessen die Hooks zu verwenden. Hooks sind Scrips die vor oder nach definierten Ereignissen ausgeführt werden. Diese Hooks werden in den Modulen in den Dateien \texttt{install} definiert.
+Als erstes wird vom Kernel nach dem Booten ein kleiner Binär-Code von Dracut ausgeführt, der dan seinerseits die in dash geschribene Dracut-Module ausführt. Das erste Modul was von Darcut startet wird ist das Modul 99base. Das Erste was das Modul tut ist, dafür zu sorgen das dass initramfs geladen hat. Das Script was dafür verantwortlich ist, ist die \texttt{init}-Datei. Diese kann angepasst werden. Empfohlen wird aber stat dessen die Hooks zu verwenden. Hooks sind Scrips die vor oder nach definierten Ereignissen ausgeführt werden. Diese Hooks werden in den Modulen in den Dateien \texttt{install} definiert.
 
 Die in den Modulen verwendeten Hooks sind:
 \begin{description}
  \item[cmdline] Ein sehr früher Zeitpunkt. Hier werden die Kerne-Parameter ausgewertet werden die dem Bootloader mitgegeben wurden (Sei es als GRUB-Konfiguration oder beim Booten). Hier werden z.B. die wichtigsten Environment-Variablen gesetzt. 
  \item[pre-pivot] Das ist der letzte Hook der ausgeführt wird, bevor  das richtige root-Verzeichnis ein gehangen wird. Also ein guter Zeitpunkt für etweilige Aufräumarbeiten.
- \item[emergency]
- \item[]
+ \item[emergency] Ein solcher Hook ist in der Dracut-Doku nicht dokumentiert.
  \end{description}
+
+In einem Script \texttt{check} wird eine Funktion \texttt{check()} definiert. Das Scrip \texttt{check} sollte 0 (null) zurückgeben, wenn alle Bedingungen wefüllt sind. Wird ein anderer Wert zurückgegeben, wird das Modul nicht von Darcut geladen.
+
+Mit dem Schlüsselwort \texttt{inst\_simple} werden Dateinen in das initramfs kopiert/installiert.
+
+Mit dem Schlüßelwort \texttt{dracut_install} werden Software-Pakete in die ramsf-Umgebung installiert bzw. zur Verfühgung gestellt. 
 
 \section{Modul 95osr-chroot}
 
@@ -52,11 +60,47 @@ Die in den Modulen verwendeten Hooks sind:
 \item[emergencyenv.sh] emergency 1
 \end{description}
 
+\subsection{In Initramfs installierte Dateien}
 
+\begin{itemize}
+ \item \verb|<|moddir\verb|>| /issue nach /etc
+ \item \verb|<|moddir\verb|>|/shinit.sh nach /sbin
+ \item \verb|<|moddir\verb|>|/lib/boot-lib.sh nach /lib/osr
+ \item \verb|<|moddir\verb|>|/lib/defaults.sh nach /lib/osr
+ \item \verb|<|moddir\verb|>|/lib/repository-lib.sh nach /lib/osr
+ \item \verb|<|moddir\verb|>|/lib/rootfs-lib.sh nach /lib/osr
+ \item \verb|<|moddir\verb|>|/lib/shinit.sh nach /lib/osr
+ \item \verb|<|moddir\verb|>|/lib/std-lib.sh nach /lib/osr
+\end{itemize}
 
+\subsection{Von Dracut zu installierende Software}
+
+\begin{itemize}
+ \item awk
+ \item cut
+ \item tr
+ \item expr
+ \item mkdir
+ \item basename
+\end{itemize}
+
+expr könnte mit awk abgedeckt werden.
 
 \section{Modul 99osr-atix-legacy}
 
 [TEXT]
+
+\section{Quellen- und Literaturangaben}
+\label{sec:quell}
+
+\begin{itemize}
+ \item fedora-Projekt: \url{http://fedoraproject.org/wiki/Dracut}
+ \item Projektseite: \url{https://dracut.wiki.kernel.org/}
+ \item News: \url{http://git.kernel.org/?p=boot/dracut/dracut.git;a=blob_plain;f=NEWS}
+\end{itemize}
+
+
+
+
 
 \end{document}
