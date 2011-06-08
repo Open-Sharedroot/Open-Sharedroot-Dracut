@@ -8,7 +8,7 @@
 
 
 \author{Olaf Radicke}
-\title{Dokumentation der Funktionsweise der OSR-Dracut-Mudule}
+\title{Dokumentation der Funktionsweise der OSR-Dracut-Module}
 
 
 \begin{document}
@@ -23,7 +23,7 @@
 
 \section{Gernerell}
 
-Als erstes wird vom Kernel nach dem Booten ein kleiner Binär-Code von Dracut ausgeführt, der dan seinerseits die in dash geschribene Dracut-Module ausführt. Das erste Modul was von Darcut startet wird ist das Modul 99base. Das Erste was das Modul tut ist, dafür zu sorgen das dass initramfs geladen hat. Das Script was dafür verantwortlich ist, ist die \texttt{init}-Datei. Diese kann angepasst werden. Empfohlen wird aber stat dessen die Hooks zu verwenden. Hooks sind Scrips die vor oder nach definierten Ereignissen ausgeführt werden. Diese Hooks werden in den Modulen in den Dateien \texttt{install} definiert.
+Als erstes wird vom Kernel nach dem Booten ein kleiner Binär-Code von Dracut ausgeführt, der dann seinerseits die in dash geschriebene Dracut-Module ausführt. Das erste Modul was von Darcut startet wird ist das Modul 99base. Das Erste was das Modul tut ist, dafür zu sorgen das dass initramfs geladen hat. Das Script was dafür verantwortlich ist, ist die \texttt{init}-Datei. Diese kann angepasst werden. Empfohlen wird aber stat dessen die Hooks zu verwenden. Hooks sind Scrips die vor oder nach definierten Ereignissen ausgeführt werden. Diese Hooks werden in den Modulen in den Dateien \texttt{install} definiert.
 
 Die in den Modulen verwendeten Hooks sind:
 \begin{description}
@@ -32,11 +32,11 @@ Die in den Modulen verwendeten Hooks sind:
  \item[emergency] Ein solcher Hook ist in der Dracut-Doku nicht dokumentiert.
  \end{description}
 
-In einem Script \texttt{check} wird eine Funktion \texttt{check()} definiert. Das Scrip \texttt{check} sollte 0 (null) zurückgeben, wenn alle Bedingungen wefüllt sind. Wird ein anderer Wert zurückgegeben, wird das Modul nicht von Darcut geladen.
+In einem Script \texttt{check} wird eine Funktion \texttt{check()} definiert. Das Scrip \texttt{check} sollte 0 (null) zurückgeben, wenn alle Bedingungen erfüllt sind. Wird ein anderer Wert zurückgegeben, wird das Modul nicht von Darcut geladen.
 
-Mit dem Schlüsselwort \texttt{inst\_simple} werden Dateinen in das initramfs kopiert/installiert.
+Mit dem Schlüsselwort \texttt{inst\_simple} werden Dateien in das initramfs kopiert/installiert.
 
-Mit dem Schlüßelwort \texttt{dracut_install} werden Software-Pakete in die ramsf-Umgebung installiert bzw. zur Verfühgung gestellt. 
+Mit dem Schlüsselwort \texttt{dracut\_install} werden Software-Pakete in die ramsf-Umgebung installiert bzw. zur Verfügung gestellt.
 
 \section{Modul 95osr-chroot}
 
@@ -59,6 +59,13 @@ Mit dem Schlüßelwort \texttt{dracut_install} werden Software-Pakete in die ram
 \item[write-xfiles.sh] pre-pivot 90
 \item[emergencyenv.sh] emergency 1
 \end{description}
+
+\subsubsection{setup-osrenv.sh}
+\begin{description}
+\item[Hook:] cmdline
+\item[Priorität:] 99
+\end{description}
+Das Script lädt  dracut-lib.sh und die /osr/std-lib.sh.
 
 \subsection{In Initramfs installierte Dateien}
 
