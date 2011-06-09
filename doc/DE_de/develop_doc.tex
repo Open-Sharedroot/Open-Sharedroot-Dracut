@@ -1,4 +1,4 @@
-\documentclass[10pt,a4paper,titlepage]{article}
+\documentclass[10pt,a4paper]{article}
 \usepackage[utf8x]{inputenc}
 \usepackage{ucs}
 \usepackage{amsmath}
@@ -23,7 +23,7 @@
 
 \section{Gernerell}
 
-Als erstes wird vom Kernel nach dem Booten ein kleiner Binär-Code von Dracut ausgeführt, der dann seinerseits die in dash geschriebene Dracut-Module ausführt. Das erste Modul was von Darcut startet wird ist das Modul 99base. Das Erste was das Modul tut ist, dafür zu sorgen das dass initramfs geladen hat. Das Script was dafür verantwortlich ist, ist die \texttt{init}-Datei. Diese kann angepasst werden. Empfohlen wird aber stat dessen die Hooks zu verwenden. Hooks sind Scrips die vor oder nach definierten Ereignissen ausgeführt werden. Diese Hooks werden in den Modulen in den Dateien \texttt{install} definiert.
+Als erstes wird vom Kernel nach dem Booten ein kleiner Binär-Code von Dracut ausgeführt, der dann seinerseits die in dash geschriebene Dracut-Module ausführt. Das erste Modul das von Darcut startet wird ist das Modul 99base. Das Erste was das Modul tut ist, dafür zu sorgen das dass initramfs geladen hat. Das Script was dafür verantwortlich ist, ist die \texttt{init}-Datei. Diese kann angepasst werden. Empfohlen wird aber stat dessen die Hooks zu verwenden. Hooks sind Scrips die vor oder nach definierten Ereignissen ausgeführt werden. Diese Hooks werden in den Modulen in den Dateien \texttt{install} definiert.
 
 Die in den Modulen verwendeten Hooks sind:
 \begin{description}
@@ -65,7 +65,31 @@ Mit dem Schlüsselwort \texttt{dracut\_install} werden Software-Pakete in die ra
 \item[Hook:] cmdline
 \item[Priorität:] 99
 \end{description}
-Das Script lädt  dracut-lib.sh und die /osr/std-lib.sh.
+Das Script lädt \texttt{dracut-lib.sh} und die \texttt{/osr/std-lib.sh}. Das Script versucht herrauszufinden um welche Distrebution es sich handelt. Und legt dann eine einfache Datenbank  mit Schlüssel-Werte-Paaren an. Die Schlüssel der gespeicherte Werte sind:
+
+\begin{itemize}
+ \item logofile
+ \item shellrcfile
+ \item shellissue
+ \item shellissuetmp
+ \item shell
+ \item sysctlfile
+ \item xtabfile
+ \item xrootfsfile
+ \item xkillallprocsfile
+\end{itemize}
+
+
+\subsubsection{parse-nodeid.sh}
+\begin{description}
+\item[Hook:] cmdline
+\item[Priorität:] 2
+\end{description}
+
+Das Script überprüft noch ein mal die Art der Distrebution und speichert den Namen in eine einfache Schlüssel-Werte-Tabelle (mittels der Funktion \texttt{repository\_store\_value()} aus der Datei  \texttt{repository-lib.sh})
+Das Script überprüft ob den Kernel ind Node-ID als Parameter übergeben wurde.
+
+
 
 \subsection{In Initramfs installierte Dateien}
 
