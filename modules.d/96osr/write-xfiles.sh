@@ -7,6 +7,7 @@ elif [ -f /lib/dracut-lib.sh ]; then
   . /lib/dracut-lib.sh
 fi
 
+# check debugging-mode
 if getarg rdnetdebug ; then
     exec >/tmp/osr-write-xfiles.$1.$$.out
     exec 2>>/tmp/osr-write-xfiles.$1.$$.out

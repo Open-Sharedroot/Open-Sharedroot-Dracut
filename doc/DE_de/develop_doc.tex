@@ -54,13 +54,54 @@ Die Dracut-lib (\texttt{/usr/share/dracut/modules.d/99base/dracut-lib.sh}) stell
 
 \section{Modul 95osr-chroot}
 
-[TEXT]
+\subsection{Definierte Hooks}
+
+\begin{tabular}{|l|l|l|}
+ \hline
+\textbf{Hook} & \textbf{Priorität} & \textbf{Script} \\ \hline
+pre-udev & 59 & osr-net-genrules.sh \\ \hline
+netroot  & 11 & osr-detect-chroot.sh \\ \hline
+netroot  & 50 & osr-mount-chroot.sh \\ \hline
+\end{tabular}
+
+\subsubsection{osr-net-genrules.sh}
+
+\subsubsection{osr-detect-chroot.sh}
+
+\subsubsection{osr-mount-chroot.sh}
 
 \section{Modul 95osr-cluster}
 
-[TEXT]
+\subsection{Von Dracut zu installierende Software}
+
+\begin{itemize}
+ \item tr
+ \item expr
+ \item mkdir
+ \item basename
+\end{itemize}
+
+
+\subsection{Definierte Hooks}
+
+\begin{tabular}{|l|l|l|}
+ \hline
+\textbf{Hook} & \textbf{Priorität} & \textbf{Script} \\ \hline
+netroot    & 11 & osr-detect-chroot.sh \\ \hline
+netroot    & 50 & osr-mount-chroot.sh \\ \hline
+pre-pivot  & 51 & osr-move-chroot.sh \\ \hline
+\end{tabular} 
+
+\subsubsection{osr-detect-chroot.sh}
+
+\subsubsection{osr-mount-chroot.sh}
+
+\subsubsection{osr-move-chroot.sh}
+
 
 \section{Modul 96osr}
+
+Das Modul ist dafür zuständig, das File System für ein \texttt{chared root} ein zu hängen.
 
 \subsection{In Initramfs installierte Dateien}
 
@@ -90,16 +131,16 @@ expr könnte mit awk abgedeckt werden.
 
 \subsection{Definierte Hooks}
 
-
-\begin{description}
-
-\item[setup-osrenv.sh] cmdline  99
-\item[parse-nodeid.sh] cmdline  2
-\item[parse-cdsl.sh] cmdline 99
-\item[mount-cdsl.sh] pre-pivot 1
-\item[write-xfiles.sh] pre-pivot 90
-\item[emergencyenv.sh] emergency 1
-\end{description}
+\begin{tabular}{|l|l|l|}
+ \hline
+\textbf{Hook} & \textbf{Priorität} & \textbf{Script} \\ \hline
+setup-osrenv.sh  & 99 & cmdline \\ \hline
+parse-nodeid.sh  & 2 & cmdline \\ \hline
+parse-cdsl.sh & 99 & cmdline \\ \hline
+mount-cdsl.sh & 1 & pre-pivot \\ \hline
+write-xfiles.sh & 90 & pre-pivot \\ \hline
+emergencyenv.sh & 1 & emergency \\ \hline
+\end{tabular} 
 
 \subsubsection{setup-osrenv.sh}
 \begin{description}
@@ -114,18 +155,21 @@ expr könnte mit awk abgedeckt werden.
 \end{figure}
 
 Das Script lädt \texttt{dracut-lib.sh} und die \texttt{/osr/std-lib.sh}. Das Script versucht herauszufinden um welche Distribution es sich handelt. Und legt dann eine einfache Datenbank  mit Schlüssel-Werte-Paaren an. Die Schlüssel der gespeicherte Werte sind:
+\medskip 
 
-\begin{itemize}
- \item logofile
- \item shellrcfile
- \item shellissue
- \item shellissuetmp
- \item shell
- \item sysctlfile
- \item xtabfile
- \item xrootfsfile
- \item xkillallprocsfile
-\end{itemize}
+\begin{tabular}{|l|l|}
+ \hline
+\textbf{Name} & \textbf{ Wert} \\ \hline
+logofile          & \verb|"/etc/atix-logo.txt"|  \\ \hline
+shellrcfile       & \verb|${libdir}/shinitrc|  \\ \hline
+shellissue        & \verb|${predir}/etc/issue|  \\ \hline
+shellissuetmp     & \verb|${predir}/tmp/issue|  \\ \hline
+shell             & \verb|"/bin/bash --rcfile $(repository_get_value shellrcfile)"|  \\ \hline
+sysctlfile        & \verb|"${predir}/etc/sysctl.conf"|  \\ \hline
+xtabfile          & \verb|/etc/xtab|  \\ \hline
+xrootfsfile       & \verb|/etc/xrootfs|  \\ \hline
+xkillallprocsfile & \verb|/etc/xkillallprocs|  \\ \hline
+\end{tabular} 
 
 
 \subsubsection{parse-nodeid.sh}
@@ -136,7 +180,7 @@ Das Script lädt \texttt{dracut-lib.sh} und die \texttt{/osr/std-lib.sh}. Das Sc
 
 \begin{figure}[h!]
  \centering
- \includegraphics[scale=0.50]{./sequence_diagram_parse-nodeid_DE_de.png}
+ \includegraphics[scale=0.45]{./sequence_diagram_parse-nodeid_DE_de.png}
  \caption[]{Sequence-Diagram des parse-nodeid.sh-Scrips}
 \end{figure}
 
@@ -152,11 +196,15 @@ Das Script überprüft ob den Kernel die Node-ID als Parameter übergeben wurde.
 
 Das Scrip legt in eine einfache Datenbank mit Schlüssel-Werte-Paaren an. Die Schlüssel der gespeicherte Werte sind:
 
-\begin{itemize}
- \item cdsltree
- \item cdslsharedtree
- \item cdsllink
-\end{itemize}
+\medskip 
+
+\begin{tabular}{|l|l|}
+ \hline
+\textbf{Name} & \textbf{ Wert} \\ \hline
+cdsltree & /cluster/cdsl \\ \hline
+cdslsharedtree & /cluster/shared \\ \hline
+cdsllink & /cdsl.local \\ \hline
+\end{tabular} 
 
 \subsubsection{mount-cdsl.sh}
 \begin{description}
@@ -164,16 +212,40 @@ Das Scrip legt in eine einfache Datenbank mit Schlüssel-Werte-Paaren an. Die Sc
 \item[Priorität:] 1
 \end{description}
 
+Das Script macht den --bind-mount für das Chared-Root-File-System. Das wird mit cdsllinks realisiert.
+
 \begin{figure}[h!]
  \centering
- \includegraphics[scale=0.50]{./sequence_diagram_mount-cdsl_DE_de.png}
+ \includegraphics[scale=0.35]{./sequence_diagram_mount-cdsl_DE_de.png}
  \caption[]{Sequence-Diagram des mount-cdsl.sh-Script}
 \end{figure}
 
 
+\subsubsection{write-xfiles.sh}
+\begin{description}
+\item[Hook:] pre-pivot
+\item[Priorität:] 90
+\end{description}
+
+Je nach verwendeten File-System des des Chared-Root-Tree wird eine bestimmte Lib eingehangen. Dann die /etc/xtab erstellt bzw.  generiert. Dann wird das \texttt{xrootfs} erstellt und der \texttt{xkillall\_procs}.
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[scale=0.35]{./sequence_diagram_write-xfiles_DE_de.png}
+ \caption[]{Sequence-Diagram des write-xfiles.sh-Script}
+\end{figure}
+
+\subsubsection{emergencyenv.sh}
+\begin{description}
+\item[Hook:] emergency
+\item[Priorität:] 1
+\end{description}
+
+Das Script sorgt für ein Semigraphische Login-Graphik. Dies geschieht durch das setzen der ENV-Variable auf das Script /sbin/shinit.sh.
+
 \section{Modul 99osr-atix-legacy}
 
-[TEXT]
+Das Modul stellt lediglich ein Semigrafisches Logo zur Verfügung, was dem User beim Login gezeigt wird.
 
 \section{Quellen- und Literaturangaben}
 \label{sec:quell}
