@@ -6,6 +6,7 @@
 \usepackage{amssymb}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{float}
 
 \author{Olaf Radicke}
 \title{Dokumentation der Funktionsweise der OSR-Dracut-Module}
@@ -31,8 +32,16 @@ Die in den Modulen verwendeten Hooks sind:
 \begin{description}
  \item[cmdline] Ein sehr früher Zeitpunkt. Hier werden die Kerne-Parameter ausgewertet werden die dem Bootloader mitgegeben wurden (Sei es als GRUB-Konfiguration oder beim Booten). Hier werden z.B. die wichtigsten Environment-Variablen gesetzt. 
  \item[pre-pivot] Das ist der letzte Hook der ausgeführt wird, bevor  das richtige root-Verzeichnis ein gehangen wird. Also ein guter Zeitpunkt für etweilige Aufräumarbeiten.
- \item[emergency] Ein solcher Hook ist in der Dracut-Doku nicht dokumentiert.
- \end{description}
+\end{description}
+ 
+\subsection{Verwendete undokumentierte Hooks}
+
+Die volgenen Hooks ist in der Dracut-Doku nicht dokumentiert. Werden aber verwendet.
+
+\begin{description}
+ \item[emergency] 
+ \item[netroot]
+\end{description}
 
 In einem Script \texttt{check} wird eine Funktion \texttt{check()} definiert. Das Scrip \texttt{check} sollte 0 (null) zurückgeben, wenn alle Bedingungen erfüllt sind. Wird ein anderer Wert zurückgegeben, wird das Modul nicht von Darcut geladen.
 
@@ -50,8 +59,16 @@ Die Dracut-lib (\texttt{/usr/share/dracut/modules.d/99base/dracut-lib.sh}) stell
 \begin{description}
  \item [getarg()] Gibt die benutzten Kernel-Parameter zurück.
  \item [die()] Schreibt eine Meldung in \texttt{/dev/kmsg}, gibt eine Meldung auf der Standartausgabe aus und beendet das Script mit Rückgabelwert 1.
+ \item [info()] Schreibt Meldungen in  \texttt{/dev/kmsg}, mit die Informationen später, nach dem Booten vom Benutzer abgerufen werden können.
+
 \end{description}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Die einzelen Module....
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NEW SECTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modul 95osr-chroot}
 
 \subsection{Definierte Hooks}
@@ -59,16 +76,24 @@ Die Dracut-lib (\texttt{/usr/share/dracut/modules.d/99base/dracut-lib.sh}) stell
 \begin{tabular}{|l|l|l|}
  \hline
 \textbf{Hook} & \textbf{Priorität} & \textbf{Script} \\ \hline
-pre-udev & 59 & osr-net-genrules.sh \\ \hline
 netroot  & 11 & osr-detect-chroot.sh \\ \hline
 netroot  & 50 & osr-mount-chroot.sh \\ \hline
+pre-udev & 51 & osr-move-chroot.sh \\ \hline
 \end{tabular}
-
-\subsubsection{osr-net-genrules.sh}
 
 \subsubsection{osr-detect-chroot.sh}
 
+Siehe \ref{osrdetectchroot} Seite \pageref{osrdetectchroot}.
+
 \subsubsection{osr-mount-chroot.sh}
+
+Siehe: \ref{osrmountchroot} Seite \pageref{osrmountchroot}.
+
+\subsubsection{osr-move-chroot.sh}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NEW SECTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Modul 95osr-cluster}
 
@@ -81,27 +106,77 @@ netroot  & 50 & osr-mount-chroot.sh \\ \hline
  \item basename
 \end{itemize}
 
-
 \subsection{Definierte Hooks}
 
 \begin{tabular}{|l|l|l|}
  \hline
 \textbf{Hook} & \textbf{Priorität} & \textbf{Script} \\ \hline
+pre-udev   & 59 & osr-net-genrules.sh \\ \hline
 netroot    & 11 & osr-detect-chroot.sh \\ \hline
 netroot    & 50 & osr-mount-chroot.sh \\ \hline
-pre-pivot  & 51 & osr-move-chroot.sh \\ \hline
 \end{tabular} 
 
+
+\subsubsection{osr-net-genrules.sh}
+
+\begin{description}
+\item[Hook:] pre-udev
+\item[Priorität:] 59
+\end{description}
+
+
+% TODO
+
 \subsubsection{osr-detect-chroot.sh}
+\label{osrdetectchroot} 
+
+\begin{description}
+\item[Hook:] netroot
+\item[Priorität:] 11
+\end{description}
+
+Das Script überprüft, ob für den Node eine ID gesetzt ist. Wenn nicht bricht es mit einer Fehlermeldung ab. Ist die ID gesetzt wird \verb|/etc/conf.d/osr-nodeidvalues-${nodeid}.conf| eingebunden. Dann wird geprüft ob eine chroot-Umgebung gebraucht wird. Das Ergebnis der Prüfung wird gespeicherte mit \texttt{osr\_param\_store()}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.35]{./sequence_diagram_osr-detect-chroot_DE_de.png}
+ \caption[]{Sequence-Diagram des osr-detect-chroot.sh-Scrips}
+\end{figure}
 
 \subsubsection{osr-mount-chroot.sh}
+\label{osrmountchroot} 
 
-\subsubsection{osr-move-chroot.sh}
+\begin{description}
+\item[Hook:] netroot
+\item[Priorität:] 50
+\end{description}
 
+Das Script hängt das richtige (shared) root-Verzeichnis ein. Schlägt das fehl, wird versucht das noch ein mal mit default Werten zu versuchen. Dann Werden die nötigen Ordnerstrukturen kopiert und die besonderen Verzeichnisse eingehangen.
+
+\begin{verbatim}
+  cp -axf $chroot_source $chroot_path
+  rm -rf $chroot_path/var/run/*
+  mkdir -p $chroot_path/tmp
+  chmod 755 $chroot_path
+  mount -t tmpfs none $chroot_path/dev
+  cp -a /dev $chroot_path/
+  mount -t devpts none $chroot_path/dev/pts
+  mount -t proc proc $chroot_path/proc
+  mount -t sysfs sysfs $chroot_path/sys
+\end{verbatim}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.35]{./sequence_diagram_osr-mount-chroot_DE_de.png}
+ \caption[]{Sequence-Diagram des osr-mount-chroot.sh-Scrips}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NEW SECTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Modul 96osr}
 
-Das Modul ist dafür zuständig, das File System für ein \texttt{chared root} ein zu hängen.
+Das Modul ist dafür zuständig, das File System für ein \texttt{shared root} ein zu hängen.
 
 \subsection{In Initramfs installierte Dateien}
 
@@ -148,7 +223,7 @@ emergencyenv.sh & 1 & emergency \\ \hline
 \item[Priorität:] 99
 \end{description}
 
-\begin{figure}[h!]
+\begin{figure}[H]
  \centering
  \includegraphics[scale=0.35]{./sequence_diagram_setup-osrenv_DE_de.png}
  \caption[]{Sequence-Diagram des setup-osrenv.sh-Scrips}
@@ -178,7 +253,7 @@ xkillallprocsfile & \verb|/etc/xkillallprocs|  \\ \hline
 \item[Priorität:] 2
 \end{description}
 
-\begin{figure}[h!]
+\begin{figure}[H]
  \centering
  \includegraphics[scale=0.45]{./sequence_diagram_parse-nodeid_DE_de.png}
  \caption[]{Sequence-Diagram des parse-nodeid.sh-Scrips}
@@ -214,7 +289,7 @@ cdsllink & /cdsl.local \\ \hline
 
 Das Script macht den --bind-mount für das Chared-Root-File-System. Das wird mit cdsllinks realisiert.
 
-\begin{figure}[h!]
+\begin{figure}[H]
  \centering
  \includegraphics[scale=0.35]{./sequence_diagram_mount-cdsl_DE_de.png}
  \caption[]{Sequence-Diagram des mount-cdsl.sh-Script}
@@ -229,7 +304,7 @@ Das Script macht den --bind-mount für das Chared-Root-File-System. Das wird mit
 
 Je nach verwendeten File-System des des Chared-Root-Tree wird eine bestimmte Lib eingehangen. Dann die /etc/xtab erstellt bzw.  generiert. Dann wird das \texttt{xrootfs} erstellt und der \texttt{xkillall\_procs}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
  \centering
  \includegraphics[scale=0.35]{./sequence_diagram_write-xfiles_DE_de.png}
  \caption[]{Sequence-Diagram des write-xfiles.sh-Script}
