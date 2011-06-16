@@ -1,8 +1,17 @@
 #!/bin/bash
 
 . $dracutfunctions
-if [ -f $dsrc/modules.d/95osr-cluster/cluster-lib.sh ]; then
-  . $dsrc/modules.d/95osr-cluster/cluster-lib.sh
+
+
+# if [ -f $dsrc/modules.d/95osr-cluster/cluster-lib.sh ]; then
+#   . $dsrc/modules.d/95osr-cluster/cluster-lib.sh
+# else
+#   dwarning "osr-cluster: Cannot load cluster library. OSR-Cluster functionality will be reduced."
+# fi
+
+
+if [ -f "$moddir"/lib/cluster-lib.sh ]; then
+  . "$moddir"/lib/cluster-lib.sh
 else
   dwarning "osr-cluster: Cannot load cluster library. OSR-Cluster functionality will be reduced."
 fi 
