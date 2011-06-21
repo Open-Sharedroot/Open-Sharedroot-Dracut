@@ -9,5 +9,5 @@ if [ ! -f /tmp/osr.nodeid ]; then
 fi > /etc/udev/rules.d/50-osr.rules
 # Will be done on any interface. And only if /tmp/osr.nodeid does not exist prior
 printf 'ACTION=="add", SUBSYSTEM=="net", RUN+="/sbin/osr-set-nodeconfig-net $env{INTERFACE}"\n'  >  /etc/udev/rules.d/51-osr.rules 
-printf 'ACTION=="online", SUBSYSTEM=="net", RUN+="/sbin/osr-detect-root $env{INTERFACE}"\n'  >>  /etc/udev/rules.d/51-osr.rules 
+#printf 'ACTION=="online", SUBSYSTEM=="net", RUN+="/sbin/osr-detect-root $env{INTERFACE}"\n'  >>  /etc/udev/rules.d/51-osr.rules 
 printf 'ACTION=="online", SUBSYSTEM=="net", RUN+="/sbin/osr-detect-syslog $env{INTERFACE}"\n'  >>  /etc/udev/rules.d/51-osr.rules 

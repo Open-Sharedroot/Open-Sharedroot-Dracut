@@ -1,5 +1,7 @@
 #!/bin/bash
 
+$dracutfunctions
+
 # Install all libraries we need
 for lib \
     in \
@@ -10,13 +12,14 @@ for lib \
         shinit.sh \
         std-lib.sh; \
     do
-  dinfo "Installing $lib"
+  dinfo "Installing $moddir/lib/$osrlib => /lib/osr"
   mkdir  -p ${initdir}/lib/osr
-  inst_simple "$moddir/lib/$lib" /lib/osr
+  inst_simple "$moddir/lib/$osrlib" /lib/osr/$osrlib
 done
 
+
 inst_simple "$moddir/issue" /etc
-inst_simple "$moddir/shinit.sh" /sbin
+#inst_simple "$moddir/shinit.sh" /sbin
 
 # We should not need this because as of version 0.7 we only need to write to /etc/cmdline in order to 
 # influence those persistent or somewhere else the /proc/cmdline parameters.
@@ -34,7 +37,7 @@ inst_hook pre-pivot 1 "$moddir/mount-cdsl.sh"
 
 inst_hook pre-pivot 90 "$moddir/write-xfiles.sh"
 
-inst_hook emergency 1 "$moddir/emergencyenv.sh"
+#inst_hook emergency 1 "$moddir/emergencyenv.sh"
 
 dracut_install cut
 dracut_install tr

@@ -38,21 +38,26 @@ netif=$1
 if [ -f /tmp/osr.nonodeid_${netif} ]; then
     info "osr-detect-root: Skipping."
 elif repository_has_key "nodeid"; then
-	. /tmp/root.info
-	osr_set_nodeconfig_root $(repository_get_value nodeid)
-	if [ -z "$root" ] || [ "$root" = "autodetect" ]; then
-	  info "osr-detect-root: fstype: ${fstype} root: ${root}"
-	  # Network root scripts may need updated root= options,
-      # so deposit them where they can see them (udev purges the env)
-      {
-        echo "root='$root'"
-        echo "rflags='$rflags'"
-        echo "fstype='$fstype'"
-        echo "netroot='$netroot'"
-        echo "NEWROOT='$NEWROOT'"
-      } > /tmp/root.info
-      ( [ $fstype = "nfs" ] || [ $fstype = "nfs4" ] ) && echo > /dev/root
+    . /tmp/root.info
+    oldroot="$root"
+    osr_set_nodeconfig_root $(repository_get_value nodeid)
+    if [ -z "$oldroot" ] || [ "$oldroot" = "autodetect" ]; then
+        info "osr-detect-root: fstype: ${fstype} root: ${root} netroot: $netroot"
+        # Network root scripts may need updated root= options,
+        # so deposit them where they can see them (udev purges the env)
+        {
+            echo "root='$root'"
+            echo "rflags='$rflags'"
+            echo "fstype='$fstype'"
+            echo "netroot='$netroot'"
+            echo "NEWROOT='$NEWROOT'"
+        } > /tmp/root.info
+        ( [ $fstype = "nfs" ] || [ $fstype = "nfs4" ] ) && echo > /dev/root
     fi
 else
-	die "osr-detect-root: nodeid neither detected nor setup as bootparameter. Cannot continue."
+    # Recalling netroot!
+    info "osr-detect-root: Calling nfsroot with $netif $netroot $NEWROOT"
+    /sbin/nfsroot $netif $netroot $NEWROOT
+    echo '[ -e $NEWROOT/proc ]' > /initqueue-finished/nfsroot.sh
+    info "osr-detect-root: Successfully called nfsroot."
 fi

@@ -2,15 +2,21 @@
 
 VERSION=dev
 
-prefix = /usr
-datadir = ${prefix}/share
-pkglibdir = ${datadir}/dracut
-DESTDIR = 
-sysconfdir = ${prefix}/etc
-sbindir = ${prefix}/sbin
-mandir = ${prefix}/share/man
+
+
+
+prefix ?= /usr
+datadir ?= ${prefix}/share
+pkglibdir ?= ${datadir}/dracut
+sysconfdir ?= ${prefix}/etc
+sbindir ?= ${prefix}/sbin
+mandir ?= ${prefix}/share/man
+sysconfdir ?= ${prefix}/etc
+DESTDIR =
 BINDIR       = /usr/local/bin
 OUTPUT_BUILD = ./osr-dracut-module-${VERSION}
+
+
 
 .PHONY: install clean archive rpm testimage test all check AUTHORS
 

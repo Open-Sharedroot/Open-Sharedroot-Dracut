@@ -20,7 +20,7 @@ elif [ -f /lib/osr/std-lib.sh ]; then
     .  /lib/osr/std-lib.sh
     libdir="/lib/osr"
 else
-    die "osr-detect-root: Could not find library boot-lib.sh but it is required for OSR module to be working"
+    die "osr-detect-root: Could not find library std-lib.sh but it is required for OSR module to be working"
 fi
 sourceLibs ${libdir} 
 
@@ -30,7 +30,8 @@ sourceLibs ${libdir}
 # don't fail fi root is not ok.
 [ -z "$rootok" ] && rootok=1
 [ -z "$root" ] && root=autodetect
-[ -z "$netroot" ] && netroot=true
+# Just to delay the decision can be set later on also
+[ -z "$netroot" ] && netroot="osr"
 
 osr_param_store logofile "/etc/atix-logo.txt"
 osr_param_store shellrcfile ${libdir}/shinitrc
