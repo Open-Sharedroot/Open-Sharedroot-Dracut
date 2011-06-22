@@ -34,7 +34,7 @@ uninstall:
 	$(RM) -r  $(DESTDIR)$(pkglibdir)/modules.d/95osr-cluster
 	$(RM) -r  $(DESTDIR)$(pkglibdir)/modules.d/96osr
 	$(RM) -r  $(DESTDIR)$(pkglibdir)/modules.d/99osr-atix-legacy
-	$(RM) -r  etc/osr/
+	$(RM) -r  /etc/osr/
 
 clean:
 	rm -f *~
