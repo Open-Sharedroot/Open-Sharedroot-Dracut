@@ -25,6 +25,8 @@ all: dist
 install:
 	mkdir -p $(DESTDIR)$(pkglibdir)/modules.d
 	cp -arx $(OUTPUT_BUILD)/modules.d/* $(DESTDIR)$(pkglibdir)/modules.d/
+	mkdir -p /etc/osr/
+	cp -arx $(OUTPUT_BUILD)/osr-configs/query-map.cfg /etc/osr/
 #	cp -arx $(OUTPUT_BUILD)/modules.d/* $(pkglibdir)/modules.d/
 
 uninstall: 
@@ -32,6 +34,7 @@ uninstall:
 	$(RM) -r  $(DESTDIR)$(pkglibdir)/modules.d/95osr-cluster
 	$(RM) -r  $(DESTDIR)$(pkglibdir)/modules.d/96osr
 	$(RM) -r  $(DESTDIR)$(pkglibdir)/modules.d/99osr-atix-legacy
+	$(RM) -r  etc/osr/
 
 clean:
 	rm -f *~
@@ -58,6 +61,8 @@ dist: AUTHORS
 	cp ./COPYING $(OUTPUT_BUILD)
 	mkdir $(OUTPUT_BUILD)/modules.d
 	cp -Rv ./modules.d/* $(OUTPUT_BUILD)/modules.d/
+	mkdir $(OUTPUT_BUILD)/osr-configs
+	cp -Rv ./osr-configs/* $(OUTPUT_BUILD)/osr-configs/
 
 
 # create tar-file

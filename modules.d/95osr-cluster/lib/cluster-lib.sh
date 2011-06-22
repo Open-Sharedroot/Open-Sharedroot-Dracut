@@ -1,24 +1,24 @@
 # Library to collect all clusterrelevant functions
 
 osr_generate_nodevalues() {
-	nodeid=$1
-	osr_querymap="$2"
-	for element in $(osr_get_cluster_elements); do # e.g. eth
-		keyname=$(osr_get_cluster_element_key $element)    # e.g. name
-		if [ -n "$keyname" ]; then
-			keys=$(com-queryclusterconf -m $osr_querymap $element"_"$keyname $nodeid)
-			echo $element"_"$keyname"="$keys
-			for key in $keys; do
-				for attribute in $(osr_get_cluster_attributes $element); do  # e.g. ip
-					echo $element"_"$key"_"$attribute=$(com-queryclusterconf -m $osr_querymap $element"_"$keyname"_"$attribute $nodeid $key)
-				done
-			done
-		else
-			for attribute in $(osr_get_cluster_attributes $element); do  # e.g. ip
-				echo $element"_"$attribute=$(com-queryclusterconf -m $osr_querymap $element"_"$attribute $nodeid $key)
-			done
-		fi
-	done
+    nodeid=$1
+    osr_querymap="$2"
+    for element in $(osr_get_cluster_elements); do # e.g. eth
+        keyname=$(osr_get_cluster_element_key $element)    # e.g. name
+        if [ -n "$keyname" ]; then
+            keys=$(com-queryclusterconf -m $osr_querymap $element"_"$keyname $nodeid)
+            echo $element"_"$keyname"="$keys
+            for key in $keys; do
+                for attribute in $(osr_get_cluster_attributes $element); do  # e.g. ip
+                    echo $element"_"$key"_"$attribute=$(com-queryclusterconf -m $osr_querymap $element"_"$keyname"_"$attribute $nodeid $key)
+                done
+            done
+        else
+            for attribute in $(osr_get_cluster_attributes $element); do  # e.g. ip
+                echo $element"_"$attribute=$(com-queryclusterconf -m $osr_querymap $element"_"$attribute $nodeid $key)
+            done
+        fi
+    done
 }
 
 #
@@ -31,50 +31,50 @@ osr_get_cluster_elements() {
 # Returns a key for the element of the cluster configuration to be used. 
 # This key needs to be unique for this node.  
 osr_get_cluster_element_key() {
-	element=$1
-	case "$element" in
-		"eth") key="name" ;;
-		*) key=""
-	esac
-	echo $key
+    element=$1
+    case "$element" in
+        "eth") key="name" ;;
+        *) key=""
+    esac
+    echo $key
 }
 
 #
 # Returns all attributes for a special element
 osr_get_cluster_attributes() {
-	case "$1" in
-		"eth") echo "name mac ip gateway mask" ;;
-		"syslog") echo "name level subsys type" ;;
-		"rootvolume") echo "name fstype" ;;
-		"fenceacksv") echo "name" ;;
-	esac
+    case "$1" in
+        "eth") echo "name mac ip gateway mask" ;;
+        "syslog") echo "name level subsys type" ;;
+        "rootvolume") echo "name fstype" ;;
+        "fenceacksv") echo "name" ;;
+    esac
 }
 
 #
 # Sets the <global> environment variables for network configurations
 # variables: ip gw mask dev
 osr_set_nodeconfig_net() {
-	local nodeid=$1
-	. /etc/conf.d/osr-nodeidvalues-${nodeid}.conf
-	for nic in $eth_name; do
-		for attribute in $(osr_get_cluster_attributes eth); do
-			case $attribute in
-				"ip")  var="ip" ;;
-				"gateway") var="gw" ;;
-				"mask") var="mask" ;;
-				"name") var="dev" ;;
-				"hostname") var="hostname";;
-				*) var="" ;;
-			esac
-			autoconf="none"
-			eval $var=\$eth_${nic}_${attribute}
-		done 
-	done
-	if [ "$ip" = "dhcp" ]; then
-		echo $dev:$ip
-	else
-		echo $ip:$server:$gateway:$mask:$hostname:$dev:$autoconf
-	fi
+    local nodeid=$1
+    . /etc/conf.d/osr-nodeidvalues-${nodeid}.conf
+    for nic in $eth_name; do
+        for attribute in $(osr_get_cluster_attributes eth); do
+            case $attribute in
+                "ip")  var="ip" ;;
+                "gateway") var="gw" ;;
+                "mask") var="mask" ;;
+                "name") var="dev" ;;
+                "hostname") var="hostname";;
+                *) var="" ;;
+            esac
+            autoconf="none"
+            eval $var=\$eth_${nic}_${attribute}
+        done
+    done
+    if [ "$ip" = "dhcp" ]; then
+        echo $dev:$ip
+    else
+        echo $ip:$server:$gateway:$mask:$hostname:$dev:$autoconf
+    fi
 }
 
 #
