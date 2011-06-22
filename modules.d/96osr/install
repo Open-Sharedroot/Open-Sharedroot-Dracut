@@ -3,7 +3,7 @@
 $dracutfunctions
 
 # Install all libraries we need
-for lib \
+for osrlib \
     in \
         boot-lib.sh \
         defaults.sh \
