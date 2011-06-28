@@ -4,14 +4,14 @@
 #   chrootneeded
 #   chroot
 if [ -n "$dracutlib" ] && [ -f $dracutlib ]; then
-	. $dracutlib
+    . $dracutlib
 elif [ -f /lib/dracut-lib.sh ]; then
   . /lib/dracut-lib.sh
 fi
 
 if [ -f std-lib.sh ]; then
-	. ./std-lib.sh
-	libdir="."
+    . ./std-lib.sh
+    libdir="."
 elif [ -f /lib/osr/std-lib.sh ]; then 
     .  /lib/osr/std-lib.sh
     libdir="/lib/osr"
@@ -21,17 +21,17 @@ fi
 sourceLibs ${libdir} 
 
 if repository_has_key "nodeid"; then
-  nodeid=$(repository_get_value "nodeid")
+    nodeid=$(repository_get_value "nodeid")
 
-  . /etc/conf.d/osr-nodeidvalues-${nodeid}.conf
+    . /etc/conf.d/osr-nodeidvalues-${nodeid}.conf
 
-  rootfs_chroot_needed initrd
-  osr_param_store chrootneeded $?
+    rootfs_chroot_needed initrd
+    osr_param_store chrootneeded $?
   
-  for param in mountpoint fstype device chrootdir options; do
-  	eval "value=\$chrootenv_$param"
-  	osr_param_store chrootenv_$param $value
-  done
+    for param in mountpoint fstype device chrootdir options; do
+        eval "value=\$chrootenv_$param"
+        osr_param_store chrootenv_$param $value
+    done
 else
-	die "osr-detect-chroot: nodeid neither detected nor setup as bootparameter. Cannot continue."
+      die "osr-detect-chroot: nodeid neither detected nor setup as bootparameter. Cannot continue."
 fi

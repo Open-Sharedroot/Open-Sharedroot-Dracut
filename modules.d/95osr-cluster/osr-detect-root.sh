@@ -34,6 +34,8 @@ else
 fi
 sourceLibs ${libdir} 
 
+#-------------------------------------------------------------------------------
+
 netif=$1
 if [ -f /tmp/osr.nonodeid_${netif} ]; then
     info "osr-detect-root: Skipping."
