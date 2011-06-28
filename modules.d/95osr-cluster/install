@@ -30,6 +30,7 @@ dracut_install tr
 dracut_install expr
 dracut_install mkdir
 dracut_install basename
+dracut_install bash
 
 inst "$moddir/lib/cluster-lib.sh" /lib/osr/
 
