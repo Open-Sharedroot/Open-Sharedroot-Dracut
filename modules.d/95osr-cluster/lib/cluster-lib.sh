@@ -81,22 +81,22 @@ osr_set_nodeconfig_net() {
 # Sets the <global> environment variables for root destination
 # variables: fstype root options rflags [nfs] [server] [path]
 osr_set_nodeconfig_root() {
-	local nodeid=$1
-	local temproot
-	local temprootfstype
+    local nodeid=$1
+    local temproot
+    local temprootfstype
 
-	. /etc/conf.d/osr-nodeidvalues-${nodeid}.conf
-	for attribute in $(osr_get_cluster_attributes rootvolume); do
-		case $attribute in
-			"name"|"root") temproot=$rootvolume_name ;;
-			"fstype") fstype=$rootvolume_fstype ;;
-			"options") 
-				options=$rootvolume_options 
-				rflags=$rootvolume_options
-				;;
-		esac
-	done
-	osr_parse_root_name "$temproot" "$fstype"
+    . /etc/conf.d/osr-nodeidvalues-${nodeid}.conf
+    for attribute in $(osr_get_cluster_attributes rootvolume); do
+        case $attribute in
+            "name"|"root") temproot=$rootvolume_name ;;
+            "fstype") fstype=$rootvolume_fstype ;;
+            "options")
+                options=$rootvolume_options
+                rflags=$rootvolume_options
+                ;;
+        esac
+    done
+    osr_parse_root_name "$temproot" "$fstype"
 }
 
 #
