@@ -11,6 +11,9 @@
 #      * gfs[2] => name=/dev/..
 #      * ocfs2  => name=/dev/..
 #
+
+echo "[osr-detect-root]: jump-in..."
+
 if [ -n "$dracutlib" ] && [ -f $dracutlib ]; then
 	. $dracutlib
 elif [ -f /lib/dracut-lib.sh ]; then
