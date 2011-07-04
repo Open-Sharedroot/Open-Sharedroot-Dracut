@@ -65,7 +65,6 @@ elif repository_has_key "nodeid"; then
         echo "\n"
         ( [ $fstype = "nfs" ] || [ $fstype = "nfs4" ] ) && echo > /dev/root
     fi
-else
     # Recalling netroot!
     info "[osr-detect-root]: Calling nfsroot with $netif $netroot $NEWROOT"
     /sbin/nfsroot $netif $netroot $NEWROOT
