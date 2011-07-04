@@ -21,9 +21,18 @@ fi
 
 echo > /tmp/osr-nodeids
 for nodeid in `com-queryclusterconf nodeids`; do 
-	echo "$nodeid "`com-queryclusterconf -m $osr_querymap macs $nodeid` >> /tmp/osr-nodeids
-	osr_generate_nodevalues $nodeid $osr_querymap > /tmp/osr-nodeidvalues-${nodeid}.conf
-	inst_simple /tmp/osr-nodeidvalues-${nodeid}.conf /etc/conf.d/osr-nodeidvalues-${nodeid}.conf
+    echo "$nodeid "`com-queryclusterconf -m $osr_querymap macs $nodeid` >> /tmp/osr-nodeids
+    osr_generate_nodevalues $nodeid $osr_querymap > /tmp/osr-nodeidvalues-${nodeid}.conf
+    inst_simple /tmp/osr-nodeidvalues-${nodeid}.conf /etc/conf.d/osr-nodeidvalues-${nodeid}.conf
+
+    echo '--------------------------------------------------------------------\n'
+    echo '...this value is set: \n'
+    echo '/tmp/osr-nodeids \n'
+    cat /tmp/osr-nodeids
+    echo '\n /tmp/osr-nodeidvalues-${nodeid}.conf'
+    cat /tmp/osr-nodeidvalues-${nodeid}.conf
+    echo '\n'
+    echo '--------------------------------------------------------------------\n'
 done
 
 dracut_install tr

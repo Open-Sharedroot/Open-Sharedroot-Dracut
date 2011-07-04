@@ -10,12 +10,16 @@ osr_generate_nodevalues() {
             echo $element"_"$keyname"="$keys
             for key in $keys; do
                 for attribute in $(osr_get_cluster_attributes $element); do  # e.g. ip
-                    echo $element"_"$key"_"$attribute=$(com-queryclusterconf -m $osr_querymap $element"_"$keyname"_"$attribute $nodeid $key)
+                    echo $element"_"$key"_"$attribute=$(\
+                      com-queryclusterconf \
+                      -m $osr_querymap $element"_"$keyname"_"$attribute $nodeid $key)
                 done
             done
         else
             for attribute in $(osr_get_cluster_attributes $element); do  # e.g. ip
-                echo $element"_"$attribute=$(com-queryclusterconf -m $osr_querymap $element"_"$attribute $nodeid $key)
+                echo $element"_"$attribute=$(\
+                  com-queryclusterconf \
+                  -m $osr_querymap $element"_"$attribute $nodeid $key)
             done
         fi
     done
@@ -103,35 +107,38 @@ osr_set_nodeconfig_root() {
 # Parses the rootname specified by the nodevalues and sets the environment variables.
 # variables: fstype root [nfs] [server] [path]
 osr_parse_root_name() {
-	local temproot=$1
-	local tempfstype=$2
-	local index=1
-	
-	# first check if first char is /
-	if [ $(expr substr $temproot 1 1) = "/" ]; then
-		root=$temproot
-		if [ -z "$tempfstype" ]; then
-			fstype="ext3"
-		else
-			fstype="$tempfstype"
-		fi
-	elif [ $(echo "$temproot" | cut -f1 -d:) = "nfs" ] || [ $(echo "$temproot" | cut -f1 -d:) = "nfs4" ] || [ "$tempfstype" = "nfs" ] || [ "$tempfstype" = "nfs4" ]; then
-		# Case NFS
-		if [ -n "$tempfstype" ]; then
-			nfs=$tempfstype
-		else
-			nfs=$(echo "$temproot" | cut -f$index -d:)
-			index=$(( $index +1 ))
-		fi
-		fstype=$nfs
-		server=$(echo "$temproot" | cut -f$index -d:)
-		index=$(( $index +1 ))
-		path=$(echo "$temproot" | cut -f$index -d:)
-		index=$(( $index +1 ))
-		options=$(echo "$temproot" | cut -f$index -d:)
-		root="$fstype:$server:$path:$options"
-		netroot=$root
-	else
-		return 1
-	fi
+    local temproot=$1
+    local tempfstype=$2
+    local index=1
+
+    # first check if first char is /
+    if [ $(expr substr $temproot 1 1) = "/" ]; then
+        root=$temproot
+        if [ -z "$tempfstype" ]; then
+            fstype="ext3"
+        else
+            fstype="$tempfstype"
+        fi
+    elif [ $(echo "$temproot" | cut -f1 -d:) = "nfs" ] || \
+      [ $(echo "$temproot" | cut -f1 -d:) = "nfs4" ] || \
+      [ "$tempfstype" = "nfs" ] || \
+      [ "$tempfstype" = "nfs4" ]; then
+          # Case NFS
+          if [ -n "$tempfstype" ]; then
+              nfs=$tempfstype
+          else
+              nfs=$(echo "$temproot" | cut -f$index -d:)
+              index=$(( $index +1 ))
+          fi
+          fstype=$nfs
+          server=$(echo "$temproot" | cut -f$index -d:)
+          index=$(( $index +1 ))
+          path=$(echo "$temproot" | cut -f$index -d:)
+          index=$(( $index +1 ))
+          options=$(echo "$temproot" | cut -f$index -d:)
+          root="$fstype:$server:$path:$options"
+          netroot=$root
+    else
+          return 1
+    fi
 }

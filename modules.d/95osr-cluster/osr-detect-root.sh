@@ -30,7 +30,7 @@ elif [ -f /lib/osr/std-lib.sh ]; then
     .  /lib/osr/std-lib.sh
     libdir="/lib/osr"
 else
-    die "osr-detect-root: Could not find library boot-lib.sh but it is required for OSR module to be working"
+    die "[osr-detect-root]: Could not find library boot-lib.sh but it is required for OSR module to be working"
 fi
 sourceLibs ${libdir} 
 
@@ -38,13 +38,14 @@ sourceLibs ${libdir}
 
 netif=$1
 if [ -f /tmp/osr.nonodeid_${netif} ]; then
-    info "osr-detect-root: Skipping."
+    info "[osr-detect-root]: Skipping."
 elif repository_has_key "nodeid"; then
+    info "[osr-detect-root]: Running......"
     . /tmp/root.info
     oldroot="$root"
     osr_set_nodeconfig_root $(repository_get_value nodeid)
     if [ -z "$oldroot" ] || [ "$oldroot" = "autodetect" ]; then
-        info "osr-detect-root: fstype: ${fstype} root: ${root} netroot: $netroot"
+        info "[osr-detect-root]: fstype: ${fstype} root: ${root} netroot: $netroot"
         # Network root scripts may need updated root= options,
         # so deposit them where they can see them (udev purges the env)
         {
@@ -54,12 +55,15 @@ elif repository_has_key "nodeid"; then
             echo "netroot='$netroot'"
             echo "NEWROOT='$NEWROOT'"
         } > /tmp/root.info
+        info "[osr-detect-root]: value of /tmp/root.info...\n"
+        cat /tmp/root.info
+        echo "\n"
         ( [ $fstype = "nfs" ] || [ $fstype = "nfs4" ] ) && echo > /dev/root
     fi
 else
     # Recalling netroot!
-    info "osr-detect-root: Calling nfsroot with $netif $netroot $NEWROOT"
+    info "[osr-detect-root]: Calling nfsroot with $netif $netroot $NEWROOT"
     /sbin/nfsroot $netif $netroot $NEWROOT
     echo '[ -e $NEWROOT/proc ]' > /initqueue-finished/nfsroot.sh
-    info "osr-detect-root: Successfully called nfsroot."
+    info "[osr-detect-root]: Successfully called nfsroot."
 fi
