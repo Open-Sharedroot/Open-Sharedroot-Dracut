@@ -136,7 +136,10 @@ osr_parse_root_name() {
           path=$(echo "$temproot" | cut -f$index -d:)
           index=$(( $index +1 ))
           options=$(echo "$temproot" | cut -f$index -d:)
-          root="$fstype:$server:$path:$options"
+          # olaf: is this the early right pleas for "$options" hire?
+          # root="$fstype:$server:$path:$options"
+          # olaf's version:
+          root="$fstype:$server:$path"
           netroot=$root
     else
           return 1

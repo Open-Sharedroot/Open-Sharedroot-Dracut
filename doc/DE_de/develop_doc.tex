@@ -68,19 +68,7 @@ Die Dracut-lib (\texttt{/usr/share/dracut/modules.d/99base/dracut-lib.sh}) stell
 
 \subsection{Undokumentierte Dracut-Schnittstellen}
 
-Handler für den netroot-Typ ( \texttt{/usr/share/dracut/modules.d/40network/netroot} ):
-\begin{lstlisting}
-# Check: do we really know how to handle (net)root?
-[ -z "$root" ] && die "No or empty root= argument"
-[ -z "$rootok" ] && die "Don't know how to handle 'root=$root'"
 
-handler=${netroot%%:*}
-handler=${handler%%4}
-handler="/sbin/${handler}root"
-if [ -z "$netroot" ] || [ ! -e "$handler" ] ; then
-    die "No handler for netroot type '$netroot'"
-fi
-\end{lstlisting}
 
 \textbf{/modules.d/95osr-cluster/osr-detect-root.sh }:
 
@@ -96,6 +84,20 @@ if [ -z "$oldroot" ] || [ "$oldroot" = "autodetect" ]; then
         echo "netroot='$netroot'"
         echo "NEWROOT='$NEWROOT'"
     } > /tmp/root.info
+\end{lstlisting}
+
+Handler für den netroot-Typ ( \texttt{/usr/share/dracut/modules.d/40network/netroot} ):
+\begin{lstlisting}
+# Check: do we really know how to handle (net)root?
+[ -z "$root" ] && die "No or empty root= argument"
+[ -z "$rootok" ] && die "Don't know how to handle 'root=$root'"
+
+handler=${netroot%%:*}
+handler=${handler%%4}
+handler="/sbin/${handler}root"
+if [ -z "$netroot" ] || [ ! -e "$handler" ] ; then
+    die "No handler for netroot type '$netroot'"
+fi
 \end{lstlisting}
 
 Bzw.: \texttt{/modules.d/95osr-cluster/install}
