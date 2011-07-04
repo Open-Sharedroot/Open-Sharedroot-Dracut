@@ -37,6 +37,8 @@ sourceLibs ${libdir}
 #-------------------------------------------------------------------------------
 
 netif=$1
+info "[osr-detect-root]: check exist /tmp/osr.nonodeid_${netif} \n"
+info "[osr-detect-root]: `[ -f /tmp/osr.nonodeid_${netif}]` \n"
 if [ -f /tmp/osr.nonodeid_${netif} ]; then
     info "[osr-detect-root]: Skipping."
 elif repository_has_key "nodeid"; then
