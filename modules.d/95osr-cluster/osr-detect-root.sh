@@ -53,7 +53,9 @@ elif repository_has_key "nodeid"; then
         info "[osr-detect-root]: fstype: ${fstype} root: ${root} netroot: $netroot"
         # Network root scripts may need updated root= options,
         # so deposit them where they can see them (udev purges the env)
-        rflags="rw"
+        # rflags="rw"
+        rflags=${rflags//ro/rw}
+
         {
             echo "root='$root'"
             echo "rflags='$rflags'"
