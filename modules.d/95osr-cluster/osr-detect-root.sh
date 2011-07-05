@@ -53,10 +53,10 @@ elif repository_has_key "nodeid"; then
         info "[osr-detect-root]: fstype: ${fstype} root: ${root} netroot: $netroot"
         # Network root scripts may need updated root= options,
         # so deposit them where they can see them (udev purges the env)
+        rflags="rw"
         {
             echo "root='$root'"
-            # echo "rflags='$rflags'"
-            echo "rflags=rw"
+            echo "rflags='$rflags'"
             echo "fstype='$fstype'"
             echo "netroot='$netroot'"
             echo "NEWROOT='$NEWROOT'"
@@ -68,7 +68,7 @@ elif repository_has_key "nodeid"; then
     fi
     # Recalling netroot!
     info "[osr-detect-root]: Calling nfsroot with $netif $netroot $NEWROOT"
-    /sbin/nfsroot $netif $netroot $NEWROOT
+    /sbin/nfsroot $netif $netroot:$rflags $NEWROOT
     echo '[ -e $NEWROOT/proc ]' > /initqueue-finished/nfsroot.sh
     info "[osr-detect-root]: Successfully called nfsroot."
     # only for debugging...
