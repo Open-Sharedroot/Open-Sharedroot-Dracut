@@ -55,7 +55,8 @@ elif repository_has_key "nodeid"; then
         # so deposit them where they can see them (udev purges the env)
         {
             echo "root='$root'"
-            echo "rflags='$rflags'"
+            # echo "rflags='$rflags'"
+            echo "rflags=rw"
             echo "fstype='$fstype'"
             echo "netroot='$netroot'"
             echo "NEWROOT='$NEWROOT'"
