@@ -34,39 +34,39 @@
 #  SOURCE
 #
 mount_chroot () {
-	local chroot_fstype=$1
-	local chroot_dev=$2
-	local chroot_mount=$3
-	local chroot_path=$4
-	local chroot_options=$5
+    local chroot_fstype=$1
+    local chroot_dev=$2
+    local chroot_mount=$3
+    local chroot_path=$4
+    local chroot_options=$5
 
-	info "osr_mount_chroot: Creating chroot environment"
-	mkdir -p $chroot_mount
-	mount -t $chroot_fstype -o $chroot_options $chroot_dev $chroot_mount
-	
-	[ -n "$chroot_mount" ] && mount | grep "$chroot_mount" >/dev/null 2>/dev/null
-	# method3 fallback to tmpfs
-	if [ $? -ne 0 ]; then
-		info "osr_mount_chroot: Mounting chroot failed. Using default values"
-		#Fallback values
-		# Filesystem type for the chroot device
-		chroot_fstype="tmpfs"
-		# chroot device name
-		chroot_dev="none"
-		# Mountpoint for the chroot device
-		chroot_mount=$DFLT_CHROOT_MOUNT
-		# Path where the chroot environment should be build
-		chroot_path=$DFLT_CHROOT_PATH
-		# Mount options for the chroot device
-		chroot_options="defaults"
-		mkdir -p $chroot_mount
-		mount -t $chroot_fstype -o $chroot_options $chroot_dev $chroot_mount
-		echo $chroot_fstype > /tmp/osr.chrootenv_fstype
-		echo $chroot_dev > /tmp/osr.chrootenv_device
-		echo $chroot_mount > /tmp/osr.chrootenv_mountpoint
-		echo $chroot_path > /tmp/osr.chrootenv_chrootdir
-		echo $chroot_options > /tmp/osr.chrootenv_options
-	fi
+    info "osr_mount_chroot: Creating chroot environment"
+    mkdir -p $chroot_mount
+    mount -t $chroot_fstype -o $chroot_options $chroot_dev $chroot_mount
+
+    [ -n "$chroot_mount" ] && mount | grep "$chroot_mount" >/dev/null 2>/dev/null
+    # method3 fallback to tmpfs
+    if [ $? -ne 0 ]; then
+        info "osr_mount_chroot: Mounting chroot failed. Using default values"
+        #Fallback values
+        # Filesystem type for the chroot device
+        chroot_fstype="tmpfs"
+        # chroot device name
+        chroot_dev="none"
+        # Mountpoint for the chroot device
+        chroot_mount=$DFLT_CHROOT_MOUNT
+        # Path where the chroot environment should be build
+        chroot_path=$DFLT_CHROOT_PATH
+        # Mount options for the chroot device
+        chroot_options="defaults"
+        mkdir -p $chroot_mount
+        mount -t $chroot_fstype -o $chroot_options $chroot_dev $chroot_mount
+        echo $chroot_fstype > /tmp/osr.chrootenv_fstype
+        echo $chroot_dev > /tmp/osr.chrootenv_device
+        echo $chroot_mount > /tmp/osr.chrootenv_mountpoint
+        echo $chroot_path > /tmp/osr.chrootenv_chrootdir
+        echo $chroot_options > /tmp/osr.chrootenv_options
+    fi
 }
 #************** build_chroot
 #****f* boot-lib.sh/create_chroot
