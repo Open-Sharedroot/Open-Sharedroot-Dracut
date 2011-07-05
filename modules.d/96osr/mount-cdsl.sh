@@ -37,5 +37,5 @@ if [ "$fstype" = "nfs" ]; then
 fi 
 
 info "osr: Mapping $NEWROOT/"$(repository_get_value cdsltree)"/"$(repository_get_value nodeid)" => $NEWROOT/"$(repository_get_value cdsllink)
-mount --bind $NEWROOT/$(repository_get_value cdsltree)/$(repository_get_value nodeid) $NEWROOT/$(repository_get_value cdsllink)
+mount --bind --wr $NEWROOT/$(repository_get_value cdsltree)/$(repository_get_value nodeid) $NEWROOT/$(repository_get_value cdsllink)
 #exit $?

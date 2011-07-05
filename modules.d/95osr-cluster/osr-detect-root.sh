@@ -70,9 +70,4 @@ elif repository_has_key "nodeid"; then
     /sbin/nfsroot $netif $netroot $NEWROOT
     echo '[ -e $NEWROOT/proc ]' > /initqueue-finished/nfsroot.sh
     info "[osr-detect-root]: Successfully called nfsroot."
-    # only for debugging...
-    echo "[osr-detect-root]:"
-    /sbin/arping -c 1 $netroot
-    echo "\n"
-    # ... end debugging info.
 fi
