@@ -67,8 +67,8 @@ elif repository_has_key "nodeid"; then
         ( [ $fstype = "nfs" ] || [ $fstype = "nfs4" ] ) && echo > /dev/root
     fi
     # Recalling netroot!
-    info "[osr-detect-root]: Calling nfsroot with $netif $netroot $NEWROOT"
-    /sbin/nfsroot $netif $netroot:$rflags $NEWROOT
+    info "[osr-detect-root]: Calling nfsroot with $netif $netroot$rflags $NEWROOT"
+    /sbin/nfsroot $netif $netroot$rflags $NEWROOT
     echo '[ -e $NEWROOT/proc ]' > /initqueue-finished/nfsroot.sh
     info "[osr-detect-root]: Successfully called nfsroot."
     # only for debugging...
