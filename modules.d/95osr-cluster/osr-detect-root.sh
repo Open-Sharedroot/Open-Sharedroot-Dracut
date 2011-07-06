@@ -54,8 +54,9 @@ elif repository_has_key "nodeid"; then
         # Network root scripts may need updated root= options,
         # so deposit them where they can see them (udev purges the env)
         # rflags="rw"
-        [ "$rflags" == "ro" ] && rflags="rw" && echo '[osr-detect-root]: overwrite rflags with "rw"'
-
+        #[ "$rflags" == "ro" ] && rflags="rw" && echo '[osr-detect-root]: overwrite rflags with "rw"'
+        echo '[osr-detect-root]: overwrite rflags with "rw"'
+        rflags="rw"
         {
             echo "root='$root'"
             echo "rflags='$rflags'"
