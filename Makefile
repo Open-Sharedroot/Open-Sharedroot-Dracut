@@ -80,7 +80,7 @@ rpm: tar
 	--define "_srcrpmdir $$PWD" \
 	--define "_rpmdir $$PWD" \
 	-ba osr-dracut-module.spec
-	rm -fr BUILD BUILDROOT
+#	rm -fr BUILD BUILDROOT
 	
 # 	rpmbuild -v \
 # 	--define "_topdir $$PWD" \

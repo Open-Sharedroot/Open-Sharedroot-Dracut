@@ -54,9 +54,12 @@ elif repository_has_key "nodeid"; then
         # Network root scripts may need updated root= options,
         # so deposit them where they can see them (udev purges the env)
         # rflags="rw"
-        #[ "$rflags" == "ro" ] && rflags="rw" && echo '[osr-detect-root]: overwrite rflags with "rw"'
-        echo '[osr-detect-root]: overwrite rflags with "rw"'
-        rflags="rw"
+        if [ "$rflags" = "ro" ]
+          then
+          rflags="rw"
+          echo 'over write rflags with "rw"'
+        fi
+
         {
             echo "root='$root'"
             echo "rflags='$rflags'"
@@ -75,8 +78,8 @@ elif repository_has_key "nodeid"; then
     echo '[ -e $NEWROOT/proc ]' > /initqueue-finished/nfsroot.sh
     info "[osr-detect-root]: Successfully called nfsroot."
     # only for debugging...
-    echo "[osr-detect-root]:"
-    /sbin/arping -c 1 192.168.1.99
-    echo "\n"
+#     echo "[osr-detect-root]:"
+#     /sbin/arping -c 1 192.168.1.99
+#     echo "\n"
     # ... end debugging info.
 fi
