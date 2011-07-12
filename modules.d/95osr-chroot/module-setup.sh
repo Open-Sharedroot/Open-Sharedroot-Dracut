@@ -15,9 +15,9 @@ depends() {
     return 0
 }
 
-installkernel() {
-    instmods nfs sunrpc ipv6
-}
+# installkernel() {
+#     instmods nfs sunrpc ipv6
+# }
 
 install() {
 

@@ -14,9 +14,9 @@ depends() {
     return 0
 }
 
-installkernel() {
-
-}
+# installkernel() {
+# 
+# }
 
 install() {
     inst "$moddir/atix-logo.txt" /etc

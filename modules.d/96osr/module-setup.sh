@@ -13,9 +13,9 @@ depends() {
     return 0
 }
 
-installkernel() {
-
-}
+# installkernel() {
+# 
+# }
 
 install() {
     # Install all libraries we need
