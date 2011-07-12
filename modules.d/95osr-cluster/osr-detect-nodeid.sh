@@ -54,7 +54,7 @@ if ! repository_has_value "nodeid" ; then
     cat /sys/class/net/$netif/address \n
     
     if [ -z "$nodeid" ]; then
-        info $(basename $0)": Could not detect the nodeid for this interface $netif."
+        info $(basename $0)": ...Could not detect the nodeid for this interface $netif."
         echo > /tmp/osr.nonodeid_${netif}
     else
         info $(basename $0)": Detected nodeid $nodeid"
