@@ -19,5 +19,5 @@ depends() {
 # }
 
 install() {
-    inst "$moddir/atix-logo.txt" /etc
+    inst_simple "$moddir/atix-logo.txt" /etc
 }

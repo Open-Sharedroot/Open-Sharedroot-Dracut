@@ -23,7 +23,7 @@ install() {
 
 #     . $dracutfunctions
 
-    inst "$moddir/lib/chroot-lib.sh" /lib/osr/
+    inst_simple "$moddir/lib/chroot-lib.sh" /lib/osr/
 
     # What do we need for mounting the chroot
     inst_hook netroot    11 "$moddir/osr-detect-chroot.sh"

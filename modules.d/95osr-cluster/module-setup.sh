@@ -51,18 +51,18 @@ install() {
     dracut_install basename
     dracut_install bash
 
-    inst "$moddir/lib/cluster-lib.sh" /lib/osr/
+    inst_simple "$moddir/lib/cluster-lib.sh" /lib/osr/
 
     inst_simple /tmp/osr-nodeids
     inst_simple /tmp/osr-nodeidvalues-${nodeid}.conf /etc/conf.d/osr-nodeidvalues-${nodeid}.conf
 
     # Next the nodeid detection should be done as it can influence every other setting following afterwards.
-    inst "$moddir/osr-detect-nodeid.sh" "/sbin/osr-detect-nodeid"
-    inst "$moddir/osr-set-nodeconfig-net.sh" "/sbin/osr-set-nodeconfig-net"
+    ins_simplet "$moddir/osr-detect-nodeid.sh" "/sbin/osr-detect-nodeid"
+    inst_simple "$moddir/osr-set-nodeconfig-net.sh" "/sbin/osr-set-nodeconfig-net"
     # ugly...
-    inst "$moddir/osr-detect-root.sh" "/sbin/osr-detect-root"
-    inst "$moddir/osr-detect-root.sh" "/sbin/osrroot"
-    inst "$moddir/osr-detect-syslog.sh" "/sbin/osr-detect-syslog"
+    inst_simple "$moddir/osr-detect-root.sh" "/sbin/osr-detect-root"
+    inst_simple "$moddir/osr-detect-root.sh" "/sbin/osrroot"
+    inst_simple "$moddir/osr-detect-syslog.sh" "/sbin/osr-detect-syslog"
 
     inst_hook pre-udev 59 "$moddir/osr-net-genrules.sh"
     #inst_hook netroot  11 "$moddir/osr-detect-chroot.sh"
