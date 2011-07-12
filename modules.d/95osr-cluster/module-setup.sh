@@ -51,13 +51,13 @@ install() {
     dracut_install basename
     dracut_install bash
 
-    inst_simple "$moddir/lib/cluster-lib.sh" /lib/osr/
+    inst "$moddir/lib/cluster-lib.sh" /lib/osr/
 
     inst_simple /tmp/osr-nodeids
     inst_simple /tmp/osr-nodeidvalues-${nodeid}.conf /etc/conf.d/osr-nodeidvalues-${nodeid}.conf
 
     # Next the nodeid detection should be done as it can influence every other setting following afterwards.
-    ins_simplet "$moddir/osr-detect-nodeid.sh" "/sbin/osr-detect-nodeid"
+    inst_simple "$moddir/osr-detect-nodeid.sh" "/sbin/osr-detect-nodeid"
     inst_simple "$moddir/osr-set-nodeconfig-net.sh" "/sbin/osr-set-nodeconfig-net"
     # ugly...
     inst_simple "$moddir/osr-detect-root.sh" "/sbin/osr-detect-root"
