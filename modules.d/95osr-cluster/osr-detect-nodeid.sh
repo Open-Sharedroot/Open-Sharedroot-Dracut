@@ -35,14 +35,16 @@ if ! repository_has_value "nodeid" ; then
     # from the mac address we'll get the nodeid
     # TODO: make it more general later. Means there is a hardware id and the nodeid will be detected from it!
     nodeid=""
+    echo "/sys/class/net/\$netif/address:" \n
+    cat /sys/class/net/$netif/address \n
     hwaddr=$(cat /sys/class/net/$netif/address | tr '[:upper:]' '[:lower:]')
     while read nodeid2 hwaddr2s; do
         for hwaddr2 in $hwaddr2s; do
             hwaddr2=$(echo $hwaddr2 | tr '[:upper:]' '[:lower:]')
             if [ -n "$hwaddr2" ] && [ -n "$nodeid2" ] && [ $hwaddr = $hwaddr2 ]; then
-                echo "[osr-detect-nodeid]" vergleiche hwaddr: $hwaddr \n
-                echo mit ... \n
-                echo "[osr-detect-nodeid]" hwaddr2: $hwaddr2
+                echo "[osr-detect-nodeid]"  hwaddr: $hwaddr \n
+                echo vs ... \n
+                echo "[osr-detect-nodeid]" hwaddr2: $hwaddr2 \n
                 nodeid=$nodeid2
                 info $(basename $0)": nodeid $nodeid detected for nic $netif"
             fi
