@@ -38,11 +38,14 @@ if ! repository_has_value "nodeid" ; then
     hwaddr=$(cat /sys/class/net/$netif/address | tr '[:upper:]' '[:lower:]')
     while read nodeid2 hwaddr2s; do
         for hwaddr2 in $hwaddr2s; do
-              hwaddr2=$(echo $hwaddr2 | tr '[:upper:]' '[:lower:]')
-              if [ -n "$hwaddr2" ] && [ -n "$nodeid2" ] && [ $hwaddr = $hwaddr2 ]; then
-                    nodeid=$nodeid2
-                    info $(basename $0)": nodeid $nodeid detected for nic $netif"
-              fi
+            hwaddr2=$(echo $hwaddr2 | tr '[:upper:]' '[:lower:]')
+            if [ -n "$hwaddr2" ] && [ -n "$nodeid2" ] && [ $hwaddr = $hwaddr2 ]; then
+                echo "[osr-detect-nodeid]" vergleiche hwaddr: $hwaddr \n
+                echo mit ... \n
+                echo "[osr-detect-nodeid]" hwaddr2: $hwaddr2
+                nodeid=$nodeid2
+                info $(basename $0)": nodeid $nodeid detected for nic $netif"
+            fi
         done
     done < /tmp/osr-nodeids
     if [ -z "$nodeid" ]; then
