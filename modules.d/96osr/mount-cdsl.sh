@@ -4,6 +4,8 @@
 # Mounts the cdsl infrastructure as a bindmount
 # All parameters are read from /tmp/osr.nodeid, /tmp/osr.cdsltree, /tmp/osr.cdsllink and mapped to:
 # mount --bind $cdsltree/$nodeid $cdsllink
+echo "[mount-cdsl] Jump in mount-cdsl.sh..."
+
 
 . /lib/dracut-lib.sh
 
