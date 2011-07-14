@@ -50,7 +50,7 @@ install() {
     # Shouldn't it go into the mount hook but after root mount? Root mount is already number 99 ;-(.
     # So I'll put it in pre-pivot as first thing to do.
 #     inst_hook pre-pivot 1 "$moddir/mount-cdsl.sh"
-    inst_hook netroot 52 "$moddir/mount-cdsl.sh"
+    inst_hook pre-pivot 1 "$moddir/mount-cdsl.sh"
 
     inst_hook pre-pivot 90 "$moddir/write-xfiles.sh"
 
