@@ -75,6 +75,13 @@ elif repository_has_key "nodeid"; then
     # Recalling netroot!
     info "[osr-detect-root]: Calling nfsroot with $netif $netroot$rflags $NEWROOT"
     /sbin/nfsroot $netif $netroot$rflags $NEWROOT
+    if [ -d /initqueue-finished ];
+        then
+        info "[osr-detect-root]: /initqueue-finished exist"
+    else
+        info "[osr-detect-root]: create /initqueue-finished"
+        mkdir /initqueue-finished
+    fi
     echo '[ -e $NEWROOT/proc ]' > /initqueue-finished/nfsroot.sh
     info "[osr-detect-root]: Successfully called nfsroot."
     # only for debugging...
