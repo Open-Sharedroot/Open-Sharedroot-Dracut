@@ -24,6 +24,7 @@ fi
 sourceLibs ${libdir} 
 
 echo "[osr-mount-chroot] : jump in..."
+info "[osr-mount-chroot] : jump in..."
 
 chrootneeded=$(repository_get_value chrootneeded)
 

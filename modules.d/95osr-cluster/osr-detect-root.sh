@@ -87,9 +87,9 @@ elif repository_has_key "nodeid"; then
     # only for debugging...
     echo "[osr-detect-root] arping:"
     info "[osr-detect-root] arping:"
-    /sbin/arping -c 1 192.168.1.99
+#
     echo "\n"
     # ... end debugging info.
 fi
 
-echo "[osr-detect-root]: jump-out................................."
+info "[osr-detect-root]: jump-out................................."
