@@ -22,6 +22,8 @@ else
 fi
 sourceLibs $libdir
 
+echo "[parse-cdsl] jump in..." 
+
 osr_param_store "cdsltree" "/cluster/cdsl"
 osr_param_store "cdslsharedtree" "/cluster/shared"
 osr_param_store "cdsllink" "/cdsl.local"
