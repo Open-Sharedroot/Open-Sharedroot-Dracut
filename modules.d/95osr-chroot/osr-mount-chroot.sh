@@ -23,6 +23,8 @@ else
 fi
 sourceLibs ${libdir} 
 
+echo "[osr-mount-chroot] : jump in..."
+
 chrootneeded=$(repository_get_value chrootneeded)
 
 if [ -n "$chrootneeded" ] && ( [ "$chrootneeded" -eq 0 ] || [ "$chrootneeded" = "__set__" ] ); then

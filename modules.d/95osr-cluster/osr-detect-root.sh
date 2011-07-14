@@ -90,3 +90,5 @@ elif repository_has_key "nodeid"; then
     echo "\n"
     # ... end debugging info.
 fi
+
+echo "[osr-detect-root]: jump-out................................."
