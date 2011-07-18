@@ -17,9 +17,9 @@ This is the open-sharedroot module for dracut.
 Summary: Debugging-tool
 Release: 1
 Requires: dracut >= 0.8
-Requires: osr-dracut-module
-Requires: comoonics-cluster-py
 
+%description comoonics-debug
+A debugging-tool
 
 %package cluster
 Summary: Additional base cluster modules for shared booting with open-sharedroot
