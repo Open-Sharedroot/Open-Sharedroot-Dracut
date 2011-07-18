@@ -13,6 +13,13 @@ BuildArch: noarch
 %description
 This is the open-sharedroot module for dracut.
 
+%package comoonics-debug
+Summary: Debugging-tool
+Release: 1
+Requires: dracut >= 0.8
+Requires: osr-dracut-module
+Requires: comoonics-cluster-py
+
 
 %package cluster
 Summary: Additional base cluster modules for shared booting with open-sharedroot
@@ -52,6 +59,12 @@ rm -rf $RPM_BUILD_ROOT
 %doc README.txt COPYING AUTHORS
 %{_datadir}/dracut/modules.d/96osr
 %{_datadir}/dracut/modules.d/99osr-atix-legacy
+
+%files comoonics-debug
+%defattr(-,root,root,0755)
+%{_datadir}/dracut/modules.d/99comoonics-debug
+%doc README.osr-cluster.txt COPYING AUTHORS
+
 
 %files cluster
 %defattr(-,root,root,0755)
