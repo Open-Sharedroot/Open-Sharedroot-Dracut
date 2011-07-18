@@ -10,5 +10,5 @@ echo "[communics-debugging] handler cmdline ..............\n"
 # do
 #   echo "."
 #  info "."
-  sleep 1
+  sleep 10
 # done
