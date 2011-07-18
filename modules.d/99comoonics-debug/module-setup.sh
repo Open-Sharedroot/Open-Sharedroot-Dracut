@@ -15,11 +15,11 @@ depends() {
 
 install() {
 
-    inst_hook cmdline     1 "$moddir/handler-cmdline.sh"
-    inst_hook pre-udev    1 "$moddir/handler-pre-udev.sh"
-    inst_hook pre-trigger 1 "$moddir/handler-pre-trigger.sh"
-    inst_hook pre-mount   1 "$moddir/handler-pre-mount.sh"
-    inst_hook mount       1 "$moddir/handler-mount.sh"
-    inst_hook pre-piv     1 "$moddir/handler-pre-pivot.sh"
+    inst_hook cmdline     50 "$moddir/handler-cmdline.sh"
+    inst_hook pre-udev    50 "$moddir/handler-pre-udev.sh"
+    inst_hook pre-trigger 50 "$moddir/handler-pre-trigger.sh"
+    inst_hook pre-mount   50 "$moddir/handler-pre-mount.sh"
+    inst_hook mount       50 "$moddir/handler-mount.sh"
+    inst_hook pre-piv     50 "$moddir/handler-pre-pivot.sh"
     
 }
