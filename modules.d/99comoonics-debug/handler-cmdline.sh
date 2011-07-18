@@ -4,11 +4,11 @@
 
 
 echo [communics-debugging] handler cmdline \n
-info "[communics-debugging] handler cmdline \n"
+# info "[communics-debugging] handler cmdline \n"
 
 for((i=10; i>0; i--))
 do
   echo "."
-  info "."
+#  info "."
   sleep 1
 done
