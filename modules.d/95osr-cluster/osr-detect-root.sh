@@ -64,10 +64,15 @@ elif repository_has_key "nodeid"; then
 
         {
             echo "root='$root'"
+            export root=$root
             echo "rflags='$rflags'"
+            export rflags=$rflags
             echo "fstype='$fstype'"
+            export fstype=$fstype
             echo "netroot='$netroot'"
+            export netroot=$netroot
             echo "NEWROOT='$NEWROOT'"
+            export NEWROOT=$NEWROOT
         } > /tmp/root.info
         info "[osr-detect-root]: value of /tmp/root.info...\n"
         cat /tmp/root.info
