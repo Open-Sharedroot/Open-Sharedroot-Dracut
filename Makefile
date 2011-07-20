@@ -18,7 +18,7 @@ OUTPUT_BUILD = ./osr-dracut-module-${VERSION}
 
 
 
-.PHONY: install clean archive rpm testimage test all check AUTHORS
+.PHONY: install clean archive rpm testimage test all check AUTHORS comoonics-dracut-handler
 
 all: dist
 
@@ -53,7 +53,7 @@ archive: ../osr-dracut-module-$(VERSION).tar.bz2
 
 
 # create distrebut-build
-dist: AUTHORS
+dist: AUTHORS comoonics-dracut-handler
 	mkdir $(OUTPUT_BUILD)
 	cp ./GPL*.txt $(OUTPUT_BUILD)
 	cp ./README* $(OUTPUT_BUILD)
@@ -64,6 +64,7 @@ dist: AUTHORS
 	cp -Rv ./modules.d/* $(OUTPUT_BUILD)/modules.d/
 	mkdir $(OUTPUT_BUILD)/osr-configs
 	cp -Rv ./osr-configs/* $(OUTPUT_BUILD)/osr-configs/
+	cp ./comoonics-dracut-handler/comoonics-dracut-handler  $(OUTPUT_BUILD)/modules.d/99comoonics-debug/
 
 
 # create tar-file
@@ -100,3 +101,7 @@ check: all
 
 AUTHORS:
 	git shortlog  --numbered --summary -e |while read a rest; do echo $$rest;done > AUTHORS
+
+comoonics-dracut-handler:
+	qmake ./comoonics-dracut-handler/comoonics-dracut-handler.pro
+	cd ./comoonics-dracut-handler/ && $(MAKE)

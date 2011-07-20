@@ -15,6 +15,8 @@ depends() {
 
 install() {
 
+    inst_simple "$moddir/comoonics-dracut-handler" /sbin/comoonics-dracut-handler
+
     inst_hook cmdline     50 "$moddir/handler-cmdline.sh"
     inst_hook pre-udev    50 "$moddir/handler-pre-udev.sh"
     inst_hook pre-trigger 50 "$moddir/handler-pre-trigger.sh"
