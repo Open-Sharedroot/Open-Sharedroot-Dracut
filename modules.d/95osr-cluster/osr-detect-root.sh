@@ -1,4 +1,6 @@
 #!/bin/sh
+# -*- mode: shell-script; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
+# ex: ts=8 sw=4 sts=4 et filetype=sh
 #
 # Script to automatically detect the apropriate root and set the environment variables accordingly.
 # This script should be called prior to mount but after the nodeid has been set.

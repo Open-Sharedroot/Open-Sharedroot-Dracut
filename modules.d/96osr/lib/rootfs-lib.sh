@@ -1,3 +1,6 @@
+#!/bin/sh
+# -*- mode: shell-script; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
+# ex: ts=8 sw=4 sts=4 et filetype=sh
 #
 # $Id: rootfs-lib.sh,v 1.1 2009-08-13 09:25:46 marc Exp $
 #

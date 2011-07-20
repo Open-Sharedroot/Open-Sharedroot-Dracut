@@ -1,4 +1,6 @@
 #!/bin/sh
+# -*- mode: shell-script; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
+# ex: ts=8 sw=4 sts=4 et filetype=sh
 #
 # Parse the cdsl settings. Normally defaults should be ok. But if need be to overwrite it the do it.
 # Format:

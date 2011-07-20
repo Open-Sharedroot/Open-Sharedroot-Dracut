@@ -1,4 +1,6 @@
 #!/bin/sh
+# -*- mode: shell-script; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
+# ex: ts=8 sw=4 sts=4 et filetype=sh
 #
 # $Id: shinit.sh,v 1.2 2009-08-13 10:00:41 marc Exp $
 #

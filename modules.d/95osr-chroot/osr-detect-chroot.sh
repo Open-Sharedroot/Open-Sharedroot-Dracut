@@ -1,4 +1,8 @@
 #!/bin/sh
+# -*- mode: shell-script; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
+# ex: ts=8 sw=4 sts=4 et filetype=sh
+
+
 # This script detects if a chroot is needed for this rootfilesystem.
 # It can either be configured via the nodevalues file or the following bootparameters:
 #   chrootneeded

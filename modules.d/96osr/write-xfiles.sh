@@ -1,4 +1,7 @@
 #!/bin/sh
+# -*- mode: shell-script; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
+# ex: ts=8 sw=4 sts=4 et filetype=sh
+
 # This skript fills in the xfiles for being used by other programs that might be using those information
 
 if [ -n "$dracutlib" ] && [ -f $dracutlib ]; then

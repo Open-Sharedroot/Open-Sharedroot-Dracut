@@ -3,12 +3,6 @@
 # ex: ts=8 sw=4 sts=4 et filetype=sh
 
 
+echo "====================================================================="
 echo "[communics-debugging] handler cmdline ..............\n"
-# info "[communics-debugging] handler cmdline \n"
-
-# for((i=10; i>0; i--))
-# do
-#   echo "."
-#  info "."
-#   sleep 10
-# done
+echo "====================================================================="
