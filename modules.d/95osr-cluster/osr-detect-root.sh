@@ -71,6 +71,7 @@ elif repository_has_key "nodeid"; then
         } > /tmp/root.info
         info "[osr-detect-root]: value of /tmp/root.info...\n"
         cat /tmp/root.info
+        . /tmp/root.info
         echo "\n"
         ( [ $fstype = "nfs" ] || [ $fstype = "nfs4" ] ) && echo > /dev/root
     fi
