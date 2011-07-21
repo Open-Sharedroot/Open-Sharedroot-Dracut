@@ -64,7 +64,7 @@ dist: AUTHORS comoonics-dracut-handler
 	cp -Rv ./modules.d/* $(OUTPUT_BUILD)/modules.d/
 	mkdir $(OUTPUT_BUILD)/osr-configs
 	cp -Rv ./osr-configs/* $(OUTPUT_BUILD)/osr-configs/
-	cp ./comoonics-dracut-handler/comoonics-dracut-handler  $(OUTPUT_BUILD)/modules.d/99comoonics-debug/
+	cp ./comoonics-dracut-handler/comoonics-handler  $(OUTPUT_BUILD)/modules.d/99comoonics-debug/
 
 
 # create tar-file
@@ -103,5 +103,5 @@ AUTHORS:
 	git shortlog  --numbered --summary -e |while read a rest; do echo $$rest;done > AUTHORS
 
 comoonics-dracut-handler:
-	qmake ./comoonics-dracut-handler/comoonics-dracut-handler.pro
+	cd ./comoonics-dracut-handler/ && qmake ./comoonics-dracut-handler.pro
 	cd ./comoonics-dracut-handler/ && $(MAKE)

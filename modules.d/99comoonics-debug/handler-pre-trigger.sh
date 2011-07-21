@@ -5,5 +5,5 @@
 
 echo "====================================================================="
 echo "[communics-debugging] handler pre-trigger ...............................\n"
-comoonics-dracut-handler
+comoonics-handler
 echo "====================================================================="

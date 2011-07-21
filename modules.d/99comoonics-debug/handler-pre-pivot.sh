@@ -4,5 +4,5 @@
 
 echo "====================================================================="
 echo "[communics-debugging] handler pre-pivot ............................\n"
-comoonics-dracut-handler
+comoonics-handler
 echo "====================================================================="

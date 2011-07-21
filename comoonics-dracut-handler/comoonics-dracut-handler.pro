@@ -6,7 +6,7 @@
 
 QT       -= gui
 
-TARGET = comoonics-dracut-handler
+TARGET = comoonics-handler
 CONFIG   += console static
 CONFIG   -= app_bundle
 
