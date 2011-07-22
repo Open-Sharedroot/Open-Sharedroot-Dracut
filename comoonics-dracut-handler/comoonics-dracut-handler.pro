@@ -7,8 +7,8 @@
 QT       -= gui
 
 TARGET = comoonics-handler
-CONFIG   += console static staticlib
-CONFIG   -= app_bundle
+CONFIG   += console static staticlib release
+# CONFIG   -= app_bundle
 
 TEMPLATE = app
 
