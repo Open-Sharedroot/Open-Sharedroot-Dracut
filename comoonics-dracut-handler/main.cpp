@@ -1,3 +1,17 @@
+#include <stdio.h>
+int main( int argc, const char* argv[] )
+{
+    // Prints each argument on the command line.
+    for( int i = 0; i < argc; i++ )
+    {
+        printf( "Hallo Welt! \n arg %d: %s\n", i, argv[i] );
+    }
+    return 0;
+}
+
+
+
+/*
 #include <QtCore/QCoreApplication>
 #include <QStringList>
 #include <iostream>
@@ -36,4 +50,4 @@ int main(int argc, char *argv[])
         }
     }
     return a.exec();
-}
+}*/
