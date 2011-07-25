@@ -44,8 +44,8 @@ Die in den Modulen verwendeten Hooks sind:
 Die volgenen Hooks ist in der Dracut-Doku nicht dokumentiert. Werden aber verwendet.
 
 \begin{description}
- \item[emergency] 
- \item[netroot]
+ \item[emergency] wenn der Bootvorgang wegen einer Ausnahme unterbrochen werden muss, wird der Hook aufgeruffen.
+ \item[netroot] Scheint es nicht (mehr) zu geben.
 \end{description}
 
 In einem Script \texttt{check} wird eine Funktion \texttt{check()} definiert. Das Scrip \texttt{check} sollte 0 (null) zurückgeben, wenn alle Bedingungen erfüllt sind. Wird ein anderer Wert zurückgegeben, wird das Modul nicht von Darcut geladen.
@@ -68,11 +68,71 @@ Die Dracut-lib (\texttt{/usr/share/dracut/modules.d/99base/dracut-lib.sh}) stell
 
 \end{description}
 
+
+\subsection{Der Bootablauf für com.oonics}
+
+    inst_hook cmdline 90 "$moddir/parse-nfsroot.sh"
+    inst_hook pre-pivot 99 "$moddir/nfsroot-cleanup.sh"
+
+
+\begin{itemize}
+ \item Basic Setup
+    \begin{itemize}
+      \item Nichts für com.oonics
+    \end{itemize}
+ \item Hook "`\textbf{cmdline}"'
+    \begin{itemize}
+      \item 1 - setup-osrenv.sh (Modul: osr)
+      \item 2 - parse-nodeid.sh (Modul: osr)
+      \item 90 - parse-nfsroot.sh (Modul: nfs)
+      \item 99 - parse-cdsl.sh (Modul: osr)
+    \end{itemize}
+ \item Hook "`\textbf{pre-udev}"'
+    \begin{itemize}
+      \item 59 - osr-net-genrules.sh (Modul: osr-cluster)
+    \end{itemize}
+ \item Start Udev
+    \begin{itemize}
+      \item Nichts für com.oonics
+    \end{itemize}
+ \item Hook "`\textbf{pre-trigger}"'
+    \begin{itemize}
+      \item Nichts für com.oonics
+    \end{itemize}
+ \item Trigger Udev
+    \begin{itemize}
+      \item Nichts für com.oonics
+    \end{itemize}
+ \item Main Loop
+    \begin{itemize}
+      \item Nichts für com.oonics
+    \end{itemize}
+ \item Hook "`\textbf{pre-mount}"'
+    \begin{itemize}
+      \item Nichts für com.oonics
+    \end{itemize}
+ \item Hook "`\textbf{mount}"'
+    \begin{itemize}
+      \item Nichts für com.oonics
+    \end{itemize}
+ \item Hook "`\textbf{pre-pivot}"'
+    \begin{itemize}
+      \item 11 - osr-detect-chroot.sh (Modul: osr-chroot)
+      \item 12 - osr-mount-chroot.sh (Modul: osr-chroot)
+      \item 51 - osr-move-chroot.sh (Modul: osr-chroot)
+      \item 90 - write-xfiles.sh (Modul: osr)
+      \item 60 - mount-cdsl.sh (Modul: osr)
+      \item 99 - nfsroot-cleanup.sh (Modul: nfs)
+    \end{itemize}
+ \item Hook "`\textbf{cleanup and switch\_root}"'
+\end{itemize}
+
+
+
 \subsection{Undokumentierte Dracut-Schnittstellen}
 
 
-
-\textbf{/modules.d/95osr-cluster/osr-detect-root.sh }:
+An dieser Stelle wird das root-Filesystem präperiert:
 
 \begin{lstlisting}
 if [ -z "$oldroot" ] || [ "$oldroot" = "autodetect" ]; then
@@ -87,6 +147,9 @@ if [ -z "$oldroot" ] || [ "$oldroot" = "autodetect" ]; then
         echo "NEWROOT='$NEWROOT'"
     } > /tmp/root.info
 \end{lstlisting}
+...Der Code ist in der Datei \textbf{/modules.d/95osr-cluster/osr-detect-root.sh } zu finden
+
+\bigskip
 
 Handler für den netroot-Typ ( \texttt{/usr/share/dracut/modules.d/40network/netroot} ):
 \begin{lstlisting}
@@ -101,6 +164,8 @@ if [ -z "$netroot" ] || [ ! -e "$handler" ] ; then
     die "No handler for netroot type '$netroot'"
 fi
 \end{lstlisting}
+
+\bigskip
 
 Bzw.: \texttt{/modules.d/95osr-cluster/install}
 

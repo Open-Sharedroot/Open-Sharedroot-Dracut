@@ -40,7 +40,7 @@ install() {
     # We should not need this because as of version 0.7 we only need to write to /etc/cmdline in order to
     # influence those persistent or somewhere else the /proc/cmdline parameters.
     # This should go first as it might overwrite some cmdline options
-    inst_hook cmdline  99  "$moddir/setup-osrenv.sh"
+    inst_hook cmdline  1  "$moddir/setup-osrenv.sh"
     # Next the nodeid detection should be done as it can influence every other setting following afterwards.
     inst_hook cmdline  2  "$moddir/parse-nodeid.sh"
 
@@ -50,7 +50,7 @@ install() {
     # Shouldn't it go into the mount hook but after root mount? Root mount is already number 99 ;-(.
     # So I'll put it in pre-pivot as first thing to do.
 #     inst_hook pre-pivot 1 "$moddir/mount-cdsl.sh"
-    inst_hook pre-udev 60 "$moddir/mount-cdsl.sh"
+    inst_hook pre-pivot 60 "$moddir/mount-cdsl.sh"
 
     inst_hook pre-pivot 90 "$moddir/write-xfiles.sh"
 
