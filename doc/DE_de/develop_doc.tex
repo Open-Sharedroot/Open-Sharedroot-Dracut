@@ -81,6 +81,7 @@ Die Dracut-lib (\texttt{/usr/share/dracut/modules.d/99base/dracut-lib.sh}) stell
     \begin{itemize}
       \item 1 - setup-osrenv.sh (Modul: osr)
       \item 2 - parse-nodeid.sh (Modul: osr)
+      \item 10 - parse-root-opts.sh (Modul: base) Beschreibt \texttt{/tmp/root.info}
       \item 90 - parse-nfsroot.sh (Modul: nfs)
       \item 99 - parse-cdsl.sh (Modul: osr)
     \end{itemize}
@@ -106,7 +107,7 @@ Die Dracut-lib (\texttt{/usr/share/dracut/modules.d/99base/dracut-lib.sh}) stell
     \end{itemize}
  \item Hook "`\textbf{pre-mount}"'
     \begin{itemize}
-      \item Nichts für com.oonics
+      \item 11 - osr-detect-chroot.sh (Modul: osr-chroot)
     \end{itemize}
  \item Hook "`\textbf{mount}"'
     \begin{itemize}
@@ -114,7 +115,6 @@ Die Dracut-lib (\texttt{/usr/share/dracut/modules.d/99base/dracut-lib.sh}) stell
     \end{itemize}
  \item Hook "`\textbf{pre-pivot}"'
     \begin{itemize}
-      \item 11 - osr-detect-chroot.sh (Modul: osr-chroot)
       \item 12 - osr-mount-chroot.sh (Modul: osr-chroot)
       \item 51 - osr-move-chroot.sh (Modul: osr-chroot)
       \item 90 - write-xfiles.sh (Modul: osr)
