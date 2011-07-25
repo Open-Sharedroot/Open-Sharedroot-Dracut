@@ -29,6 +29,8 @@
 
 Als erstes wird vom Kernel nach dem Booten ein kleiner Binär-Code von Dracut ausgeführt, der dann seinerseits die in dash geschriebene Dracut-Module ausführt. Das erste Modul das von Darcut startet wird ist das Modul 99base. Das Erste was das Modul tut ist, dafür zu sorgen das dass initramfs geladen hat. Das Script was dafür verantwortlich ist, ist die \texttt{init}-Datei. Diese kann angepasst werden. Empfohlen wird aber stat dessen die Hooks zu verwenden. Hooks sind Scrips die vor oder nach definierten Ereignissen ausgeführt werden. Diese Hooks werden in den Modulen in den Dateien \texttt{install} definiert.
 
+Die Hooks die Dracut abarbeitet stehen im initrd im Verzeichnis \texttt{/lib/dracut/hooks/}. Die Einträge werden von Dracut automatisch generiert.
+
 \subsection{Verwendete Hooks}
 
 Die in den Modulen verwendeten Hooks sind:
