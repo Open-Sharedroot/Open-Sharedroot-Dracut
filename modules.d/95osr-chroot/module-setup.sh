@@ -26,7 +26,7 @@ install() {
     inst_simple "$moddir/lib/chroot-lib.sh" /lib/osr/
 
     # What do we need for mounting the chroot
-    inst_hook pre-pivot    11 "$moddir/osr-detect-chroot.sh"
+    inst_hook pre-mount    11 "$moddir/osr-detect-chroot.sh"
 #     inst_hook pre-pivot    50 "$moddir/osr-mount-chroot.sh"
     inst_hook pre-pivot    12 "$moddir/osr-mount-chroot.sh"
     inst_hook pre-pivot  51 "$moddir/osr-move-chroot.sh"

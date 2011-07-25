@@ -71,9 +71,6 @@ Die Dracut-lib (\texttt{/usr/share/dracut/modules.d/99base/dracut-lib.sh}) stell
 
 \subsection{Der Bootablauf für com.oonics}
 
-    inst_hook cmdline 90 "$moddir/parse-nfsroot.sh"
-    inst_hook pre-pivot 99 "$moddir/nfsroot-cleanup.sh"
-
 
 \begin{itemize}
  \item Basic Setup
