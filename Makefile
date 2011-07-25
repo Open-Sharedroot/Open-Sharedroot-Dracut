@@ -103,7 +103,7 @@ AUTHORS:
 	git shortlog  --numbered --summary -e |while read a rest; do echo $$rest;done > AUTHORS
 
 comoonics-dracut-handler:
-# 	cd ./comoonics-dracut-handler/ && qmake ./comoonics-dracut-handler.pro
-# 	cd ./comoonics-dracut-handler/ && $(MAKE)
+	cd ./comoonics-dracut-handler/ && qmake ./comoonics-dracut-handler.pro
+	cd ./comoonics-dracut-handler/ && $(MAKE)
 
-	cd ./comoonics-dracut-handler/ && g++ ./main.cpp -o comoonics-handler
+#	cd ./comoonics-dracut-handler/ && g++ ./main.cpp -o comoonics-handler

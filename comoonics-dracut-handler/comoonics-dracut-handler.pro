@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       -= gui
+QT  -= gui
 
 TARGET = comoonics-handler
 CONFIG   += -console -static  -release
