@@ -78,17 +78,22 @@ Die Dracut-lib (\texttt{/usr/share/dracut/modules.d/99base/dracut-lib.sh}) stell
       \item Nichts für com.oonics
     \end{itemize}
  \item Hook "`\textbf{cmdline}"'
-    \begin{itemize}
-      \item 1 - setup-osrenv.sh (Modul: osr)
-      \item 2 - parse-nodeid.sh (Modul: osr)
-      \item 10 - parse-root-opts.sh (Modul: base) Beschreibt \texttt{/tmp/root.info}
-      \item 90 - parse-nfsroot.sh (Modul: nfs)
-      \item 99 - parse-cdsl.sh (Modul: osr)
-    \end{itemize}
+    \begin{description}
+      \item [1 - setup-osrenv.sh] (Modul: osr) Ermittlung der Distrebution.
+      \item [2 - parse-nodeid.sh] (Modul: osr] Überprüft noch mal die
+      Distrebution und ermitteld die Node-ID.
+      \item [10 - parse-root-opts.sh] (Modul: base) Base-Modul von Dracut
+      schreibt in die Datei: \texttt{/tmp/root.info}
+      \item [90 - parse-nfsroot.sh] (Modul: nfs) Der Hook des Dracut-Modul für
+      nfs-root wird aufgerufen.
+      \item [99 - parse-cdsl.sh] (Modul: osr) Es wird eine Datenbank mit den
+      Informationen zu cdsl angelegt.
+    \end{description}
  \item Hook "`\textbf{pre-udev}"'
-    \begin{itemize}
-      \item 59 - osr-net-genrules.sh (Modul: osr-cluster)
-    \end{itemize}
+    \begin{description}
+      \item [59 - osr-net-genrules.sh (Modul: osr-cluster)] Es werden
+      udev-Regeln gesetzt.
+    \end{description}
  \item Start Udev
     \begin{itemize}
       \item Nichts für com.oonics
@@ -106,21 +111,28 @@ Die Dracut-lib (\texttt{/usr/share/dracut/modules.d/99base/dracut-lib.sh}) stell
       \item Nichts für com.oonics
     \end{itemize}
  \item Hook "`\textbf{pre-mount}"'
-    \begin{itemize}
-      \item 11 - osr-detect-chroot.sh (Modul: osr-chroot)
-    \end{itemize}
+    \begin{description}
+      \item [11 - osr-detect-chroot.sh] (Modul: osr-chroot) Wenn eine Node-ID
+      gefunden wird, werden die Node-Informationen geladen. Es wird geprüft ob
+      eine chroot-Umgebung benötigt wird.
+    \end{description}
  \item Hook "`\textbf{mount}"'
     \begin{itemize}
       \item Nichts für com.oonics
     \end{itemize}
  \item Hook "`\textbf{pre-pivot}"'
-    \begin{itemize}
-      \item 12 - osr-mount-chroot.sh (Modul: osr-chroot)
-      \item 51 - osr-move-chroot.sh (Modul: osr-chroot)
-      \item 90 - write-xfiles.sh (Modul: osr)
-      \item 60 - mount-cdsl.sh (Modul: osr)
-      \item 99 - nfsroot-cleanup.sh (Modul: nfs)
-    \end{itemize}
+    \begin{description}
+      \item [12 - osr-mount-chroot.sh] (Modul: osr-chroot) Es wird versuch das
+      sharedroot zu mounten.
+      \item [51 - osr-move-chroot.sh] (Modul: osr-chroot) Wechsel (chroot) in
+      das sharedroot.
+      \item [90 - write-xfiles.sh] (Modul: osr) Abhängig von Filesystem, wird
+      eine andere Lib gewählt, eine \texttt{/etc/xtab}, eine  \texttt{xrootfs}
+      und eine \texttt{xkillall\_procs} erstellt.
+      xkillall-Prozess gestartet.
+      \item [60 - mount-cdsl.sh] (Modul: osr) bind-mount für das Chared-Root-File-System
+      \item [99 - nfsroot-cleanup.sh] (Modul: nfs) cleanup-Przess für NFS.
+    \end{description}
  \item Hook "`\textbf{cleanup and switch\_root}"'
 \end{itemize}
 
@@ -199,7 +211,12 @@ Siehe: \ref{osrmountchroot} Seite \pageref{osrmountchroot}.
 
 \subsubsection{osr-move-chroot.sh}
 
+\begin{description}
+\item[Hook:] pre-pivot
+\item[Priorität:] 51
+\end{description}
 
+Das Modul wechselt in das sharedroot.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NEW SECTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -367,7 +384,7 @@ xkillallprocsfile & \verb|/etc/xkillallprocs|  \\ \hline
 \end{figure}
 
 Das Script überprüft noch ein mal die Art der Distribution und speichert den Namen in eine einfache Schlüssel-Werte-Tabelle (mittels der Funktion \texttt{repository\_store\_value()} aus der Datei  \texttt{repository-lib.sh})
-Das Script überprüft ob den Kernel die Node-ID als Parameter übergeben wurde.
+Das Script überprüft ob beim booten die Node-ID als Parameter übergeben wurde.
 
 
 \subsubsection{parse-cdsl.sh}
@@ -409,7 +426,7 @@ Das Script macht den --bind-mount für das Chared-Root-File-System. Das wird mit
 \item[Priorität:] 90
 \end{description}
 
-Je nach verwendeten File-System des des Chared-Root-Tree wird eine bestimmte Lib eingehangen. Dann die /etc/xtab erstellt bzw.  generiert. Dann wird das \texttt{xrootfs} erstellt und der \texttt{xkillall\_procs}.
+Je nach verwendeten File-System des Chared-Root-Tree wird eine bestimmte Lib eingehangen. Dann die /etc/xtab erstellt bzw.  generiert. Dann wird das \texttt{xrootfs} erstellt und der \texttt{xkillall\_procs}.
 
 \begin{figure}[H]
  \centering

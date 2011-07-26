@@ -75,26 +75,26 @@ elif repository_has_key "nodeid"; then
         echo "\n"
         ( [ $fstype = "nfs" ] || [ $fstype = "nfs4" ] ) && echo > /dev/root
     fi
-    # Recalling netroot!
-    info "[osr-detect-root]: Calling nfsroot with $netif $netroot$rflags $NEWROOT"
-    /sbin/nfsroot $netif $netroot$rflags $NEWROOT
-    if [ -d /initqueue-finished ];
-        then
-        info "[osr-detect-root]: /initqueue-finished exist"
-    else
-        info "[osr-detect-root]: create /initqueue-finished"
-        mkdir /initqueue-finished
-    fi
-    echo '[ -e $NEWROOT/proc ]' > /initqueue-finished/nfsroot.sh
-    info "[osr-detect-root]: Successfully called nfsroot."
-    # only for debugging...
-    echo "[osr-detect-root] arping:"
-    info "[osr-detect-root] arping:"
-    /sbin/arping -c 1 192.168.1.99
-    echo "\n"
-    echo "[osr-detect-root] ...if-end"
-    info "[osr-detect-root] ...if-end:"
-    # ... end debugging info.
+#     # Recalling netroot!
+#     info "[osr-detect-root]: Calling nfsroot with $netif $netroot$rflags $NEWROOT"
+#     /sbin/nfsroot $netif $netroot$rflags $NEWROOT
+#     if [ -d /initqueue-finished ];
+#         then
+#         info "[osr-detect-root]: /initqueue-finished exist"
+#     else
+#         info "[osr-detect-root]: create /initqueue-finished"
+#         mkdir /initqueue-finished
+#     fi
+#     echo '[ -e $NEWROOT/proc ]' > /initqueue-finished/nfsroot.sh
+#     info "[osr-detect-root]: Successfully called nfsroot."
+#     # only for debugging...
+#     echo "[osr-detect-root] arping:"
+#     info "[osr-detect-root] arping:"
+#     /sbin/arping -c 1 192.168.1.99
+#     echo "\n"
+#     echo "[osr-detect-root] ...if-end"
+#     info "[osr-detect-root] ...if-end:"
+#     # ... end debugging info.
 fi
 
 echo "[osr-detect-root]: jump-out................................."
