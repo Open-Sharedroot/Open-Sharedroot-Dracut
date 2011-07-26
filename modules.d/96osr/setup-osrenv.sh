@@ -31,7 +31,7 @@ sourceLibs ${libdir}
 #export CMDLINE
 # don't fail fi root is not ok.
 [ -z "$rootok" ] && rootok=1
-[ -z "$root" ] && root=autodetect
+[ -z "$root" ] && root=/dev/root
 # Just to delay the decision can be set later on also
 [ -z "$netroot" ] && netroot="osr"
 
