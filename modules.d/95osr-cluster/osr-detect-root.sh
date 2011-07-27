@@ -85,7 +85,7 @@ elif repository_has_key "nodeid"; then
         info "[osr-detect-root]: create /initqueue-finished"
         mkdir /initqueue-finished
     fi
-    echo '[ -e $NEWROOT/proc ]' > /initqueue-finished/nfsroot.sh
+    echo '[ -e $NEWROOT/proc ]' > $hookdir/initqueue-finished/osrroot.sh
     info "[osr-detect-root]: Successfully called nfsroot."
     # only for debugging...
     echo "[osr-detect-root] arping:"
