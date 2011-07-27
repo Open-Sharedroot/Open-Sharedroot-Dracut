@@ -59,7 +59,7 @@ elif repository_has_key "nodeid"; then
     echo oldroot: "$oldroot"
     echo "======================================================================"
     # is this set not by bot-comand-params... 
-    if [ -z "$oldroot" ] || [ "$oldroot" = "/dev/root" ]; then
+    if [ -z "$oldroot" ] || [ "$oldroot" = "block:/dev/root" ]; then
         info "[osr-detect-root]: fstype: ${fstype} root: ${root} netroot: $netroot"
         # Network root scripts may need updated root= options,
         # so deposit them where they can see them (udev purges the env)
