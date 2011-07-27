@@ -57,6 +57,9 @@ elif repository_has_key "nodeid"; then
     # only for debugging...
     echo "====================[osr-detect-root]================================="
     echo oldroot: "$oldroot"
+    if [ "$oldroot" = "block:/dev/root" ]; then
+      echo "is's the same!!!!!!!!!!!"
+    fi
     echo "======================================================================"
     # is this set not by bot-comand-params... 
     if [ -z "$oldroot" ] || [ "$oldroot" = "block:/dev/root" ]; then
