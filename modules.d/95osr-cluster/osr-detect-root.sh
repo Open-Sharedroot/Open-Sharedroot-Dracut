@@ -14,7 +14,10 @@
 #      * ocfs2  => name=/dev/..
 #
 
-echo "[osr-detect-root]: jump-in..."
+# only for debugging...
+echo "====================[osr-detect-root]================================="
+echo "jump-in..."
+echo "======================================================================"
 
 if [ -n "$dracutlib" ] && [ -f $dracutlib ]; then
 	. $dracutlib
@@ -51,6 +54,11 @@ elif repository_has_key "nodeid"; then
     . /tmp/root.info
     oldroot="$root"
     osr_set_nodeconfig_root $(repository_get_value nodeid)
+    # only for debugging...
+    echo "====================[osr-detect-root]================================="
+    echo oldroot: "$oldroot"
+    echo "======================================================================"
+    # is this set not by bot-comand-params... 
     if [ -z "$oldroot" ] || [ "$oldroot" = "/dev/root" ]; then
         info "[osr-detect-root]: fstype: ${fstype} root: ${root} netroot: $netroot"
         # Network root scripts may need updated root= options,
@@ -70,8 +78,8 @@ elif repository_has_key "nodeid"; then
             echo "NEWROOT='$NEWROOT'"
         } > /tmp/root.info
         # only for debugging...
-        echo "======================================================================"
-        echo "[osr-detect-root]: value of /tmp/root.info...\n"
+        echo "====================[osr-detect-root]================================="
+        echo "value of /tmp/root.info...\n"
         cat /tmp/root.info
         echo "======================================================================"
         . /tmp/root.info
@@ -91,7 +99,7 @@ elif repository_has_key "nodeid"; then
     echo '[ -e $NEWROOT/proc ]' > $hookdir/initqueue/finished/osrroot.sh
     info "[osr-detect-root]: Successfully called nfsroot."
     # only for debugging...
-    echo "======================================================================"
+    echo "====================[osr-detect-root]================================="
     echo "[osr-detect-root] arping:"
 #     info "[osr-detect-root] arping:"
     /sbin/arping -c 1 192.168.1.99
