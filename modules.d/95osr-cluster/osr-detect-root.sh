@@ -51,7 +51,7 @@ elif repository_has_key "nodeid"; then
     . /tmp/root.info
     oldroot="$root"
     osr_set_nodeconfig_root $(repository_get_value nodeid)
-    if [ -z "$oldroot" ] || [ "$oldroot" = "autodetect" ]; then
+    if [ -z "$oldroot" ] || [ "$oldroot" = "/dev/root" ]; then
         info "[osr-detect-root]: fstype: ${fstype} root: ${root} netroot: $netroot"
         # Network root scripts may need updated root= options,
         # so deposit them where they can see them (udev purges the env)
