@@ -5,7 +5,7 @@
 
 echo "====================================================================="
 echo "[communics-debugging] handler cmdline ..............\n"
-comoonics-handler
+# comoonics-handler
 echo "====================================================================="
 echo "Hook-Scheduler:"
 ls /lib/dracut/hooks/*
