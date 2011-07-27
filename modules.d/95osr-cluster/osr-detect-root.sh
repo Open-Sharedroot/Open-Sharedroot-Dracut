@@ -69,8 +69,11 @@ elif repository_has_key "nodeid"; then
             echo "netroot='$netroot'"
             echo "NEWROOT='$NEWROOT'"
         } > /tmp/root.info
-        info "[osr-detect-root]: value of /tmp/root.info...\n"
+        # only for debugging...
+        echo "======================================================================"
+        echo "[osr-detect-root]: value of /tmp/root.info...\n"
         cat /tmp/root.info
+        echo "======================================================================"
         . /tmp/root.info
         echo "\n"
         ( [ $fstype = "nfs" ] || [ $fstype = "nfs4" ] ) && echo > /dev/root
@@ -88,12 +91,14 @@ elif repository_has_key "nodeid"; then
     echo '[ -e $NEWROOT/proc ]' > $hookdir/initqueue-finished/osrroot.sh
     info "[osr-detect-root]: Successfully called nfsroot."
     # only for debugging...
+    echo "======================================================================"
     echo "[osr-detect-root] arping:"
-    info "[osr-detect-root] arping:"
+#     info "[osr-detect-root] arping:"
     /sbin/arping -c 1 192.168.1.99
     echo "\n"
     echo "[osr-detect-root] ...if-end"
-    info "[osr-detect-root] ...if-end:"
+#     info "[osr-detect-root] ...if-end:"
+    echo "======================================================================"
     # ... end debugging info.
 fi
 
