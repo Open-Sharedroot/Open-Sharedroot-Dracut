@@ -61,7 +61,6 @@ dist: AUTHORS comoonics-dracut-handler
 	cp -Rv ./modules.d/* $(OUTPUT_BUILD)/modules.d/
 	mkdir $(OUTPUT_BUILD)/osr-configs
 	cp -Rv ./osr-configs/* $(OUTPUT_BUILD)/osr-configs/
-	cp ./comoonics-dracut-handler/comoonics-handler  $(OUTPUT_BUILD)/modules.d/99comoonics-debug/
 
 
 # create tar-file
