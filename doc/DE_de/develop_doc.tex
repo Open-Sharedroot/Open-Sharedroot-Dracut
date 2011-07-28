@@ -8,8 +8,8 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{listings}
-\lstset{language=bash,basicstyle=\footnotesize}%, numbers=left}
-
+% \lstset{language=bash,basicstyle=\footnotesize}%, numbers=left}
+\lstset{language=bash, title=[CODEAUSSCHNITT], numbers=left, basicstyle=\footnotesize}
 
 \author{Olaf Radicke}
 \title{Dokumentation der Funktionsweise der OSR-Dracut-Module}
@@ -141,7 +141,8 @@ Die Dracut-lib (\texttt{/usr/share/dracut/modules.d/99base/dracut-lib.sh}) stell
 \subsection{Undokumentierte Dracut-Schnittstellen}
 
 
-An dieser Stelle wird das root-Filesystem präperiert:
+An dieser Stelle wird das root-Filesystem präperiert (\textbf{/modules.d/95osr-cluster/osr-detect-root.sh} ):
+
 
 \begin{lstlisting}
 if [ -z "$oldroot" ] || [ "$oldroot" = "autodetect" ]; then
@@ -156,11 +157,27 @@ if [ -z "$oldroot" ] || [ "$oldroot" = "autodetect" ]; then
         echo "NEWROOT='$NEWROOT'"
     } > /tmp/root.info
 \end{lstlisting}
-...Der Code ist in der Datei \textbf{/modules.d/95osr-cluster/osr-detect-root.sh } zu finden
+
+\bigskip
+In der Datei \textbf{95osr-cluster/module-setup.sh} wird der Filesystem-Typ-Handler gesetzt. Dername setzt sich zusammen aus [fs-typ] und "root":
+
+\bigskip
+
+\begin{lstlisting}
+    # set fstyp-handler
+    echo '[ -e $NEWROOT/proc ]' > $hookdir/initqueue/finished/osrroot.sh
+
+    # Handler
+    inst_simple "$moddir/osr-detect-root.sh" "/sbin/osrroot"
+\end{lstlisting}
+
 
 \bigskip
 
 Handler für den netroot-Typ ( \texttt{/usr/share/dracut/modules.d/40network/netroot} ):
+
+\bigskip
+
 \begin{lstlisting}
 # Check: do we really know how to handle (net)root?
 [ -z "$root" ] && die "No or empty root= argument"
@@ -177,6 +194,8 @@ fi
 \bigskip
 
 Bzw.: \texttt{/modules.d/95osr-cluster/install}
+
+\bigskip
 
 \begin{lstlisting}
 inst "$moddir/osr-detect-root.sh" "/sbin/osr-detect-root"

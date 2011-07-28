@@ -61,6 +61,7 @@ install() {
     inst_simple "$moddir/osr-set-nodeconfig-net.sh" "/sbin/osr-set-nodeconfig-net"
     # ugly...
     inst_simple "$moddir/osr-detect-root.sh" "/sbin/osr-detect-root"
+    # Handler 
     inst_simple "$moddir/osr-detect-root.sh" "/sbin/osrroot"
     inst_simple "$moddir/osr-detect-syslog.sh" "/sbin/osr-detect-syslog"
 
