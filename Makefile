@@ -15,7 +15,7 @@ OUTPUT_BUILD = ./osr-dracut-module-${VERSION}
 
 
 
-.PHONY: install clean archive rpm testimage test all check AUTHORS comoonics-dracut-handler
+.PHONY: install clean archive rpm testimage test all check AUTHORS 
 
 all: dist
 
@@ -50,7 +50,7 @@ archive: ../osr-dracut-module-$(VERSION).tar.bz2
 
 
 # create distrebut-build
-dist: AUTHORS comoonics-dracut-handler
+dist: AUTHORS 
 	mkdir $(OUTPUT_BUILD)
 	cp ./GPL*.txt $(OUTPUT_BUILD)
 	cp ./README* $(OUTPUT_BUILD)
