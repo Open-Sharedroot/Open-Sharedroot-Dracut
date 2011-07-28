@@ -15,9 +15,6 @@ depends() {
 
 install() {
 
-#     inst_simple "$moddir/comoonics-handler" /sbin/comoonics-handler
-#     inst_simple "/usr/lib64/libQtCore.so.4.7.3" /sbin/libQtCore.so.4
-
     inst_hook cmdline     50 "$moddir/handler-cmdline.sh"
     inst_hook pre-udev    50 "$moddir/handler-pre-udev.sh"
     inst_hook pre-trigger 50 "$moddir/handler-pre-trigger.sh"
