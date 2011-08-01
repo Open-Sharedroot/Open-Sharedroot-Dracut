@@ -7,8 +7,11 @@ check() {
     # What if we either require nfs|ocfs2|gfs|glusterfs|ext3 ???
 #     [ "$1" = "-d" ] && echo osr
 
-    this module is not be included by default
-    return 1
+    # this module is not  included by default
+#    return 1
+
+    # this module is included by default
+    return 0   
     
 }
 

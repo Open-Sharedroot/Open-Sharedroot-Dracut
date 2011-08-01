@@ -2,8 +2,12 @@
 # This module is only for debugging.
 
 check() {
-    this module is not be included by default
-    return 1
+
+    # this module is not  included by default
+#    return 1
+
+    # this module is included by default
+    return 0       
 }
 
 depends() {
