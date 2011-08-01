@@ -6,7 +6,10 @@ check() {
     # we require nfs
     # What if we either require nfs|ocfs2|gfs|glusterfs|ext3 ???
 #     [ "$1" = "-d" ] && echo osr
-    return 0
+
+    this module is not be included by default
+    return 1
+    
 }
 
 depends() {
