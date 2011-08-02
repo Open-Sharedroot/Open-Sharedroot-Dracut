@@ -24,11 +24,10 @@ elif [ -f /lib/osr/std-lib.sh ]; then
 else
     die "osr-detect-root: Could not find library std-lib.sh but it is required for OSR module to be working"
 fi
+
+# Sources the libraries needed. Sets up clutype and distribution in repository.
 sourceLibs ${libdir} 
 
-#CMDLINE="$CMDLINE"
-
-#export CMDLINE
 # don't fail fi root is not ok.
 [ -z "$rootok" ] && rootok=1
 # [ -z "$root" ] && root=autodetect

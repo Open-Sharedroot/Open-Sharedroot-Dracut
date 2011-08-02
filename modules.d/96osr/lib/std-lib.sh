@@ -22,11 +22,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 osr_param_store() {
-	key=$1
-	var=$(getarg $key 2>/dev/null) && repository_store_value $key $var
-	if [ $? -ne 0 ] && [ -n "$2" ]; then
-		repository_store_value "$key" "$2"
-	fi
+    key=$1
+    var=$(getarg $key 2>/dev/null) && repository_store_value $key $var
+    if [ $? -ne 0 ] && [ -n "$2" ]; then
+        repository_store_value "$key" "$2"
+    fi
 }
 #****f* boot-lib.sh/sourceLibs
 #  NAME
@@ -39,29 +39,19 @@ osr_param_store() {
 #  SOURCE
 #
 sourceLibs() {
-	if [ -n "$OSR_LIBSSOURCED" ] && [ $OSR_LIBSSOURCED -eq 1 ]; then
-		return 0
-	fi
-	local libdir=$1
+    if [ -n "$OSR_LIBSSOURCED" ] && [ $OSR_LIBSSOURCED -eq 1 ]; then
+        return 0
+    fi
+    local libdir=$1
 
-	OSR_LIBSSOURCED=1
+    OSR_LIBSSOURCED=1
 
     . ${libdir}/repository-lib.sh
-    #. ${libdir}/errors.sh
     . ${libdir}/boot-lib.sh
-    #. ${libdir}/hardware-lib.sh
-    #. ${libdir}/network-lib.sh
     . ${libdir}/rootfs-lib.sh
-    #. ${libdir}/stdfs-lib.sh
     . ${libdir}/defaults.sh
     [ -e ${libdir}/cluster-lib.sh ] && . ${libdir}/cluster-lib.sh
     [ -e ${libdir}/chroot-lib.sh ] && . ${libdir}/chroot-lib.sh
-    #. ${libdir}/xen-lib.sh
-    #[ -e ${libdir}/iscsi-lib.sh ] && source ${libdir}/iscsi-lib.sh
-    #[ -e ${libdir}/drbd-lib.sh ] && source ${libdir}/drbd-lib.sh
-
-    #local clutype=$(getCluType)
-    #[ -e ${libdir}/${clutype}-lib.sh ] && . ${libdir}/${clutype}-lib.sh
 
     # including all distribution dependent files
     local distribution=$(getDistribution)
@@ -71,14 +61,8 @@ sourceLibs() {
 
     for _distribution in $shortdistribution $distribution; do
       [ -e ${libdir}/${_distribution}/boot-lib.sh ] && source ${libdir}/${_distribution}/boot-lib.sh
-      #[ -e ${libdir}/${_distribution}/hardware-lib.sh ] && source ${libdir}/${_distribution}/hardware-lib.sh
-      #[ -e ${libdir}/${_distribution}/network-lib.sh ] && source ${libdir}/${_distribution}/network-lib.sh
       [ -e ${libdir}/${_distribution}/cluster-lib.sh ] && source ${libdir}/${_distribution}/clusterfs-lib.sh
       [ -e ${libdir}/${_distribution}/rootfs-lib.sh ] && source ${libdir}/${_distribution}/clusterfs-lib.sh
-      #[ -e ${libdir}/${_distribution}/${clutype}-lib.sh ] && source ${libdir}/${_distribution}/${clutype}-lib.sh
-      #[ -e ${libdir}/${_distribution}/xen-lib.sh ] && source ${libdir}/${_distribution}/xen-lib.sh
-      #[ -e ${libdir}/${_distribution}/iscsi-lib.sh ] && source ${libdir}/${_distribution}/iscsi-lib.sh
-      #[ -e ${libdir}/${_distribution}/drbd-lib.sh ] && source ${libdir}/${_distribution}/drbd-lib.sh
     done
     unset _distribution
     
@@ -179,7 +163,7 @@ step() {
    local __stepmode=$(repository_get_value step)
    local steps
    if [ -n "$__stepmode" ] && [ "$__stepmode" == "__set__" ]; then
-   	 echo -n "osr: $__message: "
+     echo -n "osr: $__message: "
      echo -n "osr: Press <RETURN> to continue (timeout in $step_timeout secs) [quit|break|continue|list]"
      read -t$step_timeout __the_step
      case "$(echo $__the_step | tr A-Z a-z)" in
