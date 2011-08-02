@@ -19,6 +19,8 @@ OUTPUT_BUILD = ./osr-dracut-module-${VERSION}
 
 all: dist
 
+
+# Install all dracut modules
 install:
 	mkdir -p $(DESTDIR)$(pkglibdir)/modules.d
 	cp -arx $(OUTPUT_BUILD)/modules.d/* $(DESTDIR)$(pkglibdir)/modules.d/
@@ -26,6 +28,7 @@ install:
 	cp -arx $(OUTPUT_BUILD)/osr-configs/query-map.cfg /etc/osr/
 #	cp -arx $(OUTPUT_BUILD)/modules.d/* $(pkglibdir)/modules.d/
 
+# remove modules 
 uninstall: 
 	$(RM) -r  $(DESTDIR)$(pkglibdir)/modules.d/95osr-chroot
 	$(RM) -r  $(DESTDIR)$(pkglibdir)/modules.d/95osr-cluster
@@ -34,6 +37,7 @@ uninstall:
 	$(RM) -r  $(DESTDIR)$(pkglibdir)/99comoonics-debug
 	$(RM) -r  /etc/osr/
 
+# cleaning the build-tmp-files
 clean:
 	rm -f *~
 	rm -f osr-dracut*.rpm 
@@ -46,6 +50,7 @@ clean:
 	$(RM) -r SRPMS
 	$(RM) -r RPMS
 
+# creake a bz2-achiv
 archive: ../osr-dracut-module-$(VERSION).tar.bz2
 
 
@@ -69,7 +74,7 @@ tar: dist
 	tar -cvjf ./osr-dracut-module-dev_`date +%F`.tar.bz2 $(OUTPUT_BUILD)
 	tar -cvjf ./osr-dracut-module-dev.tar.bz2 $(OUTPUT_BUILD)
 
-
+# create rpms
 rpm: tar
 	rpmbuild \
 	--define "_topdir $$PWD" \
@@ -86,6 +91,7 @@ check: all
 	done;exit $$ret
 	make -C test check
 
+# create a file with autors from git log.
 AUTHORS:
 	git shortlog  --numbered --summary -e |while read a rest; do echo $$rest;done > AUTHORS
 
