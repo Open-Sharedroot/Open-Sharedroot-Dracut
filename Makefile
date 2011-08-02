@@ -42,6 +42,7 @@ uninstall:
 devinstall: 
 	mkdir -p $(DEVINSTALDIR)
 	ls ./osr-dracut-module-dev/modules.d/*/lib/*.sh | xargs -I {}  cp {}  $(DEVINSTALDIR)
+	ls ./osr-dracut-module-dev/modules.d/*/lib/*.awk | xargs -I {}  cp {}  $(DEVINSTALDIR)
 
 # uninstall develop test install
 devuninstall:
