@@ -11,8 +11,7 @@ check() {
 #    return 1
 
     # this module is included by default
-    return 0   
-    
+    return 0
 }
 
 depends() {

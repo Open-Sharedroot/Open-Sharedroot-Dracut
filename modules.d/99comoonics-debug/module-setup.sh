@@ -25,6 +25,5 @@ install() {
     inst_hook pre-trigger 50 "$moddir/handler-pre-trigger.sh"
     inst_hook pre-mount   50 "$moddir/handler-pre-mount.sh"
     inst_hook mount       50 "$moddir/handler-mount.sh"
-    inst_hook pre-piv     50 "$moddir/handler-pre-pivot.sh"
-    
+    inst_hook pre-pivot   50 "$moddir/handler-pre-pivot.sh"
 }
