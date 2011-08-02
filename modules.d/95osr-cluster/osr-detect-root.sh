@@ -15,7 +15,7 @@
 #
 
 # only for debugging...
-functon debug()
+debug()
 {
     value=$1
 #     ifdebug="DEBUG"
