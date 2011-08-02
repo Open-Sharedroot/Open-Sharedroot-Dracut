@@ -3,11 +3,13 @@
 
 check() {
 
-    # this module is not  included by default
-#    return 1
+    # this module is not included by default
+   return 255
 
+    # this module is never included by default
+#    return 1
     # this module is included by default
-    return 0       
+#    return 0       
 }
 
 depends() {
