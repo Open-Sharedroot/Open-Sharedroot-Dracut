@@ -12,10 +12,10 @@ sysconfdir ?= ${prefix}/etc
 DESTDIR =
 BINDIR       = /usr/local/bin
 OUTPUT_BUILD = ./osr-dracut-module-${VERSION}
+DEVINSTALDIR = /lib/osr
 
 
-
-.PHONY: install clean archive rpm testimage test all check AUTHORS 
+.PHONY:   AUTHORS all archive check clean devinstall devuninstall install rpm testimage test  
 
 all: dist
 
@@ -27,7 +27,7 @@ install:
 	mkdir -p /etc/osr/
 	cp -arx $(OUTPUT_BUILD)/osr-configs/query-map.cfg /etc/osr/
 #	cp -arx $(OUTPUT_BUILD)/modules.d/* $(pkglibdir)/modules.d/
-
+	
 # remove modules 
 uninstall: 
 	$(RM) -r  $(DESTDIR)$(pkglibdir)/modules.d/95osr-chroot
@@ -36,6 +36,17 @@ uninstall:
 	$(RM) -r  $(DESTDIR)$(pkglibdir)/modules.d/99osr-atix-legacy
 	$(RM) -r  $(DESTDIR)$(pkglibdir)/99comoonics-debug
 	$(RM) -r  /etc/osr/
+
+
+# make a install for develop tests
+devinstall: 
+	mkdir -p $(DEVINSTALDIR)
+	ls ./osr-dracut-module-dev/modules.d/*/lib/*.sh | xargs -I {}  cp {}  $(DEVINSTALDIR)
+
+# uninstall develop test install
+devuninstall:
+	$(RM) -r $(DEVINSTALDIR)
+
 
 # cleaning the build-tmp-files
 clean:
@@ -93,5 +104,5 @@ check: all
 
 # create a file with autors from git log.
 AUTHORS:
-	git shortlog  --numbered --summary -e |while read a rest; do echo $$rest;done > AUTHORS
+	git shortlog  --numbered --summary -e |while read a rest; do echo $$rest;done > ./AUTHORS
 
