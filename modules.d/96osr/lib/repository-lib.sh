@@ -52,10 +52,10 @@
 #  SOURCE
 #
 repository_load() {
-	local repository="$1"
-	[ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
-	for file in ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.*; do
-	  repository_get_value ${file#${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.} $repository
+    local repository="$1"
+    [ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
+    for file in ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.*; do
+      repository_get_value ${file#${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.} $repository
     done
 }
 #******* repository_load
@@ -72,7 +72,7 @@ repository_load() {
 #  SOURCE
 #
 repository_normalize_value() {
-	echo $1 | tr '-' '_'
+    echo $1 | tr '-' '_'
 }
 #******* repository_store_value
 
@@ -89,16 +89,16 @@ repository_normalize_value() {
 #  SOURCE
 #
 repository_store_value() {
-	local key=$(repository_normalize_value $1)
-	local value="__set__"
-	if [ $# -gt 1 ]; then
-		value="$2"
-	fi
-	local repository="$3"
-	[ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
-	eval "${REPOSITORY_PREFIX}${repository}${REPOSITORY_FS}${key}=\"$value\""
-	echo -n "$value" > ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.$key
-	[ -f ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.$key ]
+    local key=$(repository_normalize_value $1)
+    local value="__set__"
+    if [ $# -gt 1 ]; then
+        value="$2"
+    fi
+    local repository="$3"
+    [ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
+    eval "${REPOSITORY_PREFIX}${repository}${REPOSITORY_FS}${key}=\"$value\""
+    echo -n "$value" > ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.$key
+    [ -f ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.$key ]
 }
 #******* repository_store_value
 
@@ -114,12 +114,12 @@ repository_store_value() {
 #  SOURCE
 #
 repository_append_value() {
-	local key=$(repository_normalize_value $1)
-	local repository="$3"
-	[ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
-	local value=$(repository_get_value $key $repository)
-	eval "${REPOSITORY_PREFIX}${repository}${REPOSITORY_FS}${key}=${value}\"$2\""
-	echo -n "$2" >> ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.$key
+    local key=$(repository_normalize_value $1)
+    local repository="$3"
+    [ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
+    local value=$(repository_get_value $key $repository)
+    eval "${REPOSITORY_PREFIX}${repository}${REPOSITORY_FS}${key}=${value}\"$2\""
+    echo -n "$2" >> ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.$key
 }
 #******* repository_append_value
 
@@ -134,15 +134,15 @@ repository_append_value() {
 #  SOURCE
 #
 repository_list_keys() {
-	local repository="$1"
-	[ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
-	local values=""
-	local key
+    local repository="$1"
+    [ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
+    local values=""
+    local key
 #	repository_load $repository
-	for key in ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.*; do
-		key=${key#${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.}
-		echo ${key}
-   	done		
+    for key in ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.*; do
+        key=${key#${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.}
+        echo ${key}
+    done
 }
 #******* repository_list_keys
 
@@ -157,14 +157,14 @@ repository_list_keys() {
 #  SOURCE
 #
 repository_list_values() {
-	local repository="$1"
-	[ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
-	local index=0
-	local key
-	for key in ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.*; do
-		key=${key#${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.}
-		echo $(repository_get_value $key $repository)
-   	done		
+    local repository="$1"
+    [ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
+    local index=0
+    local key
+    for key in ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.*; do
+        key=${key#${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.}
+        echo $(repository_get_value $key $repository)
+    done
 }
 #******* repository_list_values
 
@@ -179,20 +179,20 @@ repository_list_values() {
 #  SOURCE
 #
 repository_list_items() {
-	local repository="$3"
-	local OFS=" "
-	local LS="\n"
-	[ -n "$1" ] && OFS="$1"
-	[ -n "$2" ] && LS="$2"
-	[ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
-	local values=""
-	local key
-	for key in $(repository_list_keys $repository); do
-		if repository_has_key $key $repository; then
-	      values=${values}${LS}${key}${OFS}$(repository_get_value $key $repository)
-		fi
-  	done		
- 	echo -e $values
+    local repository="$3"
+    local OFS=" "
+    local LS="\n"
+    [ -n "$1" ] && OFS="$1"
+    [ -n "$2" ] && LS="$2"
+    [ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
+    local values=""
+    local key
+    for key in $(repository_list_keys $repository); do
+        if repository_has_key $key $repository; then
+          values=${values}${LS}${key}${OFS}$(repository_get_value $key $repository)
+        fi
+    done
+    echo -e $values
 }
 #******* repository_list_items
 
@@ -207,17 +207,17 @@ repository_list_items() {
 #  SOURCE
 #
 repository_get_value() {
-	local key=$(repository_normalize_value $1)
-	local repository="$2"
-	[ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
-	local value=
-	if [ -f ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.$key ]; then
-		value=$(cat ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.$key)
-		eval "${REPOSITORY_PREFIX}${repository}${REPOSITORY_FS}${key}=\"$value\""
-		echo $value
-		return 0
-	fi
-	return 1
+    local key=$(repository_normalize_value $1)
+    local repository="$2"
+    [ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
+    local value=
+    if [ -f ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.$key ]; then
+        value=$(cat ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.$key)
+        eval "${REPOSITORY_PREFIX}${repository}${REPOSITORY_FS}${key}=\"$value\""
+        echo $value
+        return 0
+    fi
+    return 1
 }
 #******* repository_get_value
 
@@ -232,11 +232,11 @@ repository_get_value() {
 #  SOURCE
 #
 repository_has_key() { 
-	local key=$(repository_normalize_value $1)
-	local repository="$2"
-	[ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
-	[ -f ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.$key ]
-	return $?
+    local key=$(repository_normalize_value $1)
+    local repository="$2"
+    [ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
+    [ -f ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.$key ]
+    return $?
 }
 #******* repository_has_key
 
@@ -251,14 +251,14 @@ repository_has_key() {
 #  SOURCE
 #
 repository_del_value() { 
-	local key=$(repository_normalize_value $1)
-	local repository="$2"
-	[ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
-	val=$(repository_get_value $key $repository)
-	if [ $? -eq 0 ]; then
-		eval "unset ${repository}${REPOSITORY_FS}${key}"
-		rm -f ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.$key
-	fi
+    local key=$(repository_normalize_value $1)
+    local repository="$2"
+    [ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
+    val=$(repository_get_value $key $repository)
+    if [ $? -eq 0 ]; then
+        eval "unset ${repository}${REPOSITORY_FS}${key}"
+        rm -f ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.$key
+    fi
 }
 #******* repository_del_value
 
@@ -273,11 +273,11 @@ repository_del_value() {
 #  SOURCE
 #
 repository_clear() {
-	local repository="$1"
-	[ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
-  	for key in $(repository_list_keys $repository); do
-  		repository_del_value $key $repository
-   	done
+    local repository="$1"
+    [ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
+    for key in $(repository_list_keys $repository); do
+        repository_del_value $key $repository
+    done
 }
 #******** repository_clear
 

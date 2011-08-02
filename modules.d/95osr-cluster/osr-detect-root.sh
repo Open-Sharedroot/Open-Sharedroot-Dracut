@@ -56,12 +56,12 @@ sourceLibs ${libdir}
 #-------------------------------------------------------------------------------
 
 netif=$1
-info "[osr-detect-root]: check exist /tmp/osr.nonodeid_${netif} \n"
-info "[osr-detect-root]: `[ -f /tmp/osr.nonodeid_${netif}]` \n"
+debug  "check exist /tmp/osr.nonodeid_${netif} \n"
+debug  `[ -f /tmp/osr.nonodeid_${netif}]` 
 if [ -f /tmp/osr.nonodeid_${netif} ]; then
-    info "[osr-detect-root]: Skipping."
+    debug  "[osr-detect-root]: Skipping."
 elif repository_has_key "nodeid"; then
-    info "[osr-detect-root]: Running......"
+    debug  "Running......"
     . /tmp/root.info
     oldroot="$root"
     osr_set_nodeconfig_root $(repository_get_value nodeid)
@@ -70,7 +70,7 @@ elif repository_has_key "nodeid"; then
 
     # is this set not by bot-comand-params... 
     if [ -z "$oldroot" ] || [ "$oldroot" = "block:/dev/root" ]; then
-        info "[osr-detect-root]: fstype: ${fstype} root: ${root} netroot: $netroot"
+        debug "fstype: ${fstype} root: ${root} netroot: $netroot"
         # Network root scripts may need updated root= options,
         # so deposit them where they can see them (udev purges the env)
         # rflags="rw"
@@ -96,13 +96,13 @@ elif repository_has_key "nodeid"; then
         ( [ $fstype = "nfs" ] || [ $fstype = "nfs4" ] ) && echo > /dev/root
     fi
     # Recalling netroot!
-    info "[osr-detect-root]: Calling nfsroot with $netif $netroot$rflags $NEWROOT"
+    debug "Calling nfsroot with $netif $netroot$rflags $NEWROOT"
     /sbin/nfsroot $netif $netroot$rflags $NEWROOT
     if [ -d /initqueue-finished ];
         then
-        info "[osr-detect-root]: /initqueue-finished exist"
+        debug " /initqueue-finished exist"
     else
-        info "[osr-detect-root]: create /initqueue-finished"
+        debug "create /initqueue-finished"
         mkdir /initqueue-finished
     fi
     echo '[ -e $NEWROOT/proc ]' > $hookdir/initqueue/finished/osrroot.sh
@@ -115,4 +115,4 @@ elif repository_has_key "nodeid"; then
 
 fi
 
-debug  "[osr-detect-root]: jump-out.........."
+debug  "jump-out.........."
