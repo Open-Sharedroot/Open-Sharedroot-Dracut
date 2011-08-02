@@ -15,8 +15,8 @@ if getarg rdnetdebug ; then
 fi
 
 if [ -f std-lib.sh ]; then
-	. ./std-lib.sh
-	libdir="."
+    . ./std-lib.sh
+    libdir="."
 elif [ -f /lib/osr/std-lib.sh ]; then 
     .  /lib/osr/std-lib.sh
     libdir="/lib/osr"
@@ -32,15 +32,14 @@ netif=$1
 if [ -f /tmp/osr.nonodeid_${netif} ]; then
     info $(basename $0)": Skipping <$netif>."
 elif repository_has_key "nodeid"; then
-	nodeid=$(repository_get_value "nodeid")
-	if [ -f "/etc/conf.d/osr-nodeidvalues-${nodeid}.conf" ]; then
-		ipstr=$(osr_set_nodeconfig_net $nodeid)
-		echo -n "ip=$ipstr" >> /etc/cmdline
-		info $(basename $0)": nodedeconfig-net ipstr: $ipstr" 
-	else
-		info $(basename $0)": Could not find nodeconfiguration for nodeid $nodeid. Continuing without."
-	fi
+    nodeid=$(repository_get_value "nodeid")
+    if [ -f "/etc/conf.d/osr-nodeidvalues-${nodeid}.conf" ]; then
+        ipstr=$(osr_set_nodeconfig_net $nodeid)
+        echo -n "ip=$ipstr" >> /etc/cmdline
+        info $(basename $0)": nodedeconfig-net ipstr: $ipstr"
+    else
+        info $(basename $0)": Could not find nodeconfiguration for nodeid $nodeid. Continuing without."
+    fi
 else
-	die $(basename $0)": nodeid neither detected nor setup as bootparameter. Cannot continue."
+    die $(basename $0)": nodeid neither detected nor setup as bootparameter. Cannot continue."
 fi
-	

@@ -267,13 +267,13 @@ listBreakpoints() {
 breakp() {
     local shell=$(cat /tmp/osr.shell)
     local issuetmp=$(cat /tmp/osr.shellissuetmp)
-    [ -z "$shell" ] && shell="/bin/sh" 
+    [ -z "$shell" ] && shell="/bin/sh"
     echo -e "$*" >  $issuetmp
-	echo "Type exit to continue work.." >> $issuetmp
-	if [ -n "$simulation" ] && [ $simulation ]; then
-	  $shell
-	else
-	  TERM=xterm $shell &>/dev/console
+    echo "Type exit to continue work.." >> $issuetmp
+    if [ -n "$simulation" ] && [ $simulation ]; then
+        $shell
+    else
+        TERM=xterm $shell &>/dev/console
     fi
     echo_local "Back to work.."
     #rm -f $rcfile

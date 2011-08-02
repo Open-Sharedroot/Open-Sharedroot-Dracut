@@ -14,8 +14,8 @@
 . /lib/dracut-lib.sh
 
 if [ -f std-lib.sh ]; then
-	. ./std-lib.sh
-	libdir="."
+    . ./std-lib.sh
+    libdir="."
 elif [ -f /lib/osr/std-lib.sh ]; then 
     .  /lib/osr/std-lib.sh
     libdir="/lib/osr"
@@ -24,8 +24,6 @@ else
 fi
 sourceLibs $libdir
 
-echo "[parse-cdsl] jump in..."
-info  "[parse-cdsl] jump in..."
 
 osr_param_store "cdsltree" "/cluster/cdsl"
 osr_param_store "cdslsharedtree" "/cluster/shared"

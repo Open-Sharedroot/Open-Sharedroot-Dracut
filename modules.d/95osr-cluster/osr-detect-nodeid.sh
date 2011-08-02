@@ -52,7 +52,6 @@ if ! repository_has_value "nodeid" ; then
     done < /tmp/osr-nodeids
     # debug info...
     echo "[osr-detect-nodeid] /sys/class/net/\$netif/address:" \n
-    echo "[osr-detect-nodeid]"
     cat /sys/class/net/$netif/address \n
     
     if [ -z "$nodeid" ]; then

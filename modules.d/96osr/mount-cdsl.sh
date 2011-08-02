@@ -18,8 +18,8 @@ if getarg rdnetdebug ; then
 fi
 
 if [ -f std-lib.sh ]; then
-	. ./std-lib.sh
-	libdir="."
+    . ./std-lib.sh
+    libdir="."
 elif [ -f /lib/osr/std-lib.sh ]; then 
     .  /lib/osr/std-lib.sh
     libdir="/lib/osr"
@@ -41,5 +41,6 @@ if [ "$fstype" = "nfs" ]; then
 fi 
 
 info "osr: Mapping $NEWROOT/"$(repository_get_value cdsltree)"/"$(repository_get_value nodeid)" => $NEWROOT/"$(repository_get_value cdsllink)
+
 mount --bind $NEWROOT/$(repository_get_value cdsltree)/$(repository_get_value nodeid) $NEWROOT/$(repository_get_value cdsllink)
 #exit $?

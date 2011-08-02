@@ -71,8 +71,6 @@ install() {
     inst_simple "$moddir/osr-detect-syslog.sh" "/sbin/osr-detect-syslog"
 
     inst_hook pre-udev 59 "$moddir/osr-net-genrules.sh"
-#    inst_hook netroot  11 "$moddir/osr-detect-chroot.sh"
-#    inst_hook netroot  50 "$moddir/osr-mount-chroot.sh"
 
     # Us
     # dracut -f -a "network nfs base osr osr-cluster" /boot/initrd_sr-$(uname -r).img $(uname -r)
