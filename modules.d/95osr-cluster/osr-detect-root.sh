@@ -15,9 +15,19 @@
 #
 
 # only for debugging...
-echo "====================[osr-detect-root]================================="
-echo "jump-in..."
-echo "======================================================================"
+functon debug()
+{
+    value=$1
+    ifdebug="DEBUG"
+    if [ "$ifdebug" = "DEBUG" ]
+    then
+        echo "====================[osr-detect-root]================================="
+        echo $value
+        echo "======================================================================"
+    fi
+}
+
+debug "Jump in..."
 
 if [ -n "$dracutlib" ] && [ -f $dracutlib ]; then
 	. $dracutlib
@@ -55,12 +65,13 @@ elif repository_has_key "nodeid"; then
     oldroot="$root"
     osr_set_nodeconfig_root $(repository_get_value nodeid)
     # only for debugging...
-    echo "====================[osr-detect-root]================================="
-    echo oldroot: "$oldroot"
-    if [ "$oldroot" = "block:/dev/root" ]; then
-      echo "is's the same!!!!!!!!!!!"
-    fi
-    echo "======================================================================"
+    debug "oldroot: $oldroot"
+#     echo "====================[osr-detect-root]================================="
+#     echo oldroot: "$oldroot"
+#     if [ "$oldroot" = "block:/dev/root" ]; then
+#       echo "is's the same!!!!!!!!!!!"
+#     fi
+#     echo "======================================================================"
     # is this set not by bot-comand-params... 
     if [ -z "$oldroot" ] || [ "$oldroot" = "block:/dev/root" ]; then
         info "[osr-detect-root]: fstype: ${fstype} root: ${root} netroot: $netroot"
@@ -81,10 +92,12 @@ elif repository_has_key "nodeid"; then
             echo "NEWROOT='$NEWROOT'"
         } > /tmp/root.info
         # only for debugging...
-        echo "====================[osr-detect-root]================================="
-        echo "value of /tmp/root.info...\n"
-        cat /tmp/root.info
-        echo "======================================================================"
+        debug "value of /tmp/root.info...\n"
+        debug `cat /tmp/root.info`
+#         echo "====================[osr-detect-root]================================="
+#         echo "value of /tmp/root.info...\n"
+#         cat /tmp/root.info
+#         echo "======================================================================"
         . /tmp/root.info
         echo "\n"
         ( [ $fstype = "nfs" ] || [ $fstype = "nfs4" ] ) && echo > /dev/root
@@ -101,16 +114,20 @@ elif repository_has_key "nodeid"; then
     fi
     echo '[ -e $NEWROOT/proc ]' > $hookdir/initqueue/finished/osrroot.sh
     info "[osr-detect-root]: Successfully called nfsroot."
+    
     # only for debugging...
-    echo "====================[osr-detect-root]================================="
-    echo "[osr-detect-root] arping:"
-#     info "[osr-detect-root] arping:"
-    /sbin/arping -c 1 192.168.1.99
-    echo "\n"
-    echo "[osr-detect-root] ...if-end"
-#     info "[osr-detect-root] ...if-end:"
-    echo "======================================================================"
+    debug "try Ping NFS with arping:"
+    debug `/sbin/arping -c 1 192.168.1.99`
+    debug "[osr-detect-root] ...if-end"
+#     echo "====================[osr-detect-root]================================="
+#     echo "[osr-detect-root] arping:"
+# #     info "[osr-detect-root] arping:"
+#     /sbin/arping -c 1 192.168.1.99
+#     echo "\n"
+#     echo "[osr-detect-root] ...if-end"
+# #     info "[osr-detect-root] ...if-end:"
+#     echo "======================================================================"
     # ... end debugging info.
 fi
 
-echo "[osr-detect-root]: jump-out................................."
+debug  "[osr-detect-root]: jump-out.........."
