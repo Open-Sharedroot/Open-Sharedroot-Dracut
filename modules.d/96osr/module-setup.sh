@@ -33,6 +33,8 @@ install() {
       inst_simple "$moddir/lib/$osrlib" /lib/osr/$osrlib
     done
 
+    # like gawk but do @include processing
+    inst_simple "/usr/bin/igawk" /usr/bin
 
     inst_simple "$moddir/issue" /etc
     #inst_simple "$moddir/shinit.sh" /sbin

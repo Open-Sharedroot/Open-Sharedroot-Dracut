@@ -8,6 +8,11 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{listings}
+
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+
 % \lstset{language=bash,basicstyle=\footnotesize}%, numbers=left}
 \lstset{language=bash, title=[CODEAUSSCHNITT], numbers=left, basicstyle=\footnotesize}
 
@@ -464,6 +469,71 @@ Das Script sorgt für ein Semigraphische Login-Graphik. Dies geschieht durch das
 \section{Modul 99osr-atix-legacy}
 
 Das Modul stellt lediglich ein Semigrafisches Logo zur Verfügung, was dem User beim Login gezeigt wird.
+
+\section{Coding conventions}
+
+\subsection{AWK}
+
+\subsubsection{Libs, Namensspace, Kommentare}
+
+AWK hat keinen Namespaces. Stattdessen werden Biblotheken mit Semit-Namespace versehen, getrent mit "`\_"' (Unterstrich). Also z.B.: "`std\_functionsname"'. "`std"' ist in diesem Fall der Namespace. AWK unterscheidet bei Variabeln- und Funktionsnnamen zwischen Groß- und Kleinschreibung. Lange Funktionsnamen können also so gestaltet werden: \texttt{std\_einSehrLangerFunktionsName()}.
+
+
+Die Dateinamen von Bibliotheken beginnen mit "`lib\_"'. Also z.B. "`lib\_std.awk"' für die Standart-Biblothek. Jede Datei hat zubegin den folgenden Haeder:
+
+\begin{verbatim}
+#!/usr/bin/igawk -f
+#==============================================================================
+# FILE:
+#       lib-std.awk
+# SEMINAMESPACE:
+#       std_
+# DESCRIPTION:
+#       Standart Lib for com.oonics-dracut-module
+# AUTORS:
+#       [...]
+# COMPANY:
+#       ATIX AG
+# LIZENZ:
+#        [...]
+#==============================================================================
+\end{verbatim}
+Jede datei hat genau \textbf{EINEN} Namensspace!
+
+
+\bigskip 
+
+
+Variablen in AWK sind grundsäzlich global. Nur die Parameter der Funktionen sind lokal. Diese Parameter-Variablen werden \textbf{AUCH} in AWK benutzt, um lokale Variablen ab zu bilden. Lokale Variablen -- wo immer möglich -- globalen vorzuziehen! Es können in AWL-Funktionen mehr Parameter-Variablen definiert werden, als beim Funktionsaufruf verwendet werden. Alle lokalen Variablen haben ein  "`\_"' (Unterstrich) vorangestellt zu haben. Die zwingend zu zu übergebenen Werte werden durch zusätzliche Leerzeichen von den übrigen lokalen Variaben separiert. Die Variablen und Parameter und lokalen Variablen werden in einem Kopf-Kommentar dokumentiert.
+
+
+\bigskip 
+\textbf{Beispiel:}
+
+
+\begin{verbatim}
+#=== FUNTION ==================================================================
+# NAME:
+#       osr_paramStore()
+# SEMINAMESPACE:
+#       std_
+# DESCRIPTION:
+#       [...]
+# PARAMETER:
+#       _key: [...]
+# LOCALE-VAR:
+#       _var: [...]
+#==============================================================================
+
+std_osr_paramStore(_key, _var)
+{
+    system(". /lib/dracut-lib.sh; getarg $key 2>/dev/null" | getline _var)
+    print _var
+}
+\end{verbatim}
+
+
+AWK unterstützt komplexe Typen. Und zwar ein- und mehrdimensionale Arrays. Arrays werden grundsätzlich mit einem großen Anfangsbuchstaben geschrieben. 
 
 
 

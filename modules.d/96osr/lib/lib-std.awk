@@ -1,7 +1,9 @@
-#!/bin/awk -f
+#!/usr/bin/igawk -f
 #==============================================================================
 # FILE:
 #       lib-std.awk
+# SEMINAMESPACE:
+#       std_
 # DESCRIPTION:
 #       Standart Lib for com.oonics-dracut-module
 # AUTORS:
@@ -15,20 +17,22 @@
 
 #=== FUNTION ==================================================================
 # NAME:
-#       osr_param_store()
+#       osr_paramStore()
+# SEMINAMESPACE:
+#       std_
 # DESCRIPTION:
 #
 # PARAMETER:
-#       key
+#       _key
 # LOCALE-VAR:
-#       var
+#       _var
 #==============================================================================
 
-osr_param_store(key var) {
+std_osr_paramStore(_key, _var) {
 
-    system(". /lib/dracut-lib.sh; getarg $key 2>/dev/null" | getline var)
+    system(". /lib/dracut-lib.sh; getarg $key 2>/dev/null" | getline _var)
 # todo...    
-    var=$(getarg $key 2>/dev/null) && repository_store_value $key $var
+    _var=$(getarg $key 2>/dev/null) && repository_store_value $key $_var
     if [ $? -ne 0 ] && [ -n "$2" ]; then
         repository_store_value "$key" "$2"
     fi
