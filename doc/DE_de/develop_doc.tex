@@ -11,7 +11,7 @@
 
 \usepackage[german]{babel}
 \usepackage[T1]{fontenc}
-\usepackage[latin1]{inputenc}
+%\usepackage[latin1]{inputenc}
 
 % \lstset{language=bash,basicstyle=\footnotesize}%, numbers=left}
 \lstset{language=bash, title=[CODEAUSSCHNITT], numbers=left, basicstyle=\footnotesize}
@@ -481,7 +481,7 @@ AWK hat keinen Namespaces. Stattdessen werden Biblotheken mit Semit-Namespace ve
 
 Die Dateinamen von Bibliotheken beginnen mit "`lib\_"'. Also z.B. "`lib\_std.awk"' für die Standart-Biblothek. Jede Datei hat zubegin den folgenden Haeder:
 
-\begin{verbatim}
+\begin{lstlisting}
 #!/usr/bin/igawk -f
 #==============================================================================
 # FILE:
@@ -497,7 +497,7 @@ Die Dateinamen von Bibliotheken beginnen mit "`lib\_"'. Also z.B. "`lib\_std.awk
 # LIZENZ:
 #        [...]
 #==============================================================================
-\end{verbatim}
+\end{lstlisting}
 Jede datei hat genau \textbf{EINEN} Namensspace!
 
 
@@ -511,18 +511,20 @@ Variablen in AWK sind grundsäzlich global. Nur die Parameter der Funktionen sin
 \textbf{Beispiel:}
 
 
-\begin{verbatim}
+\begin{lstlisting}
 #=== FUNTION ==================================================================
 # NAME:
-#       osr_paramStore()
+#    osr_paramStore()
 # SEMINAMESPACE:
-#       std_
+#    std_
 # DESCRIPTION:
-#       [...]
+#    [...]
 # PARAMETER:
-#       _key: [...]
+#    _key: [...]
 # LOCALE-VAR:
-#       _var: [...]
+#    _var: [...]
+# RETUNS:
+#    [...]
 #==============================================================================
 
 std_osr_paramStore(_key, _var)
@@ -530,10 +532,56 @@ std_osr_paramStore(_key, _var)
     system(". /lib/dracut-lib.sh; getarg $key 2>/dev/null" | getline _var)
     print _var
 }
-\end{verbatim}
+\end{lstlisting}
 
 
-AWK unterstützt komplexe Typen. Und zwar ein- und mehrdimensionale Arrays. Arrays werden grundsätzlich mit einem großen Anfangsbuchstaben geschrieben. 
+AWK unterstützt komplexe Typen. Und zwar ein- und mehrdimensionale Arrays.
+Funktionen können leider keine Arrays zurückgeben. Aber Funktionen können Array
+übergeben bekommen und manipulieren. Eine objektorientierte
+Programmierung ist daher trotzdem möglich und \textbf{sinnvoll}!
+
+\bigskip
+
+\begin{lstlisting}
+
+BEGIN{
+    mittagspause()
+}
+
+# _peter ist nur in der Funktion mittagspause() sichtbar. 
+function mittagspause( _peter)
+{
+  # _peter ist quasi ein Objekt.
+  # "Bauch" ist eine Objekt-/Klassen-eigenschaft.
+  _peter["Bauch"] = "leer"
+  _peter["Typ"] = "Fleischesser"
+
+  _uli["Bauch"] = "leer"
+  _uli["Typ"] = "Vegetarier"
+
+  print "vorher: Peter, bauch " _peter["Bauch"]
+  print "vorher: Uli, bauch " _uli["Bauch"]
+  
+  # goToMcDonalds() ist quasi eine Klasseneigenschaft.
+  goToMcDonalds(_peter)
+  goToMcDonalds(_uli)
+  
+  print "nachher: Peter, bauch " _peter["Bauch"]
+  print "nachher: Uli, bauch " _uli["Bauch"]
+}
+
+# _mensch ist ein uebergebenes Objekt
+function goToMcDonalds(_mensch)
+{
+    if (_mensch["Typ"] == "Fleischesser" )
+    {
+        _mensch["Bauch"] = "voll"
+    }else
+    {
+        _mensch["Bauch"] = "leer"
+    }
+}
+\end{lstlisting} 
 
 
 

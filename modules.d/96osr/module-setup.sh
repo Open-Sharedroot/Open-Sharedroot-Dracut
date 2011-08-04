@@ -33,8 +33,6 @@ install() {
       inst_simple "$moddir/lib/$osrlib" /lib/osr/$osrlib
     done
 
-    # like gawk but do @include processing
-    inst_simple "/usr/bin/igawk" /usr/bin
 
     inst_simple "$moddir/issue" /etc
     #inst_simple "$moddir/shinit.sh" /sbin
@@ -43,6 +41,9 @@ install() {
     # influence those persistent or somewhere else the /proc/cmdline parameters.
     # This should go first as it might overwrite some cmdline options
     inst_hook cmdline  1  "$moddir/setup-osrenv.sh"
+
+
+    
     # Next the nodeid detection should be done as it can influence every other setting following afterwards.
     inst_hook cmdline  2  "$moddir/parse-nodeid.sh"
 
@@ -64,4 +65,13 @@ install() {
     dracut_install mkdir
     dracut_install basename
     dracut_install awk
+
+    # AWK-Test ###############################################################
+
+    # like gawk but do @include processing
+    inst_simple "/usr/bin/igawk" /usr/bin
+    inst_simple "$moddir/lib/setup-osrenv.awk" /lib/osr/setup-osrenv.awk
+    # AWK-Hook-Wrapper
+    inst_hook cmdline  1  "$moddir/hook-setup-osrenv.sh"
+    
 }
