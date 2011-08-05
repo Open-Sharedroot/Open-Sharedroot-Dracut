@@ -544,30 +544,35 @@ Programmierung ist daher trotzdem möglich und \textbf{sinnvoll}!
 
 \begin{lstlisting}
 
+#!/usr/bin/awk -f
+
 BEGIN{
     mittagspause()
 }
 
-# _peter ist nur in der Funktion mittagspause() sichtbar. 
-function mittagspause( _peter)
+# _peter ist nur in der Funktion mittagspause() sichtbar.
+function mittagspause( _peter,_uli,_info,_error)
 {
-  # _peter ist quasi ein Objekt.
-  # "Bauch" ist eine Objekt-/Klassen-eigenschaft.
-  _peter["Bauch"] = "leer"
-  _peter["Typ"] = "Fleischesser"
+      _error = "?"
+      FactoryFleischesser(_peter)
+      FactoryVegetarier(_uli)
 
-  _uli["Bauch"] = "leer"
-  _uli["Typ"] = "Vegetarier"
+      print "vorher: Peter, bauch " _peter["Bauch"]
+      print "vorher: Uli, bauch " _uli["Bauch"]
 
-  print "vorher: Peter, bauch " _peter["Bauch"]
-  print "vorher: Uli, bauch " _uli["Bauch"]
-  
-  # goToMcDonalds() ist quasi eine Klasseneigenschaft.
-  goToMcDonalds(_peter)
-  goToMcDonalds(_uli)
-  
-  print "nachher: Peter, bauch " _peter["Bauch"]
-  print "nachher: Uli, bauch " _uli["Bauch"]
+      # goToMcDonalds() ist quasi eine Klasseneigenschaft.
+      goToMcDonalds(_peter)
+      goToMcDonalds(_uli)
+
+      _info = goToMcDonalds(_zombi)
+      if ( ExceptionHandler(_info,_error) )
+      {
+          print "Error:" _error
+          print "Kein Blud bei McDonadt!"
+      }
+
+      print "nachher: Peter, bauch " _peter["Bauch"]
+      print "nachher: Uli, bauch " _uli["Bauch"]
 }
 
 # _mensch ist ein uebergebenes Objekt
@@ -576,11 +581,49 @@ function goToMcDonalds(_mensch)
     if (_mensch["Typ"] == "Fleischesser" )
     {
         _mensch["Bauch"] = "voll"
-    }else
+    }else if (_mensch["Typ"] == "Vegetarier" )
     {
         _mensch["Bauch"] = "leer"
+    }else
+    {
+        return "Exception@bad typ"
     }
+    return ""
 }
+
+# Erstellt ein Objekt der Klasse "Mensch" abgeleitet ist
+function FactoryMensch(_mensch)
+{
+    _mensch["Bauch"] = "leer"
+}
+
+# Erstellt ein Objekt der Klasse "Fleischesser" das von Klasse "Mensch" abgeleitet ist
+function FactoryFleischesser(_mensch)
+{
+    FactoryMensch(_mensch)
+    _mensch["Typ"] = "Fleischesser"
+}
+
+# Erstellt ein Objekt der Klasse "Vegetarier" das von Klasse "Mensch" abgeleitet ist
+function FactoryVegetarier(_mensch)
+{
+    FactoryMensch(_mensch)
+    _mensch["Typ"] = "Vegetarier"
+}
+
+# Exception Handler
+function ExceptionHandler(_info,_ex, _array)
+{
+    if( index(_info, "Exception@") != 0)
+    {
+        split(_info, _array, "@")
+        _ex = _array[2]
+#        print _ex
+        return 1
+    }
+    return 0
+}
+
 \end{lstlisting} 
 
 
