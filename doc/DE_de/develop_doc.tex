@@ -544,18 +544,19 @@ Programmierung ist daher trotzdem möglich und \textbf{sinnvoll}!
 
 \begin{lstlisting}
 
-#!/usr/bin/awk -f
+#!/usr/bin/awk  -f
 
 BEGIN{
     mittagspause()
 }
 
 # _peter ist nur in der Funktion mittagspause() sichtbar.
-function mittagspause( _peter,_uli,_info,_error)
+function mittagspause( _peter,_uli,_zombi,_info,_ex)
 {
-      _error = "?"
+ #     _ex[""] = ""
       FactoryFleischesser(_peter)
       FactoryVegetarier(_uli)
+      FactoryZombi(_zombi)
 
       print "vorher: Peter, bauch " _peter["Bauch"]
       print "vorher: Uli, bauch " _uli["Bauch"]
@@ -565,31 +566,17 @@ function mittagspause( _peter,_uli,_info,_error)
       goToMcDonalds(_uli)
 
       _info = goToMcDonalds(_zombi)
-      if ( ExceptionHandler(_info,_error) )
+      if ( ExceptionHandler(_info,_ex) )
       {
-          print "Error:" _error
-          print "Kein Blud bei McDonadt!"
+          print "Message: "  _ex["message"]
+          print "Specification: "  _ex["specification"]
+          print "Kein Blud fuer Zombis bei McDonadt!"
       }
 
       print "nachher: Peter, bauch " _peter["Bauch"]
       print "nachher: Uli, bauch " _uli["Bauch"]
 }
 
-# _mensch ist ein uebergebenes Objekt
-function goToMcDonalds(_mensch)
-{
-    if (_mensch["Typ"] == "Fleischesser" )
-    {
-        _mensch["Bauch"] = "voll"
-    }else if (_mensch["Typ"] == "Vegetarier" )
-    {
-        _mensch["Bauch"] = "leer"
-    }else
-    {
-        return "Exception@bad typ"
-    }
-    return ""
-}
 
 # Erstellt ein Objekt der Klasse "Mensch" abgeleitet ist
 function FactoryMensch(_mensch)
@@ -611,19 +598,43 @@ function FactoryVegetarier(_mensch)
     _mensch["Typ"] = "Vegetarier"
 }
 
-# Exception Handler
+
+# Erstellt ein Objekt der Klasse "Zombi" das von Klasse "Mensch" abgeleitet ist
+function FactoryZombi(_mensch)
+{
+    FactoryMensch(_mensch)
+    _mensch["Typ"] = "Zombi"
+}
+
+
+# _mensch ist ein uebergebenes Objekt
+function goToMcDonalds(_mensch)
+{
+    if (_mensch["Typ"] == "Fleischesser" )
+    {
+        _mensch["Bauch"] = "voll"
+    }else if (_mensch["Typ"] == "Vegetarier" )
+    {
+        _mensch["Bauch"] = "leer"
+    }else
+    {
+        return "Exception@bad typ"
+    }
+    return ""
+}
+
+# Ausname fuer Typen-Fehler
 function ExceptionHandler(_info,_ex, _array)
 {
     if( index(_info, "Exception@") != 0)
     {
         split(_info, _array, "@")
-        _ex = _array[2]
-#        print _ex
+        _ex["message"] = _array[2]
+        _ex["specification"] = "TypException"
         return 1
     }
     return 0
 }
-
 \end{lstlisting} 
 
 
