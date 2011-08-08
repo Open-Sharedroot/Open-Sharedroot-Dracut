@@ -72,8 +72,8 @@ install() {
 
     # like gawk but do @include processing
     inst_simple "/usr/bin/igawk" /usr/bin
-    inst_script "$moddir/lib/setup-osrenv.awk" /lib/osr/setup-osrenv.awk
-    inst_simple "$moddir/lib/osr/lib-std.awk" /lib/osr/lib-std.awk
+    inst_script "$moddir/lib/setup-osrenv.awk" /lib/osr
+    inst_simple "$moddir/lib/osr/lib-std.awk" /lib/osr
     # AWK-Hook-Wrapper
     inst_hook cmdline  1  "$moddir/hook-setup-osrenv.sh"
     
