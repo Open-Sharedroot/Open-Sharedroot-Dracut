@@ -1,4 +1,4 @@
-#!/usr/bin/igawk -f
+#!/usr/bin/igawk --lint=fatal -f
 #==============================================================================
 # FILE:
 #       lib-std.awk
@@ -51,7 +51,7 @@ function std_getLibDir()
 # RETUNS:
 #    
 #==============================================================================
-std_paramStore(_key,_value, _var,_isSuccess,_bashComand)
+function std_paramStore(_key,_value, _var,_isSuccess,_bashComand)
 {
     _bashComand = ". /lib/dracut-lib.sh; getarg " _key
     _isSuccess = system( _bashComand | getline _var)
@@ -86,15 +86,13 @@ std_paramStore(_key,_value, _var,_isSuccess,_bashComand)
 # RETUNS:
 #   If file exist, it's return "TRUE", else "FALSE"
 #==============================================================================
-std_isFileExist(_path, _command_, _returnVar)
+function std_isFileExist(_path, _command_, _returnVar)
 {
     _command = "if [ -f " _path " ] ; then echo 'TRUE';  fi"
     system( _bashComand | getline _returnVar)
-    if( _returnVar == "TRUE")
+    if( _returnVar != "TRUE")
     {
-        return "TRUE"
-    }else
-    {
-        return "FALSE"
+        _returnVar = "FALSE"
     }
+    return _returnVar
 }

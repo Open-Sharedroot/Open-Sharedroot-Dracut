@@ -1,4 +1,4 @@
-#!/usr/bin/igawk -f
+#!/usr/bin/awk --lint=fatal -f
 #==============================================================================
 # FILE:
 #       lib-repository.awk

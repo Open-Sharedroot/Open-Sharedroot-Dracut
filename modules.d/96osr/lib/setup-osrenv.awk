@@ -2,14 +2,12 @@
 
 @include /lib/osr/lib-std.awk
 
-BEGIN
-{
-    main()
+BEGIN{
+    main_function()
 }
 
-function main( _libdir,_predir,_shellrcfile)
+function main_function( _libdir,_predir,_shellrcfile)
 {
-    system( _bashComand | getline _var)
     _libdir = std_getLibDir()
     _predir = ""
 
