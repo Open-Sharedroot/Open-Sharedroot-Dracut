@@ -8,4 +8,4 @@
 # of a shared boot with also shared boot parameters.
 # This feature is important e.g. for sharedroot clusters using a common bootloader configuration.
 
-$moddir/setup-osrenv.awk
+/lib/osr/setup-osrenv.awk
