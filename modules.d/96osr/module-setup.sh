@@ -40,7 +40,7 @@ install() {
     # We should not need this because as of version 0.7 we only need to write to /etc/cmdline in order to
     # influence those persistent or somewhere else the /proc/cmdline parameters.
     # This should go first as it might overwrite some cmdline options
-#     inst_hook cmdline  1  "$moddir/setup-osrenv.sh"
+    inst_hook cmdline  1  "$moddir/setup-osrenv.sh"
     
     inst_hook cmdline  1  "$moddir/hook-setup-osrenv.sh"
 
