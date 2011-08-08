@@ -75,6 +75,7 @@ install() {
     inst_simple "/usr/bin/igawk" /usr/bin
     chmod 755 "$moddir/lib/setup-osrenv.awk"
     inst_script "$moddir/lib/setup-osrenv.awk" /lib/osr
+    inst_simple "$moddir/lib/lib-repository.awk" /lib/osr
     inst_simple "$moddir/lib/lib-std.awk" /lib/osr
     # AWK-Hook-Wrapper
     inst_hook cmdline  1  "$moddir/hook-setup-osrenv.sh"
