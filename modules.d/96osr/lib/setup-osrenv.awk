@@ -1,7 +1,8 @@
-#!/usr/bin/igawk -f
+#!/usr/bin/awk -f
+##!/usr/bin/igawk -f
 
-@include /lib/osr/lib-std.awk
-@include /lib/osr/lib-repository.awk
+#@include /lib/osr/lib-std.awk
+#@include /lib/osr/lib-repository.awk
 
 BEGIN{
     main_function()

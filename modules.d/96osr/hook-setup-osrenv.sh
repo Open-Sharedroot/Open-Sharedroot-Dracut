@@ -8,4 +8,9 @@
 # of a shared boot with also shared boot parameters.
 # This feature is important e.g. for sharedroot clusters using a common bootloader configuration.
 
-/lib/osr/setup-osrenv.awk
+#/lib/osr/setup-osrenv.awk
+# Debug mode
+awk -W lint -f /lib/osr/setup-osrenv.awk -f /lib/osr/lib-std.awk -f /lib/osr/lib-repository.awk
+
+# Nomale mode
+#awk  -f /lib/osr/setup-osrenv.awk -f /lib/osr/lib-std.awk -f /lib/osr/lib-repository.awk

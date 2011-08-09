@@ -1,4 +1,4 @@
-#!/usr/bin/awk --lint=fatal -f
+#!/usr/bin/awk -f
 #==============================================================================
 # FILE:
 #       lib-repository.awk
