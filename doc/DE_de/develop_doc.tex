@@ -474,6 +474,57 @@ Das Modul stellt lediglich ein Semigrafisches Logo zur Verfügung, was dem User 
 
 \subsection{AWK}
 
+\subsubsection{Vorteile von AWK}
+
+AWK bietet eine ganze Reihe von Vorteilteilen gegenüber Dash/Bash.
+
+\begin{itemize}
+ \item Es ist keine Entweder-oder-Entscheidung. Dash/Bash und lässt sich relativ gut wischen.
+ \item AWK kommt von der Syntax C sehr nahe. Da die meisten Sprachen auf C-Syntax
+       basieren (Perl, C++, Java, C\#, JavaScript, PHP...), dürfe es leichter sein,
+       (neue) Programmiere für das Projekt zu gewinnen.
+ \item AWK hat mit den Flag \verb|-W lint|  ein mächtiges Tool nicht zur
+       zur syntaktischen Prüfung, sondern auch für logische Prüfung (Siehe Unten
+       Abbildung Abbildungen \ref{pic:lint}).
+ \item Die Syntax begünstigt den Umgang von Editoren mit dem Quellcode (Siehe \textit{Vim}
+       Abbildungen \ref{pic:vim} und \textit{Emacs} Abbildungen \ref{pic:emacs}). So kann
+       der Editor \textit{Kate} Codeblöcke ein und aus klappen(Abbildungen \ref{pic:kate})
+ \item AWK besitzt Komplexe Datentypen. Das ermögliche das leichtere Kapseln von
+       komplexen Aufgaben.
+ \item Funktionen sind durch die klammern leichter zu erkennen.
+ \item Komplexe Bedingungen lassen sich transparenter und leichter in Unterfunktionen
+       kapseln.
+\end{itemize}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=1.0\textwidth]{./awk-lint.png}
+ \caption[]{Ausgabe des AWK Lint-Flag}
+ \label{pic:lint} 
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=0.75\textwidth]{./awk-emacs.png}
+ \caption[]{Syntax highlighting mit Emacs}
+ \label{pic:emacs} 
+\end{figure}
+
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=0.75\textwidth]{./awk-vim.png}
+ \caption[]{Syntax highlighting mit Vim}
+ \label{pic:vim} 
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=0.75\textwidth]{./awk-kate.png}
+ \caption[]{Ausschnitt vom Kate-Editor mit "`Klammer-Falt-Funtktion"'}
+ \label{pic:kate}
+\end{figure}
+
 \subsubsection{Libs, Namensspace, Kommentare}
 
 AWK hat keinen Namespaces. Stattdessen werden Biblotheken mit Semit-Namespace versehen, getrent mit "`\_"' (Unterstrich). Also z.B.: "`std\_functionsname"'. "`std"' ist in diesem Fall der Namespace. AWK unterscheidet bei Variabeln- und Funktionsnnamen zwischen Groß- und Kleinschreibung. Lange Funktionsnamen können also so gestaltet werden: \texttt{std\_einSehrLangerFunktionsName()}.
@@ -482,7 +533,7 @@ AWK hat keinen Namespaces. Stattdessen werden Biblotheken mit Semit-Namespace ve
 Die Dateinamen von Bibliotheken beginnen mit "`lib\_"'. Also z.B. "`lib\_std.awk"' für die Standart-Biblothek. Jede Datei hat zubegin den folgenden Haeder:
 
 \begin{lstlisting}
-#!/usr/bin/igawk -f
+#!/usr/bin/awk -f
 #==============================================================================
 # FILE:
 #       lib-std.awk
