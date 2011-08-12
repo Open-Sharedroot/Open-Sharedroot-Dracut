@@ -15,7 +15,7 @@
 #==============================================================================
 
 
-#=== FUNTION ==================================================================
+#=== FUNCTION ==================================================================
 # NAME:
 #    repository_getPrefix
 # SEMINAMESPACE:
@@ -34,7 +34,7 @@ function repository_getPrefix()
     return ""
 }
 
-#=== FUNTION ==================================================================
+#=== FUNCTION ==================================================================
 # NAME:
 #    repository_getPath
 # SEMINAMESPACE:
@@ -53,7 +53,7 @@ function repository_getPath()
     return "/tmp"
 }
 
-#=== FUNTION ==================================================================
+#=== FUNCTION ==================================================================
 # NAME:
 #    repository_getDefault
 # SEMINAMESPACE:
@@ -73,7 +73,7 @@ function repository_getDefault()
     return "osr"
 }
 
-#=== FUNTION ==================================================================
+#=== FUNCTION ==================================================================
 # NAME:
 #    repository_getFS
 # SEMINAMESPACE:
@@ -92,7 +92,7 @@ function repository_getFS()
     return "_"
 }
 
-#=== FUNTION ==================================================================
+#=== FUNCTION ==================================================================
 # NAME:
 #    repository_getValue()
 # SEMINAMESPACE:
@@ -117,14 +117,17 @@ function repository_getFS()
 #    if the function found the the file with date auf key, then it's
 #    get back this value and set this as bash variable.
 #    else get back "EXCEPTION@file no found".
+# TODO:
+#   Replace system()-function with std_sysCommand()-function
 #==============================================================================
-function repository_getValue(_key,_repository, _value,_path,_bashComand,_bashVariable)
+function repository_getValue(_key,_repository, _value,_path,_bashComand,_bashVariable,_isSuccess)
 {
     # initialize private variable
     _value = ""
     _path = ""
     _bashComand = ""
     _bashVariable = ""
+    _isSuccess = ""
     
     _key = repository_normalizeValue(_key)
     if(_repository == "")
@@ -172,7 +175,7 @@ function repository_getValue(_key,_repository, _value,_path,_bashComand,_bashVar
 
 
 
-#=== FUNTION ==================================================================
+#=== FUNCTION ==================================================================
 # NAME:
 #    repository_normalizeValue()
 # SEMINAMESPACE:
