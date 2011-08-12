@@ -120,6 +120,12 @@ function repository_getFS()
 #==============================================================================
 function repository_getValue(_key,_repository, _value,_path,_bashComand,_bashVariable)
 {
+    # initialize private variable
+    _value = ""
+    _path = ""
+    _bashComand = ""
+    _bashVariable = ""
+    
     _key = repository_normalizeValue(_key)
     if(_repository == "")
     {

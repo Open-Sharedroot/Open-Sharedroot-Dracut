@@ -17,7 +17,7 @@ function main_function( _libdir,_predir,_shellrcfile)
     std_paramStore( "shellrcfile",      _libdir "/shinitrc")
     std_paramStore( "shellissue",       _predir "/etc/issue")
     std_paramStore( "shellissuetmp",    _predir "/tmp/issue")
-    _shellrcfile = repository_getValue("shellrcfile")
+    _shellrcfile = repository_getValue("shellrcfile", "")
     if( _shellrcfile == "EXCEPTION@file no found")
     {
         _shellrcfile = ""

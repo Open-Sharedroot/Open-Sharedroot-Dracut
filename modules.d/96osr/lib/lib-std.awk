@@ -53,6 +53,11 @@ function std_getLibDir()
 #==============================================================================
 function std_paramStore(_key,_value, _var,_isSuccess,_bashComand)
 {
+    # initialize private variable
+    _var = ""
+    _isSuccess = 0
+    _bashComand = ""
+
     _bashComand = ". /lib/dracut-lib.sh; getarg " _key
     _isSuccess = system( _bashComand | getline _var)
     if(_isSuccess)
@@ -86,8 +91,12 @@ function std_paramStore(_key,_value, _var,_isSuccess,_bashComand)
 # RETUNS:
 #   If file exist, it's return "TRUE", else "FALSE"
 #==============================================================================
-function std_isFileExist(_path, _command_, _returnVar)
+function std_isFileExist(_path, _bashComand, _returnVar)
 {
+    # initialize private variable
+    _bashComand = ""
+    _returnVar = ""
+    
     _command = "if [ -f " _path " ] ; then echo 'TRUE';  fi"
     system( _bashComand | getline _returnVar)
     if( _returnVar != "TRUE")
