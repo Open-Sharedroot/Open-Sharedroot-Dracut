@@ -37,7 +37,7 @@ function std_getLibDir()
 
 #=== FUNCTION ==================================================================
 # NAME:
-#    osr_paramStore()
+#    std_paramStore()
 # SEMINAMESPACE:
 #    std_
 # DESCRIPTION:
@@ -124,23 +124,27 @@ function std_isFileExist(_path, _bashComand, _returnVar)
 
 
 #=== FUNCTION ==================================================================
-# NAME:
-#    sysCommand()
-# SEMINAMESPACE:
-#    std_
-# DESCRIPTION:
-#   This function execute a system command.
-# PARAMETER:
-#    _path:
-#       a file path
-# LOCALE-VAR:
-#    _command:
-#        String for storage a bash command
-# RETUNS:
-#   The output of the bash command. Or return a exception string.
-#   for exception handling see std_ExceptionHandler()
-# Exception(s):
-#   "Exception@SystemException@[....]"
+## NAME:
+##    std_sysCommand()
+## NAMESPACE:
+##    std
+## DESCRIPTION:
+##   This function execute a system command.
+## PARAMETER:
+##    ITEM: _bashComand
+##       a bash command.
+## LOCALE:
+##    ITEM: _returnVar
+##        value of return from system-functions-call.
+##    ITEM: _returnVarSum
+##        the sum of all returns.
+## RETURN:
+##   The output of the bash command. Or return a exception string.
+##   for exception handling see std_ExceptionHandler()
+## EXCEPTION:
+##    ITEM: SystemException
+##       If system-function not successful than return
+##       "Exception@SystemException@[....]" string.
 #==============================================================================
 function std_sysCommand(_bashComand, _returnVar,_returnVarSum)
 {

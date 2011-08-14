@@ -487,7 +487,7 @@ AWK bietet eine ganze Reihe von Vorteilteilen gegenüber Dash/Bash.
        zur syntaktischen Prüfung, sondern auch für logische Prüfung (Siehe Unten
        Abbildung Abbildungen \ref{pic:lint}).
  \item Mit \textbf{dgawk} gibt es für AWK ein mächtigen Debugger.\footnote{Siehe
-       hier zu die gawk-Doku \url{http://www.gnu.org/software/gawk/manual/gawk.html#Debugger}}
+       hier zu die gawk-Doku \url{http://www.gnu.org/software/gawk/manual/gawk.html\#Debugger}}
  \item Die Syntax begünstigt den Umgang von Editoren mit dem Quellcode (Siehe \textit{Vim}
        Abbildungen \ref{pic:vim} und \textit{Emacs} Abbildungen \ref{pic:emacs}). So kann
        der Editor \textit{Kate} Codeblöcke ein und aus klappen(Abbildungen \ref{pic:kate})
@@ -532,7 +532,7 @@ AWK bietet eine ganze Reihe von Vorteilteilen gegenüber Dash/Bash.
 AWK hat keinen Namespaces. Stattdessen werden Biblotheken mit Semit-Namespace versehen, getrent mit "`\_"' (Unterstrich). Also z.B.: "`std\_functionsname"'. "`std"' ist in diesem Fall der Namespace. AWK unterscheidet bei Variabeln- und Funktionsnnamen zwischen Groß- und Kleinschreibung. Lange Funktionsnamen können also so gestaltet werden: \texttt{std\_einSehrLangerFunktionsName()}.
 
 
-Die Dateinamen von Bibliotheken beginnen mit "`lib\_"'. Also z.B. "`lib\_std.awk"' für die Standart-Biblothek. Jede Datei hat zubegin den folgenden Haeder:
+Die Dateinamen von Bibliotheken beginnen mit "`lib\_"'. Also z.B. "`lib\_std.awk"' für die Standart-Biblothek. Jede Datei hat zu Beginn den folgenden Haeder:
 
 \begin{lstlisting}
 #!/usr/bin/awk -f
@@ -557,36 +557,11 @@ Jede datei hat genau \textbf{EINEN} Namensspace!
 \bigskip 
 
 
-Variablen in AWK sind grundsäzlich global. Nur die Parameter der Funktionen sind lokal. Diese Parameter-Variablen werden \textbf{AUCH} in AWK benutzt, um lokale Variablen ab zu bilden. Lokale Variablen -- wo immer möglich -- globalen vorzuziehen! Es können in AWL-Funktionen mehr Parameter-Variablen definiert werden, als beim Funktionsaufruf verwendet werden. Alle lokalen Variablen haben ein  "`\_"' (Unterstrich) vorangestellt zu haben. Die zwingend zu zu übergebenen Werte werden durch zusätzliche Leerzeichen von den übrigen lokalen Variaben separiert. Die Variablen und Parameter und lokalen Variablen werden in einem Kopf-Kommentar dokumentiert.
-
+Variablen in AWK sind grundsätzlich global. Nur die Parameter der Funktionen sind lokal. Diese Parameter-Variablen werden \textbf{AUCH} in AWK benutzt, um lokale Variablen ab zu bilden. Lokale Variablen -- wo immer möglich -- globalen vorzuziehen! Es können in AWL-Funktionen mehr Parameter-Variablen definiert werden, als beim Funktionsaufruf verwendet werden. Alle lokalen Variablen haben ein  "`\_"' (Unterstrich) vorangestellt zu haben. Die zwingend zu zu übergebenen Werte werden durch zusätzliche Leerzeichen von den übrigen lokalen Variablen separiert. Die Variablen und Parameter und lokalen Variablen werden in einem Kopf-Kommentar dokumentiert.
 
 \bigskip 
-\textbf{Beispiel:}
 
-
-\begin{lstlisting}
-#=== FUNTION ==================================================================
-# NAME:
-#    osr_paramStore()
-# SEMINAMESPACE:
-#    std_
-# DESCRIPTION:
-#    [...]
-# PARAMETER:
-#    _key: [...]
-# LOCALE-VAR:
-#    _var: [...]
-# RETUNS:
-#    [...]
-#==============================================================================
-
-std_osr_paramStore(_key, _var)
-{
-    system(". /lib/dracut-lib.sh; getarg $key 2>/dev/null" | getline _var)
-    print _var
-}
-\end{lstlisting}
-
+\subsubsection{Objektorientierte Programmierung}
 
 AWK unterstützt komplexe Typen. Und zwar ein- und mehrdimensionale Arrays.
 Funktionen können leider keine Arrays zurückgeben. Aber Funktionen können Array
@@ -692,9 +667,81 @@ function ExceptionHandler(_info,_ex, _array)
 \bigskip 
 Zur Vertiefung des Themas siehe auch: \url{http://de.wikibooks.org/wiki/Awk:_Grundlagen:_Objektorientierte_Programmierung}
 
+\subsubsection{Automatisch generierte Schnittstellen-Dokumentation}
+
+Es gibt ein kleines AWK-Skript (\texttt{interface\_doc\_generator.awk}) mit dem automatisch Dokumentation generiert werden kann mit den Schnittstellen der Funktionen. Dazu müssen diese aber auf eine bestimmte weise im Code kommentiert werden. 
+\bigskip 
+\textbf{Beispiel:}
 
 
+\begin{lstlisting}
+#=== FUNCTION ==================================================================
+## NAME:
+##    std_sysCommand()
+## NAMESPACE:
+##    std
+## DESCRIPTION:
+##   This function execute a system command.
+## PARAMETER:
+##    ITEM: _bashComand
+##       a bash command.
+## LOCALE:
+##    ITEM: _returnVar
+##        value of return from system-functions-call.
+##    ITEM: _returnVarSum
+##        the sum of all returns.
+## RETURN:
+##   The output of the bash command. Or return a exception string.
+##   for exception handling see std_ExceptionHandler()
+## EXCEPTION:
+##    ITEM: SystemException
+##       If system-function not successful than return
+##       "Exception@SystemException@[....]" string.
+#==============================================================================
+function std_sysCommand(_bashComand, _returnVar,_returnVarSum)
+{
+    # initialize private variable
+    _returnVar = ""
+    _returnVarSum = ""
 
+    while ((_bashComand | getline  _returnVar) > 0) {
+        _returnVarSum += _returnVar
+    }
+    if( close(_bashComand) != 0 )
+    {
+        return "Exception@SystemException@process is not successful ending."
+    }
+    return _returnVarSum
+}
+\end{lstlisting}
+
+\bigskip 
+
+Generell: Alle Kommentare die berücksichtigt werden sollen müssen mit zwei Raute-Zeichen beginnen. Die Doppelpunkte am Ende der Schlüsselwörter sind zwingend. Die zu verwendenden Schlüsselwörter sind die folgenden. 
+
+\bigskip 
+
+\begin{description}
+ \item[NAME:] Name der Funktion.
+ \item[NAMESPACE:] Der Teil des Funktionsnamen, der den Namensraum darstellt.
+ \item[DESCRIPTION:] Beschreibung was die Funktion tut.
+ \item[PARAMETER:] Liste der Parameter, die die Funktion erwartet.
+ \item[ITEM:] Beschreibt ein einzelnen Elemente (Etwa Parameter oder lokale Variablen) . Das Erste Wort nach dem Schlüsselwort \textit{ITEM:} wird als Name des Elements verwendet. Die eigentliche Beschreibung folgt in den nächsten Zeilen. 
+ \item[LOCALE:] Auflistung der lokalen Variablen, die in der Funktion verwendet werden.
+ \item[RETURN:] Der zu erwartende Rückgabewert.
+ \item[EXCEPTION:] Ist in der Funktion eine (oder mehrere) Ausnahme definiert, werden die hier beschrieben. 
+ \end{description}
+
+\bigskip 
+Das Ergebnis wir in Abbildung \ref{pic:html} aussehen.
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=0.75\textwidth]{./awk-html-conv.png}
+ \caption[]{HTML-Ausgabe im Browser.}
+ \label{pic:html}
+\end{figure}
+ 
 \section{Nutzungsbedingungen}
 
 \subsection{Informationen für Weiternutzer}
