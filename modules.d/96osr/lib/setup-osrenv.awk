@@ -1,13 +1,33 @@
 #!/usr/bin/awk -f
-##!/usr/bin/igawk -f
-
-#@include /lib/osr/lib-std.awk
-#@include /lib/osr/lib-repository.awk
 
 BEGIN{
     main_function()
 }
 
+
+
+#=== FUNCTION ==================================================================
+## NAME:
+##    main_function()
+## NAMESPACE:
+##    
+## DESCRIPTION:
+##    init env-variable.
+## PARAMETER:
+## LOCALE:
+##    ITEM: _libdir
+##        Path of lib-dir.
+##    ITEM: _predir
+##
+##    ITEM: _shellrcfile
+##        Bash-rc File.
+## RETURN:
+##   No returns.
+## EXCEPTION:
+##    ITEM: Not definiert.
+## TODO:
+##      Clean up.
+#==============================================================================
 function main_function( _libdir,_predir,_shellrcfile)
 {
     _libdir = std_getLibDir()

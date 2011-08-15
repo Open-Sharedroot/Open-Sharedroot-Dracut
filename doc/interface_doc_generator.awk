@@ -10,7 +10,9 @@ BEGIN{
     htmlDoc = htmlDoc "\n<body>"
 
     for (i = 1; i < ARGC; i++)
+    {
         readeFile( ARGV[i] )
+    }
     htmlDoc = htmlDoc "\n</body>"
     htmlDoc = htmlDoc "\n</html>"
 
@@ -25,6 +27,7 @@ function readeFile(_filename,  _bashComand,_returnVar,_tagName,_data)
     _bashComand = ""
     _data = ""
 
+    htmlDoc = htmlDoc "<h1>File: " _filename "</h1>\n"
     _bashComand = "cat "  _filename " | grep '^##' | sed 's/^##//'"
     while ((_bashComand | getline  _returnVar) > 0) {
         if ( index(_returnVar, "NAME:") != 0)
@@ -33,7 +36,7 @@ function readeFile(_filename,  _bashComand,_returnVar,_tagName,_data)
             {
                 htmlDoc = htmlDoc "<" _tagName ">" _data "</" _tagName ">\n"
             }
-            _tagName = "h1"
+            _tagName = "h2"
             _data = "Function: "
         } else if (index(_returnVar, "NAMESPACE:") != 0)
         {
@@ -49,11 +52,11 @@ function readeFile(_filename,  _bashComand,_returnVar,_tagName,_data)
             {
                 htmlDoc = htmlDoc "<" _tagName ">" _data "</" _tagName ">\n"
             }
-            _tagName = "h2"
-            _data = "Description:"
+            _tagName = "p"
+            _data = "<h3>Description:</h3>"
         } else if (index(_returnVar, "PARAMETER:") != 0)
         {
-            _tagName = "h2"
+            _tagName = "h3"
             _data = "Parameter"
         } else if (index(_returnVar, "LOCALE:") != 0)
         {
@@ -61,7 +64,7 @@ function readeFile(_filename,  _bashComand,_returnVar,_tagName,_data)
             {
                 htmlDoc = htmlDoc "<" _tagName ">" _data "</" _tagName ">\n"
             }
-            _tagName = "h2"
+            _tagName = "h3"
             _data = "Local variables"
         } else if (index(_returnVar, "RETURN:") != 0)
         {
@@ -70,7 +73,16 @@ function readeFile(_filename,  _bashComand,_returnVar,_tagName,_data)
                 htmlDoc = htmlDoc "<" _tagName ">" _data "</" _tagName ">\n"
             }
             _tagName = "p"
-            htmlDoc = htmlDoc "<h2>Return value</h2>\n"
+            htmlDoc = htmlDoc "<h3>Return value</h3>\n"
+            _data = ""
+        } else if (index(_returnVar, "TODO:") != 0)
+        {
+            if ( _data != "")
+            {
+                htmlDoc = htmlDoc "<" _tagName ">" _data "</" _tagName ">\n"
+            }
+            _tagName = "p"
+            htmlDoc = htmlDoc "<h3>To do</h3>\n"
             _data = ""
         } else if (index(_returnVar, "EXCEPTION:") != 0)
         {
@@ -79,7 +91,7 @@ function readeFile(_filename,  _bashComand,_returnVar,_tagName,_data)
                 htmlDoc = htmlDoc "<" _tagName ">" _data "</" _tagName ">\n"
             }
             _tagName = "p"
-            htmlDoc = htmlDoc "<h2>Exceptions</h2>\n"
+            htmlDoc = htmlDoc "<h3>Exceptions</h3>\n"
             _data = ""
         } else if (index(_returnVar, "ITEM:") != 0)
         {
