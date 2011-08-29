@@ -16,18 +16,14 @@
 
 
 #=== FUNCTION ==================================================================
-# NAME:
-#    repository_getPrefix
-# SEMINAMESPACE:
-#    repository_
-# DESCRIPTION:
-#    Prefix for every variable found in the repository
-# PARAMETER:
-#
-# LOCALE-VAR:
-#
-# RETUNS:
-#
+## NAME:
+##    repository_getPrefix
+## NAMESPACE:
+##    repository_
+## DESCRIPTION:
+##    Prefix for every variable found in the repository
+## RETURN:
+##    A prefix.
 #==============================================================================
 function repository_getPrefix()
 {
@@ -35,18 +31,18 @@ function repository_getPrefix()
 }
 
 #=== FUNCTION ==================================================================
-# NAME:
-#    repository_getPath
-# SEMINAMESPACE:
-#    repository_
-# DESCRIPTION:
-#    Where to store the repository
+## NAME:
+##    repository_getPath
+## NAMESPACE:
+##    repository_
+## DESCRIPTION:
+##    Where to store the repository
 # PARAMETER:
 #
-# LOCALE-VAR:
+# LOCALE:
 #
-# RETUNS:
-#
+## RETURN:
+##
 #==============================================================================
 function repository_getPath()
 {
@@ -54,19 +50,19 @@ function repository_getPath()
 }
 
 #=== FUNCTION ==================================================================
-# NAME:
-#    repository_getDefault
-# SEMINAMESPACE:
-#    repository_
-# DESCRIPTION:
-#    Repository name that is prefixed for any file used by the repository
-#    followed by a "."
+## NAME:
+##    repository_getDefault
+## NAMESPACE:
+##    repository_
+## DESCRIPTION:
+##    Repository name that is prefixed for any file used by the repository
+##    followed by a "."
 # PARAMETER:
 #
-# LOCALE-VAR:
+# LOCALE:
 #
-# RETUNS:
-#
+## RETURN:
+##    Repository name as string.
 #==============================================================================
 function repository_getDefault()
 {
@@ -74,18 +70,18 @@ function repository_getDefault()
 }
 
 #=== FUNCTION ==================================================================
-# NAME:
-#    repository_getFS
-# SEMINAMESPACE:
-#    repository_
-# DESCRIPTION:
-#    
+## NAME:
+##    repository_getFS
+## NAMESPACE:
+##    repository_
+## DESCRIPTION:
+##    Get back a '_'
 # PARAMETER:
 #
-# LOCALE-VAR:
+# LOCALE:
 #    
-# RETUNS:
-#
+## RETURN:
+##    Get back a '_'
 #==============================================================================
 function repository_getFS()
 {
@@ -93,32 +89,34 @@ function repository_getFS()
 }
 
 #=== FUNCTION ==================================================================
-# NAME:
-#    repository_getValue()
-# SEMINAMESPACE:
-#    repository_
-# DESCRIPTION: repository_get_value()
-#    origin bash function
-#    return the value from the repository with the name repository_name
-# PARAMETER:
-#    _key:
-#       key of value
-#    _repository:
-#
-# LOCALE-VAR:
-#    _value:
-#        store a value.
-#    _path:
-#    _bashComand:
-#       store a bash command.
-#    _bashVariable:
-#       store a bash variable.
-# RETUNS:
-#    if the function found the the file with date auf key, then it's
-#    get back this value and set this as bash variable.
-#    else get back "EXCEPTION@file no found".
-# TODO:
-#   Replace system()-function with std_sysCommand()-function
+## NAME:
+##    repository_getValue()
+## SEMINAMESPACE:
+##    repository_
+## DESCRIPTION: repository_get_value()
+##    origin bash function
+##    return the value from the repository with the name repository_name
+## PARAMETER:
+##    ITEM: _key
+##       key of value
+##    ITEM: _repository
+##
+## LOCALE:
+##    ITEM: _value
+##        store a value.
+##    ITEM: _path
+##    ITEM: _bashComand
+##       store a bash command.
+##    ITEM: _bashVariable
+##       store a bash variable.
+## RETURN:
+##    if the function found the the file with date auf key, then it's
+##    get back this value and set this as bash variable.
+## EXCEPTION:
+##     ITEM: FileException
+##         Forme like "EXCEPTION@FileException@file no found"
+## TODO:
+##   Replace system()-function with std_sysCommand()-function
 #==============================================================================
 function repository_getValue(_key,_repository, _value,_path,_bashComand,_bashVariable,_isSuccess)
 {
@@ -144,7 +142,7 @@ function repository_getValue(_key,_repository, _value,_path,_bashComand,_bashVar
         system( _bashComand )
         return _value
     }
-    return "EXCEPTION@file no found"
+    return "EXCEPTION@FileException@file no found"
 }
 
 #****f* repository-lib.sh/repository_get_value
@@ -176,19 +174,19 @@ function repository_getValue(_key,_repository, _value,_path,_bashComand,_bashVar
 
 
 #=== FUNCTION ==================================================================
-# NAME:
-#    repository_normalizeValue()
-# SEMINAMESPACE:
-#    repository_
-# DESCRIPTION:
-#    normalizes a value
-# PARAMETER:
-#    _value:
-#       value
-# LOCALE-VAR:
-#    
-# RETUNS:
-#
+## NAME:
+##    repository_normalizeValue()
+## SEMINAMESPACE:
+##    repository
+## DESCRIPTION:
+##    normalizes a value
+## PARAMETER:
+##    ITEM: _value
+##       value
+## LOCALE:
+##    
+## RETURN:
+##
 #==============================================================================
 function repository_normalizeValue(_value)
 {

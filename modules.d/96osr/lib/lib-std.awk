@@ -17,18 +17,14 @@
 
 
 #=== FUNCTION ==================================================================
-# NAME:
-#    std_getLibDir
-# SEMINAMESPACE:
-#    std_
-# DESCRIPTION:
-#    Get back the lib dir path
-# PARAMETER:
-#
-# LOCALE-VAR:
-#
-# RETUNS:
-#
+## NAME:
+##    std_getLibDir
+## NAMESPACE:
+##    std_
+## DESCRIPTION:
+##    Get back the lib dir path
+## RETUNS:
+##    Return path of lib as string.
 #==============================================================================
 function std_getLibDir()
 {
@@ -36,22 +32,22 @@ function std_getLibDir()
 }
 
 #=== FUNCTION ==================================================================
-# NAME:
-#    osr_paramStore()
-# SEMINAMESPACE:
-#    std_
-# DESCRIPTION:
-#
-# PARAMETER:
-#    _key
-# LOCALE-VAR:
-#    _var:
-#    _isSuccess:
-#        return value of success from system()-function. (true or false)
-#    _returnVar:
-#        return value of success from system()-function. Or return a exception.
-# RETUNS:
-#    maybe if a exception throw, then is give back.
+## NAME:
+##    std_paramStore()
+## SEMINAMESPACE:
+##    std_
+## DESCRIPTION:
+##
+## PARAMETER:
+##    _key
+## LOCALE:
+##    ITEM: _var
+##    ITEM: _isSuccess
+##        return value of success from system()-function. (true or false)
+##    ITEM: _returnVar
+##        return value of success from system()-function. Or return a exception.
+## RETUNS:
+##    maybe if a exception throw, then is give back.
 #==============================================================================
 function std_paramStore(_key,_value, _var,_isSuccess,_bashComand,_returnVar)
 {
@@ -88,20 +84,20 @@ function std_paramStore(_key,_value, _var,_isSuccess,_bashComand,_returnVar)
 }
 
 #=== FUNCTION ==================================================================
-# NAME:
-#    osr_paramStore()
-# SEMINAMESPACE:
-#    std_
-# DESCRIPTION:
-#   This function check if a file exist.
-# PARAMETER:
-#    _path:
-#       a fiel path
-# LOCALE-VAR:
-#    _command:
-#        String for storage a bash vcmand
-# RETUNS:
-#   If file exist, it's return "TRUE", else "FALSE"
+## NAME:
+##    osr_paramStore()
+## NAMESPACE:
+##    std_
+## DESCRIPTION:
+##   This function check if a file exist.
+## PARAMETER:
+##    ITEM _path:
+##       a fiel path
+## LOCALE:
+##    ITEM: _command:
+##        String for storage a bash vcmand
+## RETUNS:
+##   If file exist, it's return "TRUE", else "FALSE"
 #==============================================================================
 function std_isFileExist(_path, _bashComand, _returnVar)
 {
@@ -124,23 +120,27 @@ function std_isFileExist(_path, _bashComand, _returnVar)
 
 
 #=== FUNCTION ==================================================================
-# NAME:
-#    sysCommand()
-# SEMINAMESPACE:
-#    std_
-# DESCRIPTION:
-#   This function execute a system command.
-# PARAMETER:
-#    _path:
-#       a file path
-# LOCALE-VAR:
-#    _command:
-#        String for storage a bash command
-# RETUNS:
-#   The output of the bash command. Or return a exception string.
-#   for exception handling see std_ExceptionHandler()
-# Exception(s):
-#   "Exception@SystemException@[....]"
+## NAME:
+##    std_sysCommand()
+## NAMESPACE:
+##    std
+## DESCRIPTION:
+##   This function execute a system command.
+## PARAMETER:
+##    ITEM: _bashComand
+##       a bash command.
+## LOCALE:
+##    ITEM: _returnVar
+##        value of return from system-functions-call.
+##    ITEM: _returnVarSum
+##        the sum of all returns.
+## RETURN:
+##   The output of the bash command. Or return a exception string.
+##   for exception handling see std_ExceptionHandler()
+## EXCEPTION:
+##    ITEM: SystemException
+##       If system-function not successful than return
+##       "Exception@SystemException@[....]" string.
 #==============================================================================
 function std_sysCommand(_bashComand, _returnVar,_returnVarSum)
 {
@@ -159,28 +159,28 @@ function std_sysCommand(_bashComand, _returnVar,_returnVarSum)
 }
 
 #=== FUNCTION ==================================================================
-# NAME:
-#    std_ExceptionHandler()
-# SMEINAMESPACE:
-#    std_
-# DESCRIPTION:
-#   This function checked is a function return a value with a exception.
-# PARAMETER:
-#    _frv:
-#       it's meaning 'function return value'
-#       A value of a (other) function return. Ther is maybe a exception-info
-#       as string.
-#   _exception:
-#       Set a reference of (empty) array . If in parameter '_info' a exception,
-#       in this array you can find the details:
-#       '_exception["specification"]' is store the exception specification.
-#       '_exception["message"]' is store the additional exception infos/messages.
-# LOCALE-VAR:
-#    _array:
-#        Is for splitting string.
-# RETURNS:
-#   If in parameter '_info' a exception, the function returns '1' (it's
-#   meaning 'true'). And '0' for 'false'
+## NAME:
+##    std_ExceptionHandler()
+## NAMESPACE:
+##    std_
+## DESCRIPTION:
+##   This function checked is a function return a value with a exception.
+## PARAMETER:
+##    ITEM: _frv
+##       it's meaning 'function return value'
+##       A value of a (other) function return. Ther is maybe a exception-info
+##       as string.
+##   ITEM: _exception
+##       Set a reference of (empty) array . If in parameter '_info' a exception,
+##       in this array you can find the details:
+##       '_exception["specification"]' is store the exception specification.
+##       '_exception["message"]' is store the additional exception infos/messages.
+## LOCALE:
+##    ITEM: _array
+##        Is for splitting string.
+## RETURNS:
+##   If in parameter '_info' a exception, the function returns '1' (it's
+##   meaning 'true'). And '0' for 'false'
 #==============================================================================
 function std_ExceptionHandler(_returnValue,_exception, _array)
 {
