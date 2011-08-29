@@ -61,6 +61,8 @@ clean:
 	$(RM) -r SPECS
 	$(RM) -r SRPMS
 	$(RM) -r RPMS
+	$(RM) -r ./interface_doc.css
+	$(RM) -r ./doc/robodoc
 
 # creake a bz2-achiv
 archive: ../osr-dracut-module-$(VERSION).tar.bz2
@@ -106,4 +108,8 @@ check: all
 # create a file with autors from git log.
 AUTHORS:
 	git shortlog  --numbered --summary -e |while read a rest; do echo $$rest;done > ./AUTHORS
+
+robodoc:
+	robodoc --src ./modules.d/ --doc ./doc/robodoc/ --multidoc --index --html
+
 
