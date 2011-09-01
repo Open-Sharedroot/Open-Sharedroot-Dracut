@@ -474,11 +474,6 @@ Das Modul stellt lediglich ein Semigrafisches Logo zur Verfügung, was dem User 
 
 \subsection{Dash/Bash}
 
-\subsubsection{Schnittstellen- und Code-dokumentation}
-
-Zur dokumentation der Schnittstellen bzw. des Codes wird das Tool \textit{Robodock} verwendet.
-Die offizielle Dokumentation findes sich auf \url{http://rfsber.home.xs4all.nl/Robo/}
-
 
 
 \subsection{AWK}
@@ -676,81 +671,76 @@ function ExceptionHandler(_info,_ex, _array)
 \bigskip 
 Zur Vertiefung des Themas siehe auch: \url{http://de.wikibooks.org/wiki/Awk:_Grundlagen:_Objektorientierte_Programmierung}
 
-\subsubsection{Automatisch generierte Schnittstellen-Dokumentation}
+\subsection{Automatisch generierte  Schnittstellen- und Code-dokumentation}
 
-Es gibt ein kleines AWK-Skript (\texttt{interface\_doc\_generator.awk}) mit dem automatisch Dokumentation generiert werden kann mit den Schnittstellen der Funktionen. Dazu müssen diese aber auf eine bestimmte weise im Code kommentiert werden. 
-\bigskip 
-\textbf{Beispiel:}
+Zur dokumentation der Schnittstellen bzw. des Codes wird das Tool \textit{Robodock} verwendet.
+Die offizielle Dokumentation findes sich auf \url{http://rfsber.home.xs4all.nl/Robo/}
 
-
-\begin{lstlisting}
-#=== FUNCTION ==================================================================
-## NAME:
-##    std_sysCommand()
-## NAMESPACE:
-##    std
-## DESCRIPTION:
-##   This function execute a system command.
-## PARAMETER:
-##    ITEM: _bashComand
-##       a bash command.
-## LOCALE:
-##    ITEM: _returnVar
-##        value of return from system-functions-call.
-##    ITEM: _returnVarSum
-##        the sum of all returns.
-## RETURN:
-##   The output of the bash command. Or return a exception string.
-##   for exception handling see std_ExceptionHandler()
-## EXCEPTION:
-##    ITEM: SystemException
-##       If system-function not successful than return
-##       "Exception@SystemException@[....]" string.
-#==============================================================================
-function std_sysCommand(_bashComand, _returnVar,_returnVarSum)
-{
-    # initialize private variable
-    _returnVar = ""
-    _returnVarSum = ""
-
-    while ((_bashComand | getline  _returnVar) > 0) {
-        _returnVarSum += _returnVar
-    }
-    if( close(_bashComand) != 0 )
-    {
-        return "Exception@SystemException@process is not successful ending."
-    }
-    return _returnVarSum
-}
-\end{lstlisting}
-
-\bigskip 
-
-Generell: Alle Kommentare die berücksichtigt werden sollen müssen mit zwei Raute-Zeichen beginnen. Die Doppelpunkte am Ende der Schlüsselwörter sind zwingend. Die zu verwendenden Schlüsselwörter sind die folgenden. 
-
-\bigskip 
+\subsubsection{Schlüsselwörter}
+Die wichtigsten -- und zu verwendenen -- Schlüsselwörter sind:
 
 \begin{description}
- \item[NAME:] Name der Funktion.
- \item[NAMESPACE:] Der Teil des Funktionsnamen, der den Namensraum darstellt.
- \item[DESCRIPTION:] Beschreibung was die Funktion tut.
- \item[PARAMETER:] Liste der Parameter, die die Funktion erwartet.
- \item[ITEM:] Beschreibt ein einzelnen Elemente (Etwa Parameter oder lokale Variablen) . Das Erste Wort nach dem Schlüsselwort \textit{ITEM:} wird als Name des Elements verwendet. Die eigentliche Beschreibung folgt in den nächsten Zeilen. 
- \item[LOCALE:] Auflistung der lokalen Variablen, die in der Funktion verwendet werden.
- \item[RETURN:] Der zu erwartende Rückgabewert.
- \item[EXCEPTION:] Ist in der Funktion eine (oder mehrere) Ausnahme definiert, werden die hier beschrieben. 
- \item[TODO:] Beschreibung offener Punkte.
+ \item[NAME] Name der Funtion mit Kurzbeschreibung. 
+ \item[COPYRIGHT] Urheber und Lizenzvermerk. Z.B. "`(c) <year>-<year> by <company/person>"'
+ \item[SYNOPSIS , USAGE] Beschreibung des gebrauchs.
+ \item[FUNCTION , DESCRIPTION , PURPOSE] Beschreibung was es tut.
+ \item[INPUTS , ARGUMENTS , OPTIONS , PARAMETERS , SWITCHES] Erwartete Parameter.
+ \item[OUTPUT , SIDE EFFECTS] Wechselwirkungen.
+ \item[RESULT , RETURN VALUE] Rückgabewert.
+ \item[EXAMPLE] Bespiel für die nutzung.
+ \item[NOTES] Anmerkungen.
+ \item[WARNINGS , ERRORS] Mögliche Fehlermeldungen und Wahrnungen.
+ \item[BUGS] Bekannte Fehler.
+ \item[TODO , IDEAS] Offene Punkte und Ideen.
+ \item[PORTABILITY] Anmerkungen System-/Distributions-Abhängigkeiten.
+ \item[SEE ALSO] Verweis auf andere Funktionen oder Dokus.
+ \item[TAGS] Kategorie. Macht Sinn für die Pseudo-Namensräume. Hier wird also
+ der Namensraum genannt.
+ \item[USES , CHILDREN] Welche Funktionen werden verwendet/benötigt.
+ \item[USED BY , PARENTS] Wer oder Was ist auf diese Funktion angewiesen.
+ \item[COMMANDS] Komandobeschreibungen.
+ \item[SOURCE] Sollte am Ende des Funktionskommentar stehen. Zeigt an, das der
+ eigentlich Funktionscode folgt und berücksichtigt werden soll.
  \end{description}
 
-\bigskip 
-Das Ergebnis wir in Abbildung \ref{pic:html} aussehen.
 
-\begin{figure}[H]
- \centering
- \includegraphics[width=0.75\textwidth]{./awk-html-conv.png}
- \caption[]{HTML-Ausgabe im Browser.}
- \label{pic:html}
-\end{figure}
+\subsubsection{Beipiel}
+\begin{lstlisting}
+#****f* repository-lib.sh/repository_has_key
+#  NAME
+#    repository_has_key
+#  SYNOPSIS
+#    function repository_has_key(key, repository_name)
+#  DESCRIPTION
+#    return if the key exists in repository
+#  IDEAS
+#  SOURCE
+#
+repository_has_key() {
+    local key=$(repository_normalize_value $1)
+    local repository="$2"
+    [ -z "$repository" ] && repository=${REPOSITORY_DEFAULT}
+    [ -f ${REPOSITORY_PATH}/${REPOSITORY_PREFIX}${repository}.$key ]
+    return $?
+}
+#******* repository_has_key
+\end{lstlisting}
+
+
+\subsubsection{Nicht verwendete Schlüsselwörter}
+
+\begin{description}
+
+ \item[AUTHOR] Autor(en) namen. Ist in Git besser nachvolziebar.
+ \item[CREATION DATE] Erstellungsdatum. Unintersant und ggf. in Git zu sehen.
+ \item[MODIFICATION HISTORY , HISTORY] Änderungsgeschichte. Siehe Git.
+ \item[DIAGNOSTICS]
+ \item[METHODS , NEW METHODS] Dash ist nicht OOP.
+ \item[ATTRIBUTES , NEW ATTRIBUTES] Dash ist nicht OOP.
+ \item[DERIVED FROM] Dash ist nicht OOP.
+ \item[DERIVED BY] Dash ist nicht OOP.
+
+\end{description}
  
 \section{Nutzungsbedingungen}
 
