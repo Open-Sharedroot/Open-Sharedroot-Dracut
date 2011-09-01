@@ -23,7 +23,7 @@
 ##    std_
 ## DESCRIPTION:
 ##    Get back the lib dir path
-## RETUNS:
+## RETURNS:
 ##    Return path of lib as string.
 #==============================================================================
 function std_getLibDir()
@@ -40,32 +40,32 @@ function std_getLibDir()
 ##
 ## PARAMETER:
 ##    _key
-## LOCALE:
+## LOCAL:
 ##    ITEM: _var
 ##    ITEM: _isSuccess
 ##        return value of success from system()-function. (true or false)
 ##    ITEM: _returnVar
-##        return value of success from system()-function. Or return a exception.
-## RETUNS:
-##    maybe if a exception throw, then is give back.
+##        return value of success from system()-function. Or return an exception.
+## RETURNS:
+##    if an exception throw, then return an axception messages.
 #==============================================================================
-function std_paramStore(_key,_value, _var,_isSuccess,_bashComand,_returnVar)
+function std_paramStore(_key,_value, _var,_isSuccess,_bashCommand,_returnVar)
 {
     # initialize private variable
     _var = ""
     _isSuccess = 0
-    _bashComand = ""
+    _bashCommand = ""
     _returnVar = ""
 
-    _bashComand = ". /lib/dracut-lib.sh; getarg " _key
-    _returnVar = std_sysCommand( _bashComand)
+    _bashCommand = ". /lib/dracut-lib.sh; getarg " _key
+    _returnVar = std_sysCommand( _bashCommand)
     if ( std_ExceptionHandler(_returnVar,_ex) )
     {
         return _returnVar
     }
 
-    _bashComand = ". /lib/osr/repository-lib.sh; repository_store_value " _key _returnVar
-    _returnVar = std_sysCommand(_bashComand)
+    _bashCommand = ". /lib/osr/repository-lib.sh; repository_store_value " _key _returnVar
+    _returnVar = std_sysCommand(_bashCommand)
     if ( std_ExceptionHandler(_returnVar,_ex) )
     {
         return _returnVar
@@ -73,8 +73,8 @@ function std_paramStore(_key,_value, _var,_isSuccess,_bashComand,_returnVar)
 
     if(_value != "")
     {
-        _bashComand = ". /lib/osr/repository-lib.sh; repository_store_value " _key _value
-        _returnVar = std_sysCommand( _bashComand)
+        _bashCommand = ". /lib/osr/repository-lib.sh; repository_store_value " _key _value
+        _returnVar = std_sysCommand( _bashCommand)
         if ( std_ExceptionHandler(_returnVar,_ex) )
         {
             return _returnVar
@@ -93,20 +93,20 @@ function std_paramStore(_key,_value, _var,_isSuccess,_bashComand,_returnVar)
 ## PARAMETER:
 ##    ITEM _path:
 ##       a fiel path
-## LOCALE:
+## LOCAL:
 ##    ITEM: _command:
-##        String for storage a bash vcmand
-## RETUNS:
-##   If file exist, it's return "TRUE", else "FALSE"
+##        String for storage a bash command
+## RETURNS:
+##   If file exists, it returns "TRUE", else "FALSE"
 #==============================================================================
-function std_isFileExist(_path, _bashComand, _returnVar)
+function std_isFileExist(_path, _bashCommand, _returnVar)
 {
     # initialize private variable
-    _bashComand = ""
+    _bashCommand = ""
     _returnVar = ""
 
-    _bashComand = "if [ -f " _path " ] ; then echo 'TRUE';  fi"
-    _returnVar = std_sysCommand(_bashComand)
+    _bashCommand = "if [ -f " _path " ] ; then echo 'TRUE';  fi"
+    _returnVar = std_sysCommand(_bashCommand)
     if ( std_ExceptionHandler(_returnVar,_ex) )
     {
         return _returnVar
@@ -125,35 +125,35 @@ function std_isFileExist(_path, _bashComand, _returnVar)
 ## NAMESPACE:
 ##    std
 ## DESCRIPTION:
-##   This function execute a system command.
+##   This function executes a system command.
 ## PARAMETER:
-##    ITEM: _bashComand
+##    ITEM: _bashCommand
 ##       a bash command.
-## LOCALE:
+## LOCAL:
 ##    ITEM: _returnVar
 ##        value of return from system-functions-call.
 ##    ITEM: _returnVarSum
 ##        the sum of all returns.
 ## RETURN:
-##   The output of the bash command. Or return a exception string.
+##   The output of the bash command. Or returns a exception string.
 ##   for exception handling see std_ExceptionHandler()
 ## EXCEPTION:
 ##    ITEM: SystemException
 ##       If system-function not successful than return
 ##       "Exception@SystemException@[....]" string.
 #==============================================================================
-function std_sysCommand(_bashComand, _returnVar,_returnVarSum)
+function std_sysCommand(_bashCommand, _returnVar,_returnVarSum)
 {
     # initialize private variable
     _returnVar = ""
     _returnVarSum = ""
 
-    while ((_bashComand | getline  _returnVar) > 0) {
+    while ((_bashCommand | getline  _returnVar) > 0) {
         _returnVarSum += _returnVar
     }
-    if( close(_bashComand) != 0 )
+    if( close(_bashCommand) != 0 )
     {
-        return "Exception@SystemException@process is not successful ending."
+        return "Exception@SystemException@process is not successfully ending."
     }
     return _returnVarSum
 }
@@ -164,25 +164,25 @@ function std_sysCommand(_bashComand, _returnVar,_returnVarSum)
 ## NAMESPACE:
 ##    std_
 ## DESCRIPTION:
-##   This function checked is a function return a value with a exception.
+##   This function checks if a function return an value with a exception.
 ## PARAMETER:
-##    ITEM: _frv
+##    ITEM: _returnValue
 ##       it's meaning 'function return value'
-##       A value of a (other) function return. Ther is maybe a exception-info
-##       as string.
+##       A value of a (other) function return. There is maybe an exception-info
+##       as a string.
 ##   ITEM: _exception
-##       Set a reference of (empty) array . If in parameter '_info' a exception,
-##       in this array you can find the details:
+##       Set a reference of (empty) array . If in parameter '_info'
+##       there is an exception, in this array you can find the details:
 ##       '_exception["specification"]' is store the exception specification.
 ##       '_exception["message"]' is store the additional exception infos/messages.
-## LOCALE:
+## LOCAL:
 ##    ITEM: _array
-##        Is for splitting string.
+##        Is for splitting the string.
 ## RETURNS:
 ##   If in parameter '_info' a exception, the function returns '1' (it's
 ##   meaning 'true'). And '0' for 'false'
 #==============================================================================
-function std_ExceptionHandler(_returnValue,_exception, _array)
+function std_ExceptionHandler(_returnValue,_exception,  _array)
 {
     if( index(_returnValue, "Exception@") != 0)
     {
